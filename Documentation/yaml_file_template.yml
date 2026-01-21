@@ -1,0 +1,33 @@
+name: This is the name of the workflow
+
+# Trigger manually
+on:
+  workflow_dispatch: # this runs on a manual trigger
+  schedule: # runs on a schedule using cron
+    - cron: "0 8 * * 1"  # every Monday 8:00 UTC
+
+jobs:
+  run-python-script: # This is the name of the job
+    runs-on: ubuntu-latest # Defines operating system - ubuntu-latest is pretty standard
+
+    steps:
+      # Step 1: Check out the repo - this means to gain access to the repo 
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python - this is doing exactly what it says
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      # Step 3: Install dependencies if requirements.txt exists
+      - name: Install dependencies
+        if: exists('requirements.txt')
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Run the Python script
+      - name: Run Python script
+        run: folder path/to/your_script.py
