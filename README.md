@@ -1,2 +1,2 @@
 ## Image of work flow
-![NSW-Fuel-Price-Insights](Documentation/data_flow.jpeg)
+![NSW-Fuel-Price-Insights](Documentation/data_flow.jpg)
