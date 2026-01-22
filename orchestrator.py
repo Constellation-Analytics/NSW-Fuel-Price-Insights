@@ -37,7 +37,7 @@ def push_file_to_repo(file_path, commit_message):
         subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
         logger.info(f"Successfully pushed {file_path} to repo")
     except subprocess.CalledProcessError as e:
-        logger.error(f"Failed to push {file_path}: {e}")
+        logger.exception(f"Failed to push {file_path}: {e}")
         print(f"ERROR: Failed to push {file_path}: {e}")  # print error to terminal
         raise
 
@@ -48,7 +48,7 @@ def run_module(module_path):
         subprocess.run(["python", module_path], check=True)
         logger.info(f"Finished {module_path}")
     except subprocess.CalledProcessError as e:
-        logger.error(f"Module {module_path} failed with exit code {e.returncode}")
+        logger.exception(f"Module {module_path} failed with exit code {e.returncode}")
         # Push log before stopping
         push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
         raise
