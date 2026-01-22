@@ -67,7 +67,7 @@ def run_module(module_path):
 run_module("modules/1.file_retrieval.py")
 
 # save the log
-push_file_to_repo(log_file, f"log file loaded {filedatestamp}):
+push_file_to_repo(log_file, f"log file loaded {filedatestamp}"):
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - End
