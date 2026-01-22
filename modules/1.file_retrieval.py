@@ -14,7 +14,6 @@ import logging
 os.makedirs("data and logs", exist_ok=True)
 filedatestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
 log_file = f"data and logs/workflow{filedatestamp}.log"
-datafile = f"data and logs/fuelcheck_{month}{year}.csv"
 
 
 # Set up logging for orchestrator
@@ -41,7 +40,7 @@ last_month_year = last_month_date.strftime('%Y')
 year = last_month_year
 month = last_month_name
 
-
+datafile = f"data and logs/fuelcheck_{month}{year}.csv"
 
 # Find links ending with .xlsx or .csv that match month/year (only one will be returned)
 download_links = [
