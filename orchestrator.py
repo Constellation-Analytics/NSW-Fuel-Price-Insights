@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 # ----------------------------------------------------------------------------------------------------
-#                                       Setup variables and functions
+#                                       setup variables
 # ----------------------------------------------------------------------------------------------------
 
 os.makedirs("data and logs", exist_ok=True)
@@ -22,6 +22,25 @@ logging.basicConfig(
 # Create logger with dummy name so it can be scaled later if needed
 logger = logging.getLogger('log_dog')
 
+# ----------------------------------------------------------------------------------------------------
+#                                       setup functions
+# ----------------------------------------------------------------------------------------------------
+
+def push_file_to_repo(file_path, commit_message):
+    """Adds, commits, and pushes a file to GitHub using GITHUB_TOKEN"""
+    try:
+        repo_url = f"https://x-access-token:{os.environ['GITHUB_TOKEN']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
+        subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
+        subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
+        subprocess.run(["git", "add", file_path], check=True)
+        subprocess.run(["git", "commit", "-m", commit_message], check=False)  # won't fail if nothing changed
+        subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
+        logger.info(f"Successfully pushed {file_path} to repo")
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Failed to push {file_path}: {e}")
+        print(f"ERROR: Failed to push {file_path}: {e}")  # print error to terminal
+        raise
+
 # create a reusable function to call modules with logging and error handling
 def run_module(module_path):
     try:
@@ -30,8 +49,15 @@ def run_module(module_path):
         logger.info(f"Finished {module_path}")
     except subprocess.CalledProcessError as e:
         logger.error(f"Module {module_path} failed with exit code {e.returncode}")
+        # Push log before stopping
+        push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
+        raise
     except Exception as e:
         logger.exception(f"Unexpected error running {module_path}: {e}")
+        # Push log before stopping
+        push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
+        raise
+
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
