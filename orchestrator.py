@@ -9,7 +9,7 @@ from datetime import datetime
 filedatestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
 
 # Set up logging for orchestrator
-logging.basicConfig(filename="Data and Logs/workflow.log", level=logging.INFO)
+logging.basicConfig(filename=f"data and logs/workflow{filedatestamp}.log", level=logging.INFO)
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
