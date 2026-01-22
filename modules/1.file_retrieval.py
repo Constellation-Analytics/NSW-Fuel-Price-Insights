@@ -68,10 +68,10 @@ subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
 subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
 
 # Add file
-subprocess.run(["git", "add", "data and logs"], check=True)
+subprocess.run(["git", "add", "data and logs/fuelcheck_{month}{year}.csv"], check=True)
 
 # Commit changes
-subprocess.run(["git", "commit", "-m", f"Add fuelcheck_{month}{year}.xlsx"], check=False)
+subprocess.run(["git", "commit", "-m", f"Add fuelcheck_{month}{year}.csv"], check=False)
 
 # Push changes
 subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
