@@ -38,7 +38,7 @@ with open("Data and Logs/fuelcheck_dec2025.xlsx", "wb") as f:
     f.write(b"Example content")  # Replace with real downloaded content
 
 # Configure git to use GitHub Actions token
-repo_url = f"https://x-access-token:{os.environ['GITHUB_TOKEN']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
+repo_url = f"https://x-access-token:{os.environ['TOKEN_GITHUB']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
 
 # Add files
 subprocess.run(["git", "add", "Data and Logs/*"], check=True)
