@@ -14,6 +14,8 @@ import logging
 os.makedirs("data and logs", exist_ok=True)
 filedatestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
 log_file = f"data and logs/workflow{filedatestamp}.log"
+datafile = f"data and logs/fuelcheck_{month}{year}.csv"
+
 
 # Set up logging for orchestrator
 logging.basicConfig(
@@ -60,7 +62,7 @@ if link.endswith(".xlsx"):
 elif link.endswith(".csv"):
     df = pd.read_csv(StringIO(resp.content.decode('utf-8')))
     
-df.to_csv(f"data and logs/fuelcheck_{month}{year}.csv", index=False)
+df.to_csv(datafile, index=False)
 
 # Configure git to use GitHub Actions token
 repo_url = f"https://x-access-token:{os.environ['GITHUB_TOKEN']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
@@ -68,10 +70,10 @@ subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
 subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
 
 # Add file
-subprocess.run(["git", "add", "data and logs/fuelcheck_{month}{year}.csv"], check=True)
+subprocess.run(["git", "add", datafile], check=True)
 
 # Commit changes
-subprocess.run(["git", "commit", "-m", f"Add fuelcheck_{month}{year}.csv"], check=False)
+subprocess.run(["git", "commit", "-m", f"Add file fuelcheck_{month}{year}.csv"], check=False)
 
 # Push changes
 subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
