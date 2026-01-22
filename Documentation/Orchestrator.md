@@ -6,7 +6,8 @@
 - **Author / Date:** Paul – 21 Jan 2026  
 
 ## 2. Upstream Dependencies
-- GitHub Actions cron job triggers orchestrator  
+- GitHub Actions cron job triggers orchestrator
+- config.json file  
 - Secrets (DB credentials, API keys)  
  
 ## 3. Downstream Dependencies
@@ -21,12 +22,13 @@
 - Results from individual modules loaded into GitHub  
 
 ## 6. Logic / Steps
-1. Initialise logging  
-2. Execute modules sequentially:  
+1. Initialise logging
+2. Retrieve parameters from config.json
+3. Execute modules sequentially:  
    - `File Retrieval` → `Transform Data` → `API Integration` → `Data Quality` → `Data Update`  
-3. Conditional checks:
+4. Conditional checks:
    - Stop workflow if critical module fails  
-4. Log start and finish time of each module
+5. Log start and finish time of each module
 
 ## 7. Error Handling & Logging
 - Wrap module calls in `try/except`  
