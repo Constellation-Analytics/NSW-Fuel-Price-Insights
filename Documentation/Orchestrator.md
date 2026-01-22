@@ -6,16 +6,15 @@
 - **Author / Date:** Paul – 21 Jan 2026  
 
 ## 2. Upstream Dependencies
-- GitHub Actions cron job triggers orchestrator
-- config.json file  
-- Secrets (DB credentials, API keys)  
+- GitHub Actions cron job triggers orchestrator 
  
 ## 3. Downstream Dependencies
 - Modules: `file_etl`, `api_etl`, `data_quality`, `data_update` 
 
-## 4. Inputs
-- Secrets (DB credentials, API keys) 
+## 4. Inputs / Sources
 - Log file path
+- Config.json file
+- Secrets (DB credentials, API keys) 
 
 ## 5. Outputs
 - Workflow log file (`workflow.log`)  
