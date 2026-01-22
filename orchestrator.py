@@ -45,19 +45,30 @@ def push_file_to_repo(file_path, commit_message):
 def run_module(module_path):
     try:
         logger.info(f"Starting {module_path}")
-        subprocess.run(["python", module_path], check=True)
+        # Run the module and capture its output
+        result = subprocess.run(
+            ["python", module_path],
+            check=True,
+            capture_output=True,
+            text=True
+        )
         logger.info(f"Finished {module_path}")
     except subprocess.CalledProcessError as e:
-        logger.exception(f"Module {module_path} failed with exit code {e.returncode}")
-        # Push log before stopping
+        # Log the exit code and any captured output
+        logger.error(f"Module {module_path} failed with exit code {e.returncode}")
+        if e.stdout:
+            logger.info(f"{module_path} output before failure:\n{e.stdout}")
+        if e.stderr:
+            logger.error(f"{module_path} errors before failure:\n{e.stderr}")
+        # Push the log before stopping
         push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
         raise
     except Exception as e:
+        # Catch any other unexpected error and include traceback
         logger.exception(f"Unexpected error running {module_path}: {e}")
-        # Push log before stopping
+        # Push the log before stopping
         push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
         raise
-
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
