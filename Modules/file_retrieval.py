@@ -37,8 +37,11 @@ os.makedirs("Data and Logs", exist_ok=True)
 with open("Data and Logs/fuelcheck_dec2025.xlsx", "wb") as f:
     f.write(b"Example content")  # Replace with real downloaded content
 
+
 # Configure git to use GitHub Actions token
-repo_url = f"https://x-access-token:{os.environ['TOKEN_GITHUB']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
+repo_url = f"https://x-access-token:{os.environ['GITHUB_TOKEN']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
+subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
+subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
 
 # Add files
 subprocess.run(["git", "add", "Data and Logs/*"], check=True)
