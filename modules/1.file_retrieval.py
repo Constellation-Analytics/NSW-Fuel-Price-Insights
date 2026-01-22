@@ -6,6 +6,25 @@ from datetime import datetime, timedelta
 import pandas as pd
 from io import BytesIO, StringIO
 
+# ----------------------------------------------------------------------------------------------------
+#                                       Setup variables and functions
+# ----------------------------------------------------------------------------------------------------
+
+os.makedirs("data and logs", exist_ok=True)
+filedatestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
+log_file = f"data and logs/workflow{filedatestamp}.log"
+
+# Set up logging for orchestrator
+logging.basicConfig(
+  filename=log_file,
+  level=logging.INFO,
+  format="%(asctime)s - %(levelname)s - %(message)s",
+  datefmt="%Y-%m-%d %H:%M:%S"
+)
+
+# Create logger with dummy name so it can be scaled later if needed
+logger = logging.getLogger('log_dog')
+
 url = "https://data.nsw.gov.au/data/dataset/fuel-check"
 response = requests.get(url)
 
@@ -19,6 +38,8 @@ last_month_year = last_month_date.strftime('%Y')
 year = last_month_year
 month = last_month_name
 
+
+
 # Find links ending with .xlsx or .csv that match month/year (only one will be returned)
 download_links = [
     a["href"]
@@ -29,12 +50,8 @@ download_links = [
 ]
 
 link = download_links[0]
-print("Downloading:", link)
 
 resp = requests.get(link)
-
-# Make sure the folder exists
-os.makedirs("Data and Logs", exist_ok=True)
 
 # Read file based on extension
 if link.endswith(".xlsx"):
@@ -42,7 +59,7 @@ if link.endswith(".xlsx"):
 elif link.endswith(".csv"):
     df = pd.read_csv(StringIO(resp.content.decode('utf-8')))
     
-df.to_csv(f"Data and Logs/fuelcheck_{month}{year}.csv", index=False)
+df.to_csv(f"data and logs/fuelcheck_{month}{year}.csv", index=False)
 
 # Configure git to use GitHub Actions token
 repo_url = f"https://x-access-token:{os.environ['GITHUB_TOKEN']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
