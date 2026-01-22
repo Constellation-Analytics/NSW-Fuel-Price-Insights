@@ -32,7 +32,7 @@ jobs:
 
       # Step 4: Run the Python script
       - name: Run Python script
-        run: python Modules/file_retrieval.py
+        run: python modules/orchestrator.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
