@@ -6,6 +6,10 @@ on:
   schedule: # runs on a schedule using cron
     - cron: "0 8 * * 1"  # every Monday 8:00 UTC
 
+# add permissions if writing files
+permissions:
+contents: write
+
 jobs:
   run-python-script: # This is the name of the job
     runs-on: ubuntu-latest # Defines operating system - ubuntu-latest is pretty standard
@@ -21,13 +25,14 @@ jobs:
         with:
           python-version: '3.11'
 
-      # Step 3: Install dependencies if requirements.txt exists
+      # Step 3: Install dependencies 
       - name: Install dependencies
-        if: exists('requirements.txt')
         run: |
-          pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       # Step 4: Run the Python script
       - name: Run Python script
-        run: modules/file_retrieval.py
+        run: python Modules/file_retrieval.py # be sure to include full path 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # required because im writing to github
