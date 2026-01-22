@@ -29,4 +29,4 @@ jobs:
 
       # Step 4: Run the Python script
       - name: Run Python script
-        run: modules/file_retrieval.py
+        run: Modules/file_retrieval.py
