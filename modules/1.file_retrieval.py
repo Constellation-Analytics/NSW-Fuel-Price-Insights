@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import pandas as pd
 from io import BytesIO, StringIO
+import logging
 
 # ----------------------------------------------------------------------------------------------------
 #                                       Setup variables and functions
