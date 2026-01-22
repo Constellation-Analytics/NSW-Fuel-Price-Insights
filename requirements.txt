@@ -1,4 +1,2 @@
-os
-subprocess
 requests
-bs4
+beautifulsoup4
