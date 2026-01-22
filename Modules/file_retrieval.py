@@ -1,3 +1,5 @@
+import os # to access GitHub repo
+import subprocess # to commit in GitHub repo
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
@@ -15,7 +17,6 @@ last_month_date = first_of_month - timedelta(days=1)
 last_month_name = last_month_date.strftime('%b').lower()
 last_month_year = last_month_date.strftime('%Y')
 
-
 year = last_month_year
 month = last_month_name
 
@@ -27,11 +28,7 @@ download_link = [
     and month in href
 ]
 
-print(download_link)
-
-
-import os
-import subprocess
+#print(download_link)
 
 # Make sure the folder exists
 os.makedirs("Data and Logs", exist_ok=True)
@@ -47,7 +44,7 @@ repo_url = f"https://x-access-token:{os.environ['GITHUB_TOKEN']}@github.com/{os.
 subprocess.run(["git", "add", "Data and Logs/*"], check=True)
 
 # Commit changes
-subprocess.run(["git", "commit", "-m", "Add fuelcheck_dec2025.xlsx"], check=False)
+subprocess.run(["git", "commit", "-m", f"Add fuelcheck_{month}{year}.xlsx"], check=False)
 
 # Push changes
 subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
