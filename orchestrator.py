@@ -56,10 +56,7 @@ def run_module(module_path):
     except subprocess.CalledProcessError as e:
         # Log the exit code and any captured output
         logger.error(f"Module {module_path} failed with exit code {e.returncode}")
-        if e.stdout:
-            logger.info(f"{module_path} output before failure:\n{e.stdout}")
-        if e.stderr:
-            logger.error(f"{module_path} errors before failure:\n{e.stderr}")
+        logger.error(f"{module_path} errors before failure:\n{e.stderr}")
         # Push the log before stopping
         push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
         raise
@@ -74,7 +71,7 @@ def run_module(module_path):
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
 
-# Run module1.py in its entirety
+# run module1.py
 run_module("modules/1.file_retrieval.py")
 
 # save the log
