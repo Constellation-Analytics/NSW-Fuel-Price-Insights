@@ -6,6 +6,9 @@ on:
   #schedule: # runs on a schedule using cron
   #  - cron: "0 8 * * 1"  # every Monday 8:00 UTC
 
+permissions:
+  contents: write
+  
 jobs:
   run-python-script: # This is the name of the job
     runs-on: ubuntu-latest # Defines operating system - ubuntu-latest is pretty standard
@@ -30,6 +33,3 @@ jobs:
       # Step 4: Run the Python script
       - name: Run Python script
         run: python Modules/file_retrieval.py
-        env:
-          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
-
