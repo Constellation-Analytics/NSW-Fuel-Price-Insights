@@ -11,6 +11,7 @@ import json
 os.makedirs("data and logs", exist_ok=True)
 datetimestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
 log_file = f"data and logs/workflow{datetimestamp}.log"
+config_file = "config.json"
 
 # Set up logging for orchestrator
 logging.basicConfig(
@@ -27,8 +28,7 @@ logger = logging.getLogger("log_dog")
 with open("config.json", "r") as f:
     config = json.load(f)
 
-testjson = config["string"]
-logger.info(f"testing out the config {testjson}")
+lastrun = config["last_run_date"]
 
 # ----------------------------------------------------------------------------------------------------
 #                                       Setup Functions
@@ -98,6 +98,8 @@ def run_module(module_path):
 
 logger.info("Starting orchestrator")
 
+config["last_run_date"] = datetimestamp
+
 # run module1.py
 run_module("modules/1.file_retrieval.py")
 
@@ -107,6 +109,12 @@ logger.info("Finished orchestrator")
 push_file_to_repo(
     log_file,
     f"successful run - log file loaded {datetimestamp}"
+)
+
+# update config
+push_file_to_repo(
+    config_file,
+    f"successful run - configfile updated {datetimestamp}"
 )
 
 # ----------------------------------------------------------------------------------------------------
