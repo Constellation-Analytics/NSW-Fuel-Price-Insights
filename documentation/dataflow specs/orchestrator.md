@@ -29,6 +29,18 @@
    - Stop workflow if critical module fails  
 5. Log start and finish time of each module
 
+## 7. Conditional checks:
+File Retrieval
+•  Is the file available?
+•  Has the file already been retrieved?
+ETL
+•  Has the data already been transformed?
+API
+•  Has the data already been retrieved?
+DQC (Data Quality Check)
+•  Do we already have DQC results on the most recent data?
+Update
+•  Has the database already been updated?
 ## 7. Error Handling & Logging
 - Wrap module calls in `try/except`  
 - Log all exceptions with severity  
