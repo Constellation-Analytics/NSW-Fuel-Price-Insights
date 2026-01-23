@@ -36,7 +36,7 @@ last_month_date = first_of_month - timedelta(days=1)
 last_month_name = last_month_date.strftime('%b').lower()
 last_month_year = last_month_date.strftime('%Y')
 
-datafile = f"data and logs/fuelcheck_{month}{year}.csv"
+datafile = f"data and logs/fuelcheck_{last_month_name}{last_month_year}.csv"
 
 # ----------------------------------------------------------------------------------------------------
 #                                       setup functions
