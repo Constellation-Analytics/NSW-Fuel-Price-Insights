@@ -15,7 +15,7 @@ log_file = f"data and logs/workflow{datetimestamp}.log"
 logging.basicConfig(
   filename=log_file,
   level=logging.INFO,
-  format="%(asctime)s - Orchestrator - %(levelname)s - %(message)s",
+  format="%(asctime)s - %(levelname)s - Orchestrator - %(message)s",
   datefmt="%Y-%m-%d %H:%M:%S"
 )
 
