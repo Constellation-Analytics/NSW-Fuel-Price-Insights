@@ -6,16 +6,22 @@ from datetime import datetime, timedelta
 import pandas as pd
 from io import BytesIO, StringIO
 import logging
+import argparse
 
 # ----------------------------------------------------------------------------------------------------
 #                                       setup variables
 # ----------------------------------------------------------------------------------------------------
 
-os.makedirs("data and logs", exist_ok=True)
-filedatestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
-log_file = f"data and logs/workflow{filedatestamp}.log"
+# Get log file path from orchestrator
+parser = argparse.ArgumentParser()
+parser.add_argument("--log-file", required=True)
+args = parser.parse_args()
+log_file = args.log_file
 
-# Set up logging for orchestrator
+os.makedirs("data and logs", exist_ok=True)
+datetimestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
+
+# Set up logging for module
 logging.basicConfig(
   filename=log_file,
   level=logging.INFO,
@@ -97,7 +103,7 @@ elif link.endswith(".csv"):
 df.to_csv(datafile, index=False)
 
 # save the log
-push_file_to_repo(datafile, f"data file loaded {filedatestamp}")
+push_file_to_repo(datafile, f"data file loaded {datetimestamp}")
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - End
