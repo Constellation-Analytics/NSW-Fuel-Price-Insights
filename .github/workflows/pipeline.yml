@@ -1,4 +1,4 @@
-name: NSW Fuel Price Incights Workflow
+name: NSW Fuel Price Insights Workflow
 
 # Trigger manually
 on:
