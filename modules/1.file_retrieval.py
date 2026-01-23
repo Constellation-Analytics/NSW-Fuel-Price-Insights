@@ -1,5 +1,5 @@
-import os # to access GitHub repo
-import subprocess # to commit in GitHub repo
+import os  # to access GitHub repo
+import subprocess  # to commit in GitHub repo
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
@@ -23,14 +23,14 @@ datetimestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
 
 # Set up logging for module
 logging.basicConfig(
-  filename=log_file,
-  level=logging.INFO,
-  format="%(asctime)s - %(levelname)s -    Module    - %(message)s",
-  datefmt="%Y-%m-%d %H:%M:%S" 
+    filename=log_file,
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s -    Module    - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
 )
 
 # Create logger with dummy name so it can be scaled later if needed
-logger = logging.getLogger('log_dog')
+logger = logging.getLogger("log_dog")
 
 # ----------------
 # url for web scraping
@@ -38,8 +38,8 @@ url = "https://data.nsw.gov.au/data/dataset/fuel-check"
 
 first_of_month = datetime.now().replace(day=1)
 last_month_date = first_of_month - timedelta(days=1)
-last_month_name = last_month_date.strftime('%b').lower()
-last_month_year = last_month_date.strftime('%Y')
+last_month_name = last_month_date.strftime("%b").lower()
+last_month_year = last_month_date.strftime("%Y")
 
 datafile = f"data and logs/fuelcheck_{last_month_name}{last_month_year}.csv"
 
@@ -49,18 +49,27 @@ datafile = f"data and logs/fuelcheck_{last_month_name}{last_month_year}.csv"
 
 def push_file_to_repo(file_path, commit_message):
     """Adds, commits, and pushes a file to GitHub using GITHUB_TOKEN"""
-    logger.info(f"pushing file to repo")
+    logger.info("pushing file to repo")
     try:
-        repo_url = f"https://x-access-token:{os.environ['GITHUB_TOKEN']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
+        repo_url = (
+            f"https://x-access-token:{os.environ['GITHUB_TOKEN']}"
+            f"@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
+        )
+
         subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
         subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
         subprocess.run(["git", "add", file_path], check=True)
-        subprocess.run(["git", "commit", "-m", commit_message], check=False)  # fail if nothing changed
+        subprocess.run(
+            ["git", "commit", "-m", commit_message],
+            check=False  # won't fail if nothing changed
+        )
         subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
+
         logger.info(f"Successfully pushed {file_path} to repo")
+
     except subprocess.CalledProcessError as e:
         logger.exception(f"Failed to push {file_path}: {e}")
-        print(f"ERROR: Failed to push {file_path}: {e}")  # print error to terminal
+        print(f"ERROR: Failed to push {file_path}: {e}")
         raise
 
 # ----------------------------------------------------------------------------------------------------
@@ -71,7 +80,7 @@ logger.info(f"connecting to {url}")
 response = requests.get(url)
 soup = BeautifulSoup(response.text, "html.parser")
 
-# Find links ending with .xlsx or .csv that match last_month_name/last_month_year (only one will be returned)
+# Find links ending with .xlsx or .csv that match last_month_name/last_month_year
 download_links = [
     a["href"]
     for a in soup.find_all("a", href=True)
@@ -82,16 +91,16 @@ download_links = [
 
 link = download_links[0]
 
-logger.info(f"downloading file from server")
+logger.info("downloading file from server")
 resp = requests.get(link)
 
 # Read file based on extension
 if link.endswith(".xlsx"):
     df = pd.read_excel(BytesIO(resp.content))
 elif link.endswith(".csv"):
-    df = pd.read_csv(StringIO(resp.content.decode('utf-8')))
+    df = pd.read_csv(StringIO(resp.content.decode("utf-8")))
 
-logger.info(f"converting file to csv")
+logger.info("converting file to csv")
 df.to_csv(datafile, index=False)
 
 # save the log
