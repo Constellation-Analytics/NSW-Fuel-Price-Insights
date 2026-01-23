@@ -25,7 +25,7 @@ datetimestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
 logging.basicConfig(
   filename=log_file,
   level=logging.INFO,
-  format="%(asctime)s - %(levelname)s - modules/1.file_retrieval.py - %(message)s",
+  format="%(asctime)s - %(levelname)s         - %(message)s",
   datefmt="%Y-%m-%d %H:%M:%S"
 )
 
