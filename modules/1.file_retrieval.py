@@ -30,6 +30,25 @@ logger = logging.getLogger('log_dog')
 url = "https://data.nsw.gov.au/data/dataset/fuel-check"
 response = requests.get(url)
 
+# ----------------------------------------------------------------------------------------------------
+#                                       setup functions
+# ----------------------------------------------------------------------------------------------------
+
+def push_file_to_repo(file_path, commit_message):
+    """Adds, commits, and pushes a file to GitHub using GITHUB_TOKEN"""
+    try:
+        repo_url = f"https://x-access-token:{os.environ['GITHUB_TOKEN']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
+        subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
+        subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
+        subprocess.run(["git", "add", file_path], check=True)
+        subprocess.run(["git", "commit", "-m", commit_message], check=False)  # won't fail if nothing changed
+        subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
+        logger.info(f"Successfully pushed {file_path} to repo")
+    except subprocess.CalledProcessError as e:
+        logger.exception(f"Failed to push {file_path}: {e}")
+        print(f"ERROR: Failed to push {file_path}: {e}")  # print error to terminal
+        raise
+      
 soup = BeautifulSoup(response.text, "html.parser")
 
 first_of_month = datetime.now().replace(day=1)
@@ -42,6 +61,10 @@ month = last_month_name
 
 datafile = f"data and logs/fuelcheck_{month}{year}.csv"
 
+
+# ----------------------------------------------------------------------------------------------------
+#                                     Script Body - Start
+# ----------------------------------------------------------------------------------------------------
 # Find links ending with .xlsx or .csv that match month/year (only one will be returned)
 download_links = [
     a["href"]
