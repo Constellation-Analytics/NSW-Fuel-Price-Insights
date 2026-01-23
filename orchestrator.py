@@ -24,7 +24,7 @@ logging.basicConfig(
 # Create logger with dummy name so it can be scaled later if needed
 logger = logging.getLogger("log_dog")
 
-# Set up the file config
+# Read the file config
 with open("config.json") as json_file:
     config = json.load(json_file)
 
@@ -111,7 +111,10 @@ push_file_to_repo(
     f"successful run - log file loaded {datetimestamp}"
 )
 
-# update config
+# Update Config
+with open("config.json", "w") as json_file:
+    json.dump(config, json_file, indent=4) 
+
 push_file_to_repo(
     config_file,
     f"successful run - configfile updated {datetimestamp}"
