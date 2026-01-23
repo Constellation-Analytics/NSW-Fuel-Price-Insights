@@ -8,8 +8,8 @@ from datetime import datetime
 # ----------------------------------------------------------------------------------------------------
 
 os.makedirs("data and logs", exist_ok=True)
-filedatestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
-log_file = f"data and logs/workflow{filedatestamp}.log"
+datetimestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
+log_file = f"data and logs/workflow{datetimestamp}.log"
 
 # Set up logging for orchestrator
 logging.basicConfig(
@@ -75,7 +75,7 @@ def run_module(module_path):
 run_module("modules/1.file_retrieval.py")
 
 # save the log
-push_file_to_repo(log_file, f"sucessful run - log file loaded {filedatestamp}")
+push_file_to_repo(log_file, f"sucessful run - log file loaded {datetimestamp}")
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - End
