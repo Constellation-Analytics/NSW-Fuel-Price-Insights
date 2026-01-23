@@ -2,9 +2,10 @@ import subprocess
 import logging
 import os
 from datetime import datetime
+import json
 
 # ----------------------------------------------------------------------------------------------------
-#                                       setup variables
+#                                       Setup Variables
 # ----------------------------------------------------------------------------------------------------
 
 os.makedirs("data and logs", exist_ok=True)
@@ -22,8 +23,14 @@ logging.basicConfig(
 # Create logger with dummy name so it can be scaled later if needed
 logger = logging.getLogger('log_dog')
 
+# Set up the file config
+with open("data.json", "r") as f:
+  config = json.load(f)
+
+testjson = config["string"]
+logger.info(f" testing out the config {testjson}")
 # ----------------------------------------------------------------------------------------------------
-#                                       setup functions
+#                                       Setup Functions
 # ----------------------------------------------------------------------------------------------------
 
 def push_file_to_repo(file_path, commit_message):
@@ -41,8 +48,9 @@ def push_file_to_repo(file_path, commit_message):
         print(f"ERROR: Failed to push {file_path}: {e}")  # print error to terminal
         raise
 
-# create a reusable function to call modules with logging and error handling
+# Create a reusable function to call modules with logging and error handling
 def run_module(module_path):
+  """Runs python files as a subprocess"""
     try:
         logger.info(f"Starting {module_path}")
         # Run the module and capture its output (output used exclusively for error handling)
@@ -70,13 +78,16 @@ def run_module(module_path):
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
-logger.info("starting orchestrator")
+logger.info("Starting orchestrator")
+
 # run module1.py
 run_module("modules/1.file_retrieval.py")
 
+
+logger.info("Finished orchestrator")
+
 # save the log
 push_file_to_repo(log_file, f"sucessful run - log file loaded {datetimestamp}")
-logger.info("finished orchestrator")
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - End
 # ----------------------------------------------------------------------------------------------------
