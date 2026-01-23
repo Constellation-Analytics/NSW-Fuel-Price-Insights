@@ -9,8 +9,8 @@ import json
 # ----------------------------------------------------------------------------------------------------
 
 os.makedirs("data and logs", exist_ok=True)
-datetimestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
-log_file = f"data and logs/workflow{datetimestamp}.log"
+datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
+log_file = f"data and logs/workflow_{datetimestamp}.log"
 config_file = "config.json"
 
 # Set up logging for orchestrator
