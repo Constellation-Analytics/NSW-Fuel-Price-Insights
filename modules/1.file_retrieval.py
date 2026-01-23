@@ -59,8 +59,7 @@ def push_file_to_repo(file_path, commit_message):
           subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
           logger.info(f"Successfully pushed {file_path} to repo")
         except subprocess.CalledProcessError:
-          logger.info("No changes detected. Skipping commit and push.")
-          raise
+            raise Exception("Nothing to commit. Script stopped.")
     except subprocess.CalledProcessError as e:
         logger.exception(f"Failed to push {file_path}: {e}")
         print(f"ERROR: Failed to push {file_path}: {e}")  # print error to terminal
