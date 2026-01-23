@@ -1,7 +1,4 @@
 {
-  "boolean": true,
-  "color": "gold",
-  "null": null,
-  "number": 123,
-  "string": "Hello World"
+  "latest_file": "empty",
+  "last_run_date": "empty",
 }
