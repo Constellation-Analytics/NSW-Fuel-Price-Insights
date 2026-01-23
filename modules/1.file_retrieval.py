@@ -11,7 +11,7 @@ import argparse
 # ----------------------------------------------------------------------------------------------------
 #                                       setup variables
 # ----------------------------------------------------------------------------------------------------
-logger.info("THIS IS A TEST INSIDE MODULE1")
+
 # Get log file path from orchestrator
 parser = argparse.ArgumentParser()
 parser.add_argument("--log-file", required=True)
@@ -33,7 +33,7 @@ logging.basicConfig(
 logger = logging.getLogger('log_dog')
 
 # ----------------
-
+logger.info("THIS IS A TEST INSIDE MODULE1")
 # url for web scraping
 url = "https://data.nsw.gov.au/data/dataset/fuel-check"
 
