@@ -24,7 +24,7 @@ logging.basicConfig(
 logger = logging.getLogger("log_dog")
 
 # Set up the file config
-with open("data.json", "r") as f:
+with open("config.json", "r") as f:
     config = json.load(f)
 
 testjson = config["string"]
