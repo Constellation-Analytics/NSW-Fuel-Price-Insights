@@ -11,7 +11,7 @@ import argparse
 # ----------------------------------------------------------------------------------------------------
 #                                       setup variables
 # ----------------------------------------------------------------------------------------------------
-
+logger.info("THIS IS A TEST INSIDE MODULE1")
 # Get log file path from orchestrator
 parser = argparse.ArgumentParser()
 parser.add_argument("--log-file", required=True)
