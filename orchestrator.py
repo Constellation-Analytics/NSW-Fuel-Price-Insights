@@ -70,13 +70,13 @@ def run_module(module_path):
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
-
+logger.info("starting orchestrator")
 # run module1.py
 run_module("modules/1.file_retrieval.py")
 
 # save the log
 push_file_to_repo(log_file, f"sucessful run - log file loaded {datetimestamp}")
-
+logger.info("finished orchestrator")
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - End
 # ----------------------------------------------------------------------------------------------------
