@@ -54,7 +54,7 @@ def push_file_to_repo(file_path, commit_message):
         subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
         subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
         subprocess.run(["git", "add", file_path], check=True)
-        subprocess.run(["git", "commit", "-m", commit_message], check=True)  # fail if nothing changed
+        subprocess.run(["git", "commit", "-m", commit_message], check=False)  # fail if nothing changed
         subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
         logger.info(f"Successfully pushed {file_path} to repo")
     except subprocess.CalledProcessError as e:
