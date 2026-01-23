@@ -8,13 +8,12 @@ from io import BytesIO, StringIO
 import logging
 
 # ----------------------------------------------------------------------------------------------------
-#                                       Setup variables and functions
+#                                       setup variables
 # ----------------------------------------------------------------------------------------------------
 
 os.makedirs("data and logs", exist_ok=True)
 filedatestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
 log_file = f"data and logs/workflow{filedatestamp}.log"
-
 
 # Set up logging for orchestrator
 logging.basicConfig(
@@ -27,8 +26,17 @@ logging.basicConfig(
 # Create logger with dummy name so it can be scaled later if needed
 logger = logging.getLogger('log_dog')
 
+# ----------------
+
+# url for web scraping
 url = "https://data.nsw.gov.au/data/dataset/fuel-check"
-response = requests.get(url)
+
+first_of_month = datetime.now().replace(day=1)
+last_month_date = first_of_month - timedelta(days=1)
+last_month_name = last_month_date.strftime('%b').lower()
+last_month_year = last_month_date.strftime('%Y')
+
+datafile = f"data and logs/fuelcheck_{month}{year}.csv"
 
 # ----------------------------------------------------------------------------------------------------
 #                                       setup functions
@@ -48,30 +56,22 @@ def push_file_to_repo(file_path, commit_message):
         logger.exception(f"Failed to push {file_path}: {e}")
         print(f"ERROR: Failed to push {file_path}: {e}")  # print error to terminal
         raise
-      
-soup = BeautifulSoup(response.text, "html.parser")
-
-first_of_month = datetime.now().replace(day=1)
-last_month_date = first_of_month - timedelta(days=1)
-last_month_name = last_month_date.strftime('%b').lower()
-last_month_year = last_month_date.strftime('%Y')
-
-year = last_month_year
-month = last_month_name
-
-datafile = f"data and logs/fuelcheck_{month}{year}.csv"
 
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
-# Find links ending with .xlsx or .csv that match month/year (only one will be returned)
+
+response = requests.get(url)
+soup = BeautifulSoup(response.text, "html.parser")
+
+# Find links ending with .xlsx or .csv that match last_month_name/last_month_year (only one will be returned)
 download_links = [
     a["href"]
     for a in soup.find_all("a", href=True)
     if (href := a["href"].lower()).endswith((".xlsx", ".csv"))
-    and year in href
-    and month in href
+    and last_month_year in href
+    and last_month_name in href
 ]
 
 link = download_links[0]
@@ -86,16 +86,9 @@ elif link.endswith(".csv"):
     
 df.to_csv(datafile, index=False)
 
-# Configure git to use GitHub Actions token
-repo_url = f"https://x-access-token:{os.environ['GITHUB_TOKEN']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
-subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
-subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
+# save the log
+push_file_to_repo(datafile, f"data file loaded {filedatestamp}")
 
-# Add file
-subprocess.run(["git", "add", datafile], check=True)
-
-# Commit changes
-subprocess.run(["git", "commit", "-m", f"Add file fuelcheck_{month}{year}.csv"], check=False)
-
-# Push changes
-subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
+# ----------------------------------------------------------------------------------------------------
+#                                     Script Body - End
+# ----------------------------------------------------------------------------------------------------
