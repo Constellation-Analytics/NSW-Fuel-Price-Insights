@@ -25,8 +25,8 @@ logging.basicConfig(
 logger = logging.getLogger("log_dog")
 
 # Set up the file config
-with open("config.json", "r") as f:
-    config = json.load(f)
+with open("config.json") as json_file:
+    config = json.load(json_file)
 
 lastrun = config["last_run_date"]
 
