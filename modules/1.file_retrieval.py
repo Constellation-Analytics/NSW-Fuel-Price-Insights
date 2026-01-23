@@ -49,6 +49,17 @@ def push_file_to_repo(file_path, commit_message):
         subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
         subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
         subprocess.run(["git", "add", file_path], check=True)
+      
+        # check to see if anything has changed since last commit
+        status = subprocess.run(
+            ["git", "status", "--porcelain"],
+            capture_output=True,
+            text=True
+        )
+        if not status.stdout.strip():
+            logger.info("No changes detected. Skipping commit and push.")
+            return 
+        
         subprocess.run(["git", "commit", "-m", commit_message], check=False)  # won't fail if nothing changed
         subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
         logger.info(f"Successfully pushed {file_path} to repo")
@@ -56,7 +67,6 @@ def push_file_to_repo(file_path, commit_message):
         logger.exception(f"Failed to push {file_path}: {e}")
         print(f"ERROR: Failed to push {file_path}: {e}")  # print error to terminal
         raise
-
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
