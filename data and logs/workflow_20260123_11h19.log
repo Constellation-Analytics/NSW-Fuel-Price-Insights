@@ -1,0 +1,22 @@
+2026-01-23 11:19:56 - INFO - Starting modules/1.file_retrieval.py
+2026-01-23 11:20:13 - INFO - No changes detected. Skipping commit and push.
+2026-01-23 11:20:13 - ERROR - Failed to push data and logs/fuelcheck_dec2025.csv: Command '['git', 'commit', '-m', 'data file loaded _20260123_11h19']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/1.file_retrieval.py", line 58, in push_file_to_repo
+    subprocess.run(["git", "commit", "-m", commit_message], check=True)  # fail if nothing changed
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'commit', '-m', 'data file loaded _20260123_11h19']' returned non-zero exit status 1.
+2026-01-23 11:20:13 - ERROR - Module modules/1.file_retrieval.py failed with exit code 1
+2026-01-23 11:20:13 - ERROR - modules/1.file_retrieval.py errors before failure:
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/1.file_retrieval.py", line 98, in <module>
+    push_file_to_repo(datafile, f"data file loaded {datetimestamp}")
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/1.file_retrieval.py", line 58, in push_file_to_repo
+    subprocess.run(["git", "commit", "-m", commit_message], check=True)  # fail if nothing changed
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'commit', '-m', 'data file loaded _20260123_11h19']' returned non-zero exit status 1.
+
