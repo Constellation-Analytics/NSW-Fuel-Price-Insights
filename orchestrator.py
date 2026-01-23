@@ -47,7 +47,7 @@ def run_module(module_path):
         logger.info(f"Starting {module_path}")
         # Run the module and capture its output (output used exclusively for error handling)
         result = subprocess.run(
-            ["python", module_path],
+            ["python", module_path, "--log-file", log_file], #specify the same log file so all logs are appended together
             check=True,
             capture_output=True,
             text=True
