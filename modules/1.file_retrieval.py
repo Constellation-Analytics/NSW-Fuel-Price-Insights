@@ -33,7 +33,6 @@ logging.basicConfig(
 logger = logging.getLogger('log_dog')
 
 # ----------------
-logger.info("THIS IS A TEST INSIDE MODULE1")
 # url for web scraping
 url = "https://data.nsw.gov.au/data/dataset/fuel-check"
 
@@ -55,18 +54,11 @@ def push_file_to_repo(file_path, commit_message):
         subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
         subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
         subprocess.run(["git", "add", file_path], check=True)
-      
-        # check to see if anything has changed since last commit
-        status = subprocess.run(
-            ["git", "status", "--porcelain"],
-            capture_output=True,
-            text=True
-        )
-        if not status.stdout.strip():
-            logger.info("No changes detected. Skipping commit and push.")
-            return 
-        
-        subprocess.run(["git", "commit", "-m", commit_message], check=False)  # won't fail if nothing changed
+        try:
+          subprocess.run(["git", "commit", "-m", commit_message], check=True)  # fail if nothing changed
+        except:
+          logger.info("No changes detected. Skipping commit and push.")
+          raise
         subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
         logger.info(f"Successfully pushed {file_path} to repo")
     except subprocess.CalledProcessError as e:
