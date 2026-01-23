@@ -49,6 +49,7 @@ datafile = f"data and logs/fuelcheck_{last_month_name}{last_month_year}.csv"
 
 def push_file_to_repo(file_path, commit_message):
     """Adds, commits, and pushes a file to GitHub using GITHUB_TOKEN"""
+  logger.info(f"pushing file to repo")
     try:
         repo_url = f"https://x-access-token:{os.environ['GITHUB_TOKEN']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
         subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
@@ -66,6 +67,7 @@ def push_file_to_repo(file_path, commit_message):
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
 
+logger.info(f"connecting to {url}")
 response = requests.get(url)
 soup = BeautifulSoup(response.text, "html.parser")
 
@@ -80,6 +82,7 @@ download_links = [
 
 link = download_links[0]
 
+logger.info(f"downloading file from server")
 resp = requests.get(link)
 
 # Read file based on extension
@@ -87,7 +90,8 @@ if link.endswith(".xlsx"):
     df = pd.read_excel(BytesIO(resp.content))
 elif link.endswith(".csv"):
     df = pd.read_csv(StringIO(resp.content.decode('utf-8')))
-    
+
+logger.info(f"converting file to csv")
 df.to_csv(datafile, index=False)
 
 # save the log
