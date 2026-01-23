@@ -49,7 +49,7 @@ datafile = f"data and logs/fuelcheck_{last_month_name}{last_month_year}.csv"
 
 def push_file_to_repo(file_path, commit_message):
     """Adds, commits, and pushes a file to GitHub using GITHUB_TOKEN"""
-  logger.info(f"pushing file to repo")
+    logger.info(f"pushing file to repo")
     try:
         repo_url = f"https://x-access-token:{os.environ['GITHUB_TOKEN']}@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
         subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
