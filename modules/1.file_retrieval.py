@@ -19,7 +19,7 @@ args = parser.parse_args()
 log_file = args.log_file
 
 os.makedirs("data and logs", exist_ok=True)
-datetimestamp = datetime.now().strftime("_%Y%m%d_%Hh%M")
+datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
 
 # Set up logging for module
 logging.basicConfig(
