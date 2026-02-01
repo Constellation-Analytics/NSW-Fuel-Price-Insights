@@ -31,8 +31,8 @@
 
 ## 7. Conditional checks:
 1. File Retrieval
-   - Is the file available?
    - Has the file already been retrieved?
+   - Is the file available?
 2. ETL
    - Has the data already been transformed?
 3. API
