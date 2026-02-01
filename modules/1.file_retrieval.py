@@ -7,6 +7,7 @@ import pandas as pd
 from io import BytesIO, StringIO
 import logging
 import argparse
+import sys
 
 # ----------------------------------------------------------------------------------------------------
 #                                       setup variables
@@ -72,6 +73,10 @@ def push_file_to_repo(file_path, commit_message):
         print(f"ERROR: Failed to push {file_path}: {e}")
         raise
 
+def save_log():
+    logger.info("Finished orchestrator")
+    push_file_to_repo(log_file, f"successful run - log file loaded {datetimestamp}")
+
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
@@ -91,6 +96,12 @@ download_links = [
 
 link = download_links[0]
 
+# exit if the file is not yet available
+if len(download_links) == 0:
+    logger.info(f"{last_month_name}{last_month_year} file not yet available")
+    save_log()
+    sys.exit(0)
+
 logger.info("downloading file from server")
 resp = requests.get(link)
 
@@ -103,7 +114,7 @@ elif link.endswith(".csv"):
 logger.info("converting file to csv")
 df.to_csv(datafile, index=False)
 
-# save the log
+# save the data file
 push_file_to_repo(datafile, f"data file loaded {datetimestamp}")
 
 # ----------------------------------------------------------------------------------------------------
