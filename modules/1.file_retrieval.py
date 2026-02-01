@@ -94,13 +94,13 @@ download_links = [
     and last_month_name in href
 ]
 
-link = download_links[0]
-
 # exit if the file is not yet available
 if len(download_links) == 0:
     logger.info(f"{last_month_name}{last_month_year} file not yet available")
     save_log()
     sys.exit(0)
+
+link = download_links[0]
 
 logger.info("downloading file from server")
 resp = requests.get(link)
