@@ -3,6 +3,8 @@ import logging
 import os
 from datetime import datetime
 import json
+import sys
+
 
 # ----------------------------------------------------------------------------------------------------
 #                                       Setup Variables
@@ -24,11 +26,17 @@ logging.basicConfig(
 # Create logger with dummy name so it can be scaled later if needed
 logger = logging.getLogger("log_dog")
 
+# Create variables for date 
+datenow = datetime.now().replace(day=1)
+monthyear = datenow.strftime("%b").lower() + datenow.strftime("%Y")
+
 # Read the file config
 with open("config.json") as json_file:
     config = json.load(json_file)
 
 lastrun = config["last_run_date"]
+nextfile = config["next_file_date"]
+
 
 # ----------------------------------------------------------------------------------------------------
 #                                       Setup Functions
@@ -92,33 +100,34 @@ def run_module(module_path):
         )
         raise
 
+def save_log_and_config():
+    logger.info("Finished orchestrator")
+    push_file_to_repo(log_file, f"successful run - log file loaded {datetimestamp}")
+    try:
+        with open("config.json", "w") as json_file:
+            json.dump(config, json_file, indent=4)
+    except Exception as e:
+        logger.exception(f"Unexpected error saving json config file: {e}")        
+    push_file_to_repo(config_file,f"successful run - configfile updated {datetimestamp}")
+
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
 
+# -------------------- Basic logging and config updates
 logger.info("Starting orchestrator")
-
 config["last_run_date"] = datetimestamp
 
-# run module1.py
+# -------------------- Module 1 
+if monthyear == nextfile:
+    logger.info(f"{monthyear} data file already loaded")
+    save_log_and_config()
+    sys.exit(0)
+
 run_module("modules/1.file_retrieval.py")
 
-logger.info("Finished orchestrator")
-
-# save the log
-push_file_to_repo(
-    log_file,
-    f"successful run - log file loaded {datetimestamp}"
-)
-
-# Update Config
-with open("config.json", "w") as json_file:
-    json.dump(config, json_file, indent=4) 
-
-push_file_to_repo(
-    config_file,
-    f"successful run - configfile updated {datetimestamp}"
-)
+# -------------------- Update config and save log  
+save_log_and_config()
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - End
