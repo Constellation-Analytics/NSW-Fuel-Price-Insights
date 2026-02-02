@@ -46,6 +46,12 @@ monthyear = first_of_month.strftime("%b").lower() + first_of_month.strftime("%Y"
 
 datafile = f"data and logs/fuelcheck_{last_month_name}{last_month_year}.csv"
 
+# Read the file config
+with open("config.json") as json_file:
+    config = json.load(json_file)
+
+nextfile = config["next_file_date"]
+
 # ----------------------------------------------------------------------------------------------------
 #                                       setup functions
 # ----------------------------------------------------------------------------------------------------
@@ -74,6 +80,14 @@ def push_file_to_repo(file_path, commit_message):
         logger.exception(f"Failed to push {file_path}: {e}")
         print(f"ERROR: Failed to push {file_path}: {e}")
         raise
+
+def save_config():
+    try:
+        with open("config.json", "w") as json_file:
+            json.dump(config, json_file, indent=4)
+    except Exception as e:
+        logger.exception(f"Unexpected error saving json config file: {e}")        
+    push_file_to_repo(config_file,f"successful run - configfile updated {datetimestamp}")
 
 
 # ----------------------------------------------------------------------------------------------------
@@ -119,6 +133,11 @@ df.to_csv(datafile, index=False)
 
 # save the data file
 push_file_to_repo(datafile, f"data file loaded {datetimestamp}")
+
+#update the config 
+config["next_file_date"] = monthyear
+config["latest_file"] = f"{last_month_name}{last_month_year}"
+save_config()
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - End
