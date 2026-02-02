@@ -66,6 +66,15 @@ def push_file_to_repo(file_path, commit_message):
         print(f"ERROR: Failed to push {file_path}: {e}")
         raise
 
+def save_log_and_config():
+    logger.info("Finished orchestrator")
+    push_file_to_repo(log_file, f"successful run - log file loaded {datetimestamp}")
+    try:
+        with open("config.json", "w") as json_file:
+            json.dump(config, json_file, indent=4)
+    except Exception as e:
+        logger.exception(f"Unexpected error saving json config file: {e}")        
+    push_file_to_repo(config_file,f"successful run - configfile updated {datetimestamp}")
 
 def run_module(module_path):
     """Runs python files as a subprocess"""
@@ -79,10 +88,11 @@ def run_module(module_path):
             text=True
         )
         if result.returncode == 10:
-            logger.info(f"Conditions not met in {module_path} - exiting pipeline")
+            logger.info(f"Conditions not met in {module_path} - Exiting pipeline")
             save_log_and_config()
             sys.exit(0)  
 
+        # Logger comment for normal flow 
         logger.info(f"Finished {module_path}")
         
         if result.returncode != 0:
@@ -95,16 +105,6 @@ def run_module(module_path):
         logger.exception(f"Unexpected error running {module_path}: {e}")
         push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
         raise
-
-def save_log_and_config():
-    logger.info("Finished orchestrator")
-    push_file_to_repo(log_file, f"successful run - log file loaded {datetimestamp}")
-    try:
-        with open("config.json", "w") as json_file:
-            json.dump(config, json_file, indent=4)
-    except Exception as e:
-        logger.exception(f"Unexpected error saving json config file: {e}")        
-    push_file_to_repo(config_file,f"successful run - configfile updated {datetimestamp}")
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
