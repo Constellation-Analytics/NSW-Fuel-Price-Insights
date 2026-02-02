@@ -26,10 +26,6 @@ logging.basicConfig(
 # Create logger with dummy name so it can be scaled later if needed
 logger = logging.getLogger("log_dog")
 
-# Create variables for date 
-datenow = datetime.now().replace(day=1)
-monthyear = datenow.strftime("%b").lower() + datenow.strftime("%Y")
-
 # Read the file config
 with open("config.json") as json_file:
     config = json.load(json_file)
@@ -88,9 +84,7 @@ def run_module(module_path):
             text=True
         )
         if result.returncode == 10:
-            logger.info(f"Conditions not met in {module_path} - Exiting pipeline")
-            save_log_and_config()
-            sys.exit(0)  
+            logger.info(f"Conditions not met in {module_path} - Skipping Module")
 
         # Logger comment for normal flow 
         logger.info(f"Finished {module_path}")
@@ -115,11 +109,6 @@ logger.info("Starting orchestrator")
 config["last_run_date"] = datetimestamp
 
 # -------------------- Module 1 
-if monthyear == nextfile:
-    logger.info(f"{monthyear} data file already loaded")
-    save_log_and_config()
-    sys.exit(0)
-
 run_module("modules/1.file_retrieval.py")
 
 # -------------------- Update config and save log  
