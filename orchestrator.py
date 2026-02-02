@@ -3,8 +3,6 @@ import logging
 import os
 from datetime import datetime
 import json
-import sys
-
 
 # ----------------------------------------------------------------------------------------------------
 #                                       Setup Variables
