@@ -72,12 +72,14 @@ def run_module(module_path):
     try:
         logger.info(f"Starting {module_path}")
 
-        subprocess.run(
+        result = subprocess.run(
             ["python", module_path, "--log-file", log_file],
             check=True,
             capture_output=True,
             text=True
         )
+        if result.returncode == 10:
+            logger.info(f"Conditions not met in {module_path} - exiting pipeline")     
 
         logger.info(f"Finished {module_path}")
 
