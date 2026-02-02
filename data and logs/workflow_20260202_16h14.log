@@ -1,0 +1,12 @@
+2026-02-02 16:14:10 - INFO - Orchestrator - Starting orchestrator
+2026-02-02 16:14:10 - INFO - Orchestrator - Starting modules/1.file_retrieval.py
+2026-02-02 16:14:11 - INFO -    Module    - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-02 16:14:16 - INFO - Orchestrator - Finished modules/1.file_retrieval.py
+2026-02-02 16:14:16 - ERROR - Orchestrator - Module modules/1.file_retrieval.py failed with exit code 1
+2026-02-02 16:14:16 - ERROR - Orchestrator - modules/1.file_retrieval.py errors before failure:
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/1.file_retrieval.py", line 97, in <module>
+    if monthyear == nextfile:
+                    ^^^^^^^^
+NameError: name 'nextfile' is not defined
+
