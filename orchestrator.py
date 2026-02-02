@@ -80,6 +80,7 @@ def run_module(module_path):
         )
         if result.returncode == 10:
             logger.info(f"Conditions not met in {module_path} - exiting pipeline")
+            save_log_and_config()
             sys.exit(0)  
 
         logger.info(f"Finished {module_path}")
