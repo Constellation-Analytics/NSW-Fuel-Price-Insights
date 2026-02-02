@@ -74,32 +74,25 @@ def run_module(module_path):
 
         result = subprocess.run(
             ["python", module_path, "--log-file", log_file],
-            check=True,
+            check=False, # NOTE FALSE - MUST ACCOUNT FOR ERRORS OUTSIDE OF EXCEPT CLAUSE
             capture_output=True,
             text=True
         )
         if result.returncode == 10:
-            logger.info(f"Conditions not met in {module_path} - exiting pipeline")     
+            logger.info(f"Conditions not met in {module_path} - exiting pipeline")
+            sys.exit(0)  
 
         logger.info(f"Finished {module_path}")
-
-    except subprocess.CalledProcessError as e:
-        logger.error(f"Module {module_path} failed with exit code {e.returncode}")
-        logger.error(f"{module_path} errors before failure:\n{e.stderr}")
-
-        push_file_to_repo(
-            log_file,
-            f"Workflow log before failure in {module_path}"
-        )
-        raise
+        
+        if result.returncode != 0:
+            logger.error(f"Module {module_path} failed with exit code {result.returncode}")
+            logger.error(f"{module_path} errors before failure:\n{result.stderr}")
+            push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
+            sys.exit(0)
 
     except Exception as e:
         logger.exception(f"Unexpected error running {module_path}: {e}")
-
-        push_file_to_repo(
-            log_file,
-            f"Workflow log before failure in {module_path}"
-        )
+        push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
         raise
 
 def save_log_and_config():
