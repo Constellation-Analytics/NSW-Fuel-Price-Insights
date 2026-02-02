@@ -73,9 +73,6 @@ def push_file_to_repo(file_path, commit_message):
         print(f"ERROR: Failed to push {file_path}: {e}")
         raise
 
-def save_log():
-    logger.info("Finished orchestrator")
-    push_file_to_repo(log_file, f"successful run - log file loaded {datetimestamp}")
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
@@ -97,8 +94,7 @@ download_links = [
 # exit if the file is not yet available
 if len(download_links) == 0:
     logger.info(f"{last_month_name}{last_month_year} file not yet available")
-    save_log()
-    sys.exit(0)
+    sys.exit(10)
 
 link = download_links[0]
 
