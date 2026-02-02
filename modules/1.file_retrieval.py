@@ -7,6 +7,7 @@ import pandas as pd
 from io import BytesIO, StringIO
 import logging
 import argparse
+import json
 import sys
 
 # ----------------------------------------------------------------------------------------------------
@@ -46,7 +47,8 @@ monthyear = first_of_month.strftime("%b").lower() + first_of_month.strftime("%Y"
 
 datafile = f"data and logs/fuelcheck_{last_month_name}{last_month_year}.csv"
 
-# Read the file config
+# Set up the file config
+config_file = "config.json"
 with open("config.json") as json_file:
     config = json.load(json_file)
 
