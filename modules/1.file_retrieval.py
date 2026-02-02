@@ -37,10 +37,12 @@ logger = logging.getLogger("log_dog")
 # url for web scraping
 url = "https://data.nsw.gov.au/data/dataset/fuel-check"
 
+# Create variables for date 
 first_of_month = datetime.now().replace(day=1)
 last_month_date = first_of_month - timedelta(days=1)
 last_month_name = last_month_date.strftime("%b").lower()
 last_month_year = last_month_date.strftime("%Y")
+monthyear = first_of_month.strftime("%b").lower() + first_of_month.strftime("%Y")
 
 datafile = f"data and logs/fuelcheck_{last_month_name}{last_month_year}.csv"
 
@@ -90,6 +92,11 @@ download_links = [
     and last_month_year in href
     and last_month_name in href
 ]
+
+# exit if the most recent file has already been processed
+if monthyear == nextfile:
+    logger.info(f"{monthyear} data file already loaded")
+    sys.exit(10)
 
 # exit if the file is not yet available
 if len(download_links) == 0:
