@@ -12,7 +12,6 @@ import sys
 os.makedirs("data and logs", exist_ok=True)
 datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
 log_file = f"data and logs/workflow_{datetimestamp}.log"
-config_file = "config.json"
 
 # Set up logging for orchestrator
 logging.basicConfig(
@@ -25,7 +24,8 @@ logging.basicConfig(
 # Create logger with dummy name so it can be scaled later if needed
 logger = logging.getLogger("log_dog")
 
-# Read the file config
+# Set up the config
+config_file = "config.json"
 with open("config.json") as json_file:
     config = json.load(json_file)
 
@@ -84,11 +84,12 @@ def run_module(module_path):
         )
         if result.returncode == 10:
             logger.info(f"Conditions not met in {module_path} - Skipping Module")
+            return
 
         # Logger comment for normal flow 
         logger.info(f"Finished {module_path}")
         
-        if result.returncode != 0:
+        if result.code != 0:
             logger.error(f"Module {module_path} failed with exit code {result.returncode}")
             logger.error(f"{module_path} errors before failure:\n{result.stderr}")
             push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
