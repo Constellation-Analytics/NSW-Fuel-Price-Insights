@@ -24,11 +24,6 @@ logging.basicConfig(
 # Create logger with dummy name so it can be scaled later if needed
 logger = logging.getLogger("log_dog")
 
-# Set up the config
-config_file = "config.json"
-with open("config.json") as json_file:
-    config = json.load(json_file)
-
 # ----------------------------------------------------------------------------------------------------
 #                                       Setup Functions
 # ----------------------------------------------------------------------------------------------------
@@ -102,12 +97,15 @@ def run_module(module_path):
 
 # -------------------- Basic logging and config updates
 logger.info("Starting orchestrator")
-config["last_run_date"] = datetimestamp
 
 # -------------------- Module 1 
 run_module("modules/1.file_retrieval.py")
 
-# -------------------- Update config and save log  
+# -------------------- Update config and save log
+config_file = "config.json"
+with open("config.json") as json_file:
+    config = json.load(json_file)
+config["last_run_date"] = datetimestamp
 save_log_and_config()
 
 # ----------------------------------------------------------------------------------------------------
