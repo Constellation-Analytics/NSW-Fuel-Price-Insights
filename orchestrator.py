@@ -29,10 +29,6 @@ config_file = "config.json"
 with open("config.json") as json_file:
     config = json.load(json_file)
 
-lastrun = config["last_run_date"]
-nextfile = config["next_file_date"]
-
-
 # ----------------------------------------------------------------------------------------------------
 #                                       Setup Functions
 # ----------------------------------------------------------------------------------------------------
