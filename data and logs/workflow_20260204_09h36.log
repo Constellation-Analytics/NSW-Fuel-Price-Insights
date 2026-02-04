@@ -1,0 +1,16 @@
+2026-02-04 09:36:17 - INFO - Orchestrator - Starting orchestrator
+2026-02-04 09:36:17 - INFO - Orchestrator - Starting modules/1.file_retrieval.py
+2026-02-04 09:36:18 - INFO -    Module    - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-04 09:36:21 - INFO -    Module    - downloading file from server
+2026-02-04 09:36:27 - INFO -    Module    - converting file to csv
+2026-02-04 09:36:28 - INFO -    Module    - pushing file to repo
+2026-02-04 09:36:30 - INFO -    Module    - Successfully pushed data and logs/fuelcheck_jan2026.csv to repo
+2026-02-04 09:36:30 - INFO -    Module    - pushing file to repo
+2026-02-04 09:36:30 - INFO -    Module    - Successfully pushed config.json to repo
+2026-02-04 09:36:31 - INFO - Orchestrator - Finished modules/1.file_retrieval.py
+2026-02-04 09:36:31 - ERROR - Orchestrator - Unexpected error running modules/1.file_retrieval.py: 'CompletedProcess' object has no attribute 'code'
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/orchestrator.py", line 92, in run_module
+    if result.code != 0:
+       ^^^^^^^^^^^
+AttributeError: 'CompletedProcess' object has no attribute 'code'
