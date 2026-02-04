@@ -89,7 +89,7 @@ def run_module(module_path):
         # Logger comment for normal flow 
         logger.info(f"Finished {module_path}")
         
-        if result.code != 0:
+        if result.returncode != 0:
             logger.error(f"Module {module_path} failed with exit code {result.returncode}")
             logger.error(f"{module_path} errors before failure:\n{result.stderr}")
             push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
