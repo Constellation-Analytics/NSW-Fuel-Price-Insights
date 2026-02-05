@@ -5,7 +5,7 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="ISRnrw4mpGGT1t9YkbJW-1" parent="1" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;" value="Block 1" vertex="1">
-          <mxGeometry height="240" width="980" x="65" y="-1150" as="geometry">
+          <mxGeometry height="240" width="980" x="57.5" y="-1150" as="geometry">
             <mxRectangle height="70" width="40" x="65" y="-1150" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -27,36 +27,36 @@
         <mxCell id="82GFA4SjvryaE-cGr--l-17" parent="ISRnrw4mpGGT1t9YkbJW-1" style="rounded=1;whiteSpace=wrap;html=1;" value="Convert date:&lt;div&gt;datetime / Date&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="815" y="65" as="geometry" />
         </mxCell>
-        <mxCell id="82GFA4SjvryaE-cGr--l-18" parent="ISRnrw4mpGGT1t9YkbJW-1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b&gt;Select columns&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;div&gt;&lt;div&gt;ServiceStationName&lt;/div&gt;&lt;div&gt;Address&lt;/div&gt;&lt;div&gt;Brand&lt;/div&gt;&lt;div&gt;FuelCode&lt;/div&gt;&lt;div&gt;PriceUpdatedDate&lt;/div&gt;&lt;div&gt;Price&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="82GFA4SjvryaE-cGr--l-18" parent="ISRnrw4mpGGT1t9YkbJW-1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b&gt;Select&lt;/b&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;columns&lt;/b&gt;&lt;div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;div&gt;&lt;div&gt;ServiceStationName&lt;/div&gt;&lt;div&gt;Address&lt;/div&gt;&lt;div&gt;Brand&lt;/div&gt;&lt;div&gt;FuelCode&lt;/div&gt;&lt;div&gt;PriceUpdatedDate&lt;/div&gt;&lt;div&gt;Price&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="130" width="120" x="318" y="30" as="geometry" />
         </mxCell>
         <mxCell id="82GFA4SjvryaE-cGr--l-22" edge="1" parent="ISRnrw4mpGGT1t9YkbJW-1" source="82GFA4SjvryaE-cGr--l-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="82GFA4SjvryaE-cGr--l-6">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="82GFA4SjvryaE-cGr--l-9" parent="1" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;" value="Block 2" vertex="1">
-          <mxGeometry height="260" width="975" x="80" y="-870" as="geometry">
+          <mxGeometry height="260" width="975" x="60" y="-880" as="geometry">
             <mxRectangle height="70" width="40" x="60" y="-1150" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="82GFA4SjvryaE-cGr--l-33" edge="1" parent="82GFA4SjvryaE-cGr--l-9" source="82GFA4SjvryaE-cGr--l-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;">
+        <mxCell id="82GFA4SjvryaE-cGr--l-33" edge="1" parent="82GFA4SjvryaE-cGr--l-9" source="82GFA4SjvryaE-cGr--l-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="82GFA4SjvryaE-cGr--l-28">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="610" y="120" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="82GFA4SjvryaE-cGr--l-23" parent="82GFA4SjvryaE-cGr--l-9" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;Select distinct&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;ServiceStationName&lt;/div&gt;&lt;div&gt;Address&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;FuelCode&lt;/span&gt;&lt;/div&gt;&lt;div&gt;PriceUpdatedDate&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="110" width="120" x="247.5" y="10" as="geometry" />
+        <mxCell id="82GFA4SjvryaE-cGr--l-23" parent="82GFA4SjvryaE-cGr--l-9" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;Select distinct&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;ServiceStationName&lt;/div&gt;&lt;div&gt;Address&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;FuelCode&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="120" x="443" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="82GFA4SjvryaE-cGr--l-27" edge="1" parent="82GFA4SjvryaE-cGr--l-9" source="82GFA4SjvryaE-cGr--l-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="82GFA4SjvryaE-cGr--l-26" value="">
+        <mxCell id="82GFA4SjvryaE-cGr--l-27" edge="1" parent="82GFA4SjvryaE-cGr--l-9" source="82GFA4SjvryaE-cGr--l-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="82GFA4SjvryaE-cGr--l-26" value="Last Month Only">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="82GFA4SjvryaE-cGr--l-25" parent="82GFA4SjvryaE-cGr--l-9" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;gradientColor=#97d077;" value="DBO&lt;div&gt;Fuelcheck&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="100" x="55" y="150" as="geometry" />
         </mxCell>
-        <mxCell id="82GFA4SjvryaE-cGr--l-26" parent="82GFA4SjvryaE-cGr--l-9" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;Select distinct&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;ServiceStationName&lt;/div&gt;&lt;div&gt;Address&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;FuelCode&lt;/span&gt;&lt;/div&gt;&lt;div&gt;PriceUpdatedDate&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="110" width="125" x="245" y="135" as="geometry" />
+        <mxCell id="82GFA4SjvryaE-cGr--l-26" parent="82GFA4SjvryaE-cGr--l-9" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;Select distinct&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;ServiceStationName&lt;/div&gt;&lt;div&gt;Address&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;FuelCode&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="125" x="440.5" y="145" as="geometry" />
         </mxCell>
         <mxCell id="82GFA4SjvryaE-cGr--l-28" parent="82GFA4SjvryaE-cGr--l-9" style="rhombus;whiteSpace=wrap;html=1;" value="Union" vertex="1">
-          <mxGeometry height="80" width="80" x="605" y="80" as="geometry" />
+          <mxGeometry height="80" width="80" x="860" y="80" as="geometry" />
         </mxCell>
         <mxCell id="82GFA4SjvryaE-cGr--l-31" edge="1" parent="82GFA4SjvryaE-cGr--l-9" source="82GFA4SjvryaE-cGr--l-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="82GFA4SjvryaE-cGr--l-23" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -66,6 +66,51 @@
         </mxCell>
         <mxCell id="82GFA4SjvryaE-cGr--l-32" edge="1" parent="82GFA4SjvryaE-cGr--l-9" source="82GFA4SjvryaE-cGr--l-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.054;entryY=0.501;entryDx=0;entryDy=0;entryPerimeter=0;" target="82GFA4SjvryaE-cGr--l-28">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-34" parent="1" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;" value="Block 3" vertex="1">
+          <mxGeometry height="260" width="975" x="60" y="-590" as="geometry">
+            <mxRectangle height="70" width="40" x="60" y="-1150" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-58" edge="1" parent="82GFA4SjvryaE-cGr--l-34" source="82GFA4SjvryaE-cGr--l-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="82GFA4SjvryaE-cGr--l-55">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="690" y="190" />
+              <mxPoint x="690" y="120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-38" parent="82GFA4SjvryaE-cGr--l-34" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;gradientColor=#97d077;" value="Block 2" vertex="1">
+          <mxGeometry height="80" width="100" x="55" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-57" edge="1" parent="82GFA4SjvryaE-cGr--l-34" source="82GFA4SjvryaE-cGr--l-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="82GFA4SjvryaE-cGr--l-55">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-39" parent="82GFA4SjvryaE-cGr--l-34" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b&gt;DateSpine&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;div&gt;Mindate -1&lt;div&gt;Max date&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="65.5" width="125" x="430" y="32.25" as="geometry" />
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-54" edge="1" parent="82GFA4SjvryaE-cGr--l-34" source="82GFA4SjvryaE-cGr--l-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="82GFA4SjvryaE-cGr--l-39" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-42" parent="82GFA4SjvryaE-cGr--l-34" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;gradientColor=#97d077;" value="Block 1" vertex="1">
+          <mxGeometry height="80" width="100" x="55" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-55" parent="82GFA4SjvryaE-cGr--l-34" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" value="Cross Join" vertex="1">
+          <mxGeometry height="80" width="120" x="820" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-47" parent="1" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;" value="Block 3" vertex="1">
+          <mxGeometry height="260" width="975" x="57.5" y="-300" as="geometry">
+            <mxRectangle height="70" width="40" x="60" y="-1150" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-48" parent="82GFA4SjvryaE-cGr--l-47" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;Group By&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;ServiceStationName&lt;/div&gt;&lt;div&gt;Address&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;FuelCode&lt;/span&gt;&lt;/div&gt;&lt;div&gt;PriceUpdatedDate&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;avg(Price)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="120" x="443" y="10.5" as="geometry" />
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-52" edge="1" parent="82GFA4SjvryaE-cGr--l-47" source="82GFA4SjvryaE-cGr--l-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="82GFA4SjvryaE-cGr--l-48" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="82GFA4SjvryaE-cGr--l-53" parent="82GFA4SjvryaE-cGr--l-47" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;gradientColor=#97d077;" value="Block 1" vertex="1">
+          <mxGeometry height="80" width="100" x="55" y="25" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
