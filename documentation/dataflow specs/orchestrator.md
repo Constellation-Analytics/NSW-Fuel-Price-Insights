@@ -6,10 +6,13 @@
 - **Author / Date:** Paul – 21 Jan 2026  
 
 ## 2. Upstream Dependencies
-- GitHub Actions cron job triggers orchestrator 
- 
+- GitHub Actions environment  
+- Environment variables:
+  - `GITHUB_TOKEN`
+  - `GITHUB_REPOSITORY`
+  
 ## 3. Downstream Dependencies
-- Modules: `file_etl`, `api_etl`, `data_quality`, `data_update` 
+- Modules: `1.file_retrieval`, `2.data_transformation`, `3.api_dict_update`, `4.data_quality`, `5.data_update` 
 
 ## 4. Inputs / Sources
 - Log file path
@@ -24,7 +27,7 @@
 1. Initialise logging
 2. Retrieve parameters from config.json
 3. Execute modules sequentially:  
-   - `File Retrieval` → `Transform Data` → `API Integration` → `Data Quality` → `Data Update`  
+   - `1.file_retrieval` → `2.data_transformation` → `3.api_dict_update` → `4.data_quality` → `5.data_update`
 4. Conditional checks:
    - Stop workflow if critical module fails  
 5. Log start and finish time of each module
