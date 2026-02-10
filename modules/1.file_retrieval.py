@@ -3,8 +3,9 @@ import subprocess  # to commit in GitHub repo
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 import pandas as pd
-from io import BytesIO, StringIO
+from io import BytesIO, StringIO # to read the raw xlsx or csv file
 import logging
 import argparse
 import json
@@ -38,21 +39,16 @@ logger = logging.getLogger("log_dog")
 # url for web scraping
 url = "https://data.nsw.gov.au/data/dataset/fuel-check"
 
-# Create variables for date 
-first_of_month = datetime.now().replace(day=1)
-last_month_date = first_of_month - timedelta(days=1)
-last_month_name = last_month_date.strftime("%b").lower()
-last_month_year = last_month_date.strftime("%Y")
-monthyear = first_of_month.strftime("%b").lower() + first_of_month.strftime("%Y")
-
-datafile = f"data and logs/fuelcheck_{last_month_name}{last_month_year}.csv"
-
 # Set up the file config
 config_file = "config.json"
 with open("config.json") as json_file:
     config = json.load(json_file)
 
 nextfile = config["next_file_date"]
+
+# Set up the file name
+datafile = f"data and logs/fuelcheck_{nextfile}.csv"
+
 
 # ----------------------------------------------------------------------------------------------------
 #                                       setup functions
@@ -136,9 +132,13 @@ df.to_csv(datafile, index=False)
 # save the data file
 push_file_to_repo(datafile, f"data file loaded {datetimestamp}")
 
+# chage date variable for readability
+latest_file = nextfile
+
 #update the config 
-config["next_file_date"] = monthyear
-config["latest_file"] = f"{last_month_name}{last_month_year}"
+next_file_date = datetime.strptime(latest_file, "%b%Y") + timedelta(months=1)
+config["next_file_date"] = next_file_date.strftime("%b").lower() + next_file_date.strftime("%Y")
+config["latest_file"] = latest_file
 save_config()
 
 # ----------------------------------------------------------------------------------------------------
