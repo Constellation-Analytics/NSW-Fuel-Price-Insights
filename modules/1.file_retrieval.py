@@ -22,7 +22,6 @@ args = parser.parse_args()
 log_file = args.log_file
 
 os.makedirs("data and logs", exist_ok=True)
-datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
 
 # Set up logging for module
 logging.basicConfig(
@@ -44,11 +43,18 @@ config_file = "config.json"
 with open("config.json") as json_file:
     config = json.load(json_file)
 
+# Create date variables
 nextfile = config["next_file_date"]
+nextfile_dt = datetime.strptime(nextfile, "%b%Y")
+nextfile_month = nextfile_dt.strftime("%b").lower()
+nextfile_year = nextfile_dt.strftime("%Y")
+current_monthyear = datetime.now().replace(day=1).strftime("%b%Y").lower()
+
+# timestamp for commits
+datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
 
 # Set up the file name
 datafile = f"data and logs/fuelcheck_{nextfile}.csv"
-
 
 # ----------------------------------------------------------------------------------------------------
 #                                       setup functions
@@ -101,18 +107,18 @@ download_links = [
     a["href"]
     for a in soup.find_all("a", href=True)
     if (href := a["href"].lower()).endswith((".xlsx", ".csv"))
-    and last_month_year in href
-    and last_month_name in href
+    and nextfile_month in href
+    and nextfile_year in href
 ]
 
 # exit if the most recent file has already been processed
-if monthyear == nextfile:
-    logger.info(f"{monthyear} data file already loaded")
+if current_monthyear == nextfile:
+    logger.info(f"{current_monthyear} data file already loaded")
     sys.exit(10)
 
 # exit if the file is not yet available
 if len(download_links) == 0:
-    logger.info(f"{last_month_name}{last_month_year} file not yet available")
+    logger.info(f"{nextfile} file not yet available")
     sys.exit(10)
 
 link = download_links[0]
@@ -136,8 +142,8 @@ push_file_to_repo(datafile, f"data file loaded {datetimestamp}")
 latest_file = nextfile
 
 #update the config 
-next_file_date = datetime.strptime(latest_file, "%b%Y") + timedelta(months=1)
-config["next_file_date"] = next_file_date.strftime("%b").lower() + next_file_date.strftime("%Y")
+next_file_date = datetime.strptime(latest_file, "%b%Y") + relativedelta(months=1)
+config["next_file_date"] = next_file_date.strftime("%b%Y").lower()
 config["latest_file"] = latest_file
 save_config()
 
