@@ -121,6 +121,11 @@ if len(download_links) == 0:
     logger.info(f"{nextfile} file not yet available")
     sys.exit(10)
 
+# exit if the latest file has not yet been transformed
+if config["latest_file"] != config["last_transformation"]:
+    logger.info(f"{config["latest_file"]} file has not yet been transformed")
+    sys.exit(10)
+
 link = download_links[0]
 
 logger.info("downloading file from server")
