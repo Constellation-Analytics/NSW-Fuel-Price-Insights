@@ -102,17 +102,12 @@ df_fuel_data['date'] = (
 #                                           Block Two
 # - Set column headers to lowercase  
 # - Identify unique station and fuel type combinations for current month
-# - Calculate the last day of the previous month 
-# - Fetch active stations and fuel types for the last month
+# - Fetch stations and fuel types for the last month
 # - Union the two datasets
-# - Cross join unique station-fuel combinations with the date range
-# - Calculate the median price per day for each station and fuel type
-# 
 # ----------------------------------------------------------------------------------------------------
 
-# Select and rename columns 
-df_fuel_data = df_fuel_data[['ServiceStationName','Address','Suburb','Postcode','Brand','FuelCode','PriceUpdatedDate','Price',]]
-df_fuel_data.columns =['servicestationname','address','suburb','postcode','brand','fuelcode','priceupdateddate','price',]
+# Set column headers to lowercase  
+df_fuel_data.columns = df_fuel_data.columns.str.lower()
 
 # Identify unique station and fuel type combinations
 unique_station_fuelcodes = (
@@ -121,13 +116,8 @@ unique_station_fuelcodes = (
     .reset_index(drop=True)
 )
 
-# Calculate the last day of the previous month
-date = df_fuel_data['date'].min()
-last_day = last_day_of_previous_month(date)
-
-
 # SQL query to fetch active stations and fuel types for the last month
-query = """
+query = f"""
 SELECT DISTINCT
 	name,
 	address,
@@ -138,14 +128,21 @@ FROM
         ON dim_fuel_station_dict.stationid = fuel_prices.stationid
 """
 
-# -----> DEV DONE TO HERE
-
-last_month_station_data = pd.read_sql(query, engine)
 # Execute the query
-last_month_station_data =sql_select(query)
+station_fuelcode_dbo = pd.read_sql(query, engine)
 
 # Combine unique station-fuel combinations with last month's data and remove duplicates
-union_data = pd.concat([unique_station_fuel_combinations, last_month_station_data]).drop_duplicates()
+union_data = pd.concat([unique_station_fuelcodes, station_fuelcode_dbo]).drop_duplicates().reset_index(drop=True)
+
+# -----> DEV DONE TO HERE
+
+# ----------------------------------------------------------------------------------------------------
+#                                           Block Three
+# - Fetch price data from last month
+# - Every station Left join median prices 
+# - Every station Left join last_day_of_last_month prices 
+# - Create PriceUpdatedDate column date where Price is not Null
+# ----------------------------------------------------------------------------------------------------
 
 # Generate a full date range based on the min and max dates in the dataset
 date_range_df = pd.DataFrame(pd.date_range(df_fuel_data['date'].min()- timedelta(days=1), 
@@ -163,16 +160,19 @@ expanded_date_station_fuel_df.sort_values(by=['stationid', 'fuelcode', 'date'],
 daily_median_prices = (df_fuel_data.groupby(['stationid', 'fuelcode', 'date'])['price'].median().reset_index())
 
 
-
 # ----------------------------------------------------------------------------------------------------
 #                                           Block Three
 # - Fetch price data from last month
 # - Every station Left join median prices 
 # - Every station Left join last_day_of_last_month prices 
 # - Create PriceUpdatedDate column date where Price is not Null
-# 
 # ----------------------------------------------------------------------------------------------------
 
+
+
+# Calculate the last day of the previous month
+date = df_fuel_data['date'].min()
+last_day = last_day_of_previous_month(date)
 
 # SQL query to fetch active stations and fuel types for the last month
 call = text(
