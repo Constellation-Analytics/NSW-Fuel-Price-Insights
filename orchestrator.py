@@ -35,7 +35,7 @@ def push_file_to_repo(file_path, commit_message):
             f"https://x-access-token:{os.environ['GITHUB_TOKEN']}"
             f"@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
         )
-
+        
         subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
         subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
         subprocess.run(["git", "add", file_path], check=True)
@@ -43,13 +43,15 @@ def push_file_to_repo(file_path, commit_message):
             ["git", "commit", "-m", commit_message],
             check=False  # won't fail if nothing changed
         )
+        
         subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
 
         logger.info(f"Successfully pushed {file_path} to repo")
 
-    except Exception as e:
+    except subprocess.CalledProcessError as e:
         logger.exception(f"Failed to push {file_path}: {e}")
         raise
+
 
 def save_log_and_config():
     logger.info("Finished orchestrator")
@@ -61,6 +63,7 @@ def save_log_and_config():
         logger.exception(f"Unexpected error saving json config file: {e}")        
     push_file_to_repo(config_file,f"successful run - configfile updated {datetimestamp}")
 
+
 def run_module(module_path):
     """Runs python files as a subprocess"""
     try:
@@ -68,7 +71,7 @@ def run_module(module_path):
 
         result = subprocess.run(
             ["python", module_path, "--log-file", log_file],
-            check=False, # NOTE FALSE - MUST ACCOUNT FOR ERRORS OUTSIDE OF EXCEPT CLAUSE
+            check=False, # We use check=False and handle errors via returncode
             capture_output=True,
             text=True
         )
