@@ -53,104 +53,54 @@ datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
 #                                       Defining functions
 # ----------------------------------------------------------------------------------------------------
 
-# Function to extract the last dat of the precious month
-def last_day_of_previous_month(date):
+# Function to extract the last dat of the previous month
+def last_day_of_previous_month(any_date):
     """
-    Calculates the last day of the previous month based on the earliest date in a given date column.
+    Calculates the last day of the previous month based on a given date.
 
     Args:
-        date_column (pd.Series): A Pandas Series containing date-like values.
+        any_date (datetime): A datetime object.
 
     Returns:
-        tuple: A tuple (year, month, day) representing the last day of the previous month.
+        datetime.date: The last day of the previous month.
     """
     # Calculate the last day of the previous month
     try:
-        first_day_of_current_month = datetime(date.year, date.month, 1)
-        last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
-        last_day_of_previous_month = last_day_of_previous_month.date()
-        return last_day_of_previous_month
+        return (datetime(any_date.year, any_date.month, 1) - timedelta(days=1)).date()
     except Exception as e:
-        print(f"Error: {e}")
-        return None
+        logger.exception(f"Error calculating last day of previous month: {e}")
+        raise
 
 # ----------------------------------------------------------------------------------------------------
 #                                           Block one
 # - Import data
-# - Join Data
+# - Fill missing information
 # - Convert column to date type
 # ----------------------------------------------------------------------------------------------------
 
 # Read the file 
 file = f"data and logs/fuelcheck_{nextfile}.csv"
-df = pd.read_csv(file)
+logger.info(f"Reading {file}")
 
-# Forward-fill missing information (if the file was originally excel the cells can be merged verticallt causing issues)
-df.ffill(inplace=True)
-
-# Drop rows with all NaN values (if any)
-df_fuel_data = df.dropna(how='all')
-
-# -----> DEV DONE TO HERE
-
-print(file)
-
-
-
-
-
-
-
-# Forward-fill missing information
-df.ffill(inplace=True)
-
-# Drop rows with all NaN values (if any)
-df_fuel_data = df.dropna(how='all')
-
-
-# Active stations
-query = text("""SELECT stationid,name, address
-            FROM prod.fuel_station_dict
-            WHERE deletion_flag IS NULL""")
-
-fuel_station_dict = sql_select(query)
-
-# Convert columns to uppercase for merging
-df_fuel_data['ServiceStationName'] = df_fuel_data['ServiceStationName'].str.upper()
-df_fuel_data['Address'] = df_fuel_data['Address'].str.upper()
-fuel_station_dict['name'] = fuel_station_dict['name'].str.upper()
-fuel_station_dict['address'] = fuel_station_dict['address'].str.upper()
-
-# Left join new data to existing dictionary to extract stationid
-merged_fuel_data = df_fuel_data.merge(
-    fuel_station_dict,
-    left_on=['ServiceStationName', 'Address'],
-    right_on=['name', 'address'],
-    how='left'
+# Forward-fill missing information (if the file was originally excel the cells can be merged vertically causing issues)
+df_fuel_data = (
+    pd.read_csv(file)
+      .ffill()
+      .copy()
 )
 
-# Select and rename columns 
-df_fuel_data = merged_fuel_data[['stationid','FuelCode','PriceUpdatedDate', 'Price']]
-df_fuel_data.columns = ['stationid', 'fuelcode', 'date', 'price']
-
-#Convert 'date' to datetime and normailse to reset the time component
-try:
-    df_fuel_data.loc[:, 'date'] = pd.to_datetime(df_fuel_data['date'], format='%d/%m/%Y %I:%M:%S %p').dt.normalize()
-except:
-    try:
-        df_fuel_data.loc[:, 'date'] = pd.to_datetime(df_fuel_data['date'], format='%d/%m/%Y %H:%M').dt.normalize()
-    except:
-        df_fuel_data.loc[:, 'date'] = pd.to_datetime(df_fuel_data['date']).dt.normalize()
-
-# quick Checks 
-row_count_df_fuel_data = df_fuel_data.shape[0]
-print(f"Number of rows df_fuel_data: {row_count_df_fuel_data}")
-row_count_merged_fuel_data = merged_fuel_data.shape[0]
-print(f"Number of rows merged_fuel_data: {row_count_merged_fuel_data}")
-
+#Convert 'date' to datetime and normalise to reset the time component
+df_fuel_data['date'] = (
+    pd.to_datetime(
+        df_fuel_data['date'],
+        dayfirst=True,
+        errors='raise'
+    ).dt.normalize()
+)
 
 # ----------------------------------------------------------------------------------------------------
 #                                           Block Two
+# - Set column headers to lowercase  
 # - Identify unique station and fuel type combinations for current month
 # - Calculate the last day of the previous month 
 # - Fetch active stations and fuel types for the last month
@@ -160,9 +110,13 @@ print(f"Number of rows merged_fuel_data: {row_count_merged_fuel_data}")
 # 
 # ----------------------------------------------------------------------------------------------------
 
+# Select and rename columns 
+df_fuel_data = df_fuel_data[['ServiceStationName','Address','Suburb','Postcode','Brand','FuelCode','PriceUpdatedDate','Price',]]
+df_fuel_data.columns =['servicestationname','address','suburb','postcode','brand','fuelcode','priceupdateddate','price',]
+
 # Identify unique station and fuel type combinations
-unique_station_fuel_combinations = (
-    df_fuel_data[['stationid', 'fuelcode']]
+unique_station_fuelcodes = (
+    df_fuel_data[['servicestationname','address','fuelcode']]
     .drop_duplicates()
     .reset_index(drop=True)
 )
@@ -173,14 +127,20 @@ last_day = last_day_of_previous_month(date)
 
 
 # SQL query to fetch active stations and fuel types for the last month
-query = text(
-    f"""
-    SELECT DISTINCT stationid, fuelcode 
-    FROM prod.fuel_prices 
-    WHERE date = '{last_day}'
-    """
-)
+query = """
+SELECT DISTINCT
+	name,
+	address,
+	fuelcode
+FROM
+	public.fuel_prices
+	INNER JOIN dim_fuel_station_dict 
+        ON dim_fuel_station_dict.stationid = fuel_prices.stationid
+"""
 
+# -----> DEV DONE TO HERE
+
+last_month_station_data = pd.read_sql(query, engine)
 # Execute the query
 last_month_station_data =sql_select(query)
 
