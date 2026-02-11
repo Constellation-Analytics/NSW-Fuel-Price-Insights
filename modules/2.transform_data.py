@@ -9,49 +9,49 @@ from tkinter.filedialog import askopenfilename
 import hashlib
 
 # ----------------------------------------------------------------------------------------------------
-#                                       Defining functions
+#                                       setup variables
 # ----------------------------------------------------------------------------------------------------
 
-# Function to use a file picker
-def pick_file():
-    root = Tk()
-    root.withdraw()  # Hide the main tkinter window
-    file_path = askopenfilename(
-        filetypes=[("All files", "*.*"), ("Excel files", "*.xlsx *.xls"), ("CSV files", "*.csv")],
-        title="Select a file"
-    )
-    root.destroy()  # Close the tkinter window
-    
-    return file_path
-    
-# Function to execute an SQL select query
-def sql_select(query):
-    """
-    Executes a SQL SELECT query and returns the result as a Pandas DataFrame.
+# Get log file path from orchestrator
+parser = argparse.ArgumentParser()
+parser.add_argument("--log-file", required=True)
+args = parser.parse_args()
+log_file = args.log_file
 
-    Args:
-        query (str): The SQL query to execute.
+os.makedirs("data and logs", exist_ok=True)
 
-    Returns:
-        pd.DataFrame: A DataFrame containing the query results, or None if an error occurs.
-    """
-     # Database connection string
-    db_url = "postgresql+psycopg2://paul:postgres@localhost:5432/fuelcheck"
+# Set up logging for module
+logging.basicConfig(
+    filename=log_file,
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s -    Module    - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
 
-    # Create the database engine
-    engine = create_engine(db_url)
+# Create logger with dummy name so it can be scaled later if needed
+logger = logging.getLogger("log_dog")
 
-    try:
-        # Fetch data from PostgreSQL
-        with engine.connect() as conn:
-            result = conn.execute(query)
-            # Convert the result to a DataFrame with column names
-            df = pd.DataFrame(result.fetchall(), columns=result.keys())
-            return df
-    except Exception as e:
-        print(f"Error: {e}")
-       
-    return None
+# Create database engine
+engine = create_engine(NEON_SECRET)
+
+# Set up the file config
+config_file = "config.json"
+with open("config.json") as json_file:
+    config = json.load(json_file)
+
+# Create date variables
+nextfile = config["next_file_date"]
+nextfile_dt = datetime.strptime(nextfile, "%b%Y")
+nextfile_month = nextfile_dt.strftime("%b").lower()
+nextfile_year = nextfile_dt.strftime("%Y")
+current_monthyear = datetime.now().replace(day=1).strftime("%b%Y").lower()
+
+# timestamp for commits
+datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
+
+# ----------------------------------------------------------------------------------------------------
+#                                       Defining functions
+# ----------------------------------------------------------------------------------------------------
 
 # Function to extract the last dat of the precious month
 def last_day_of_previous_month(date):
@@ -82,21 +82,24 @@ def last_day_of_previous_month(date):
 # ----------------------------------------------------------------------------------------------------
 
 # Read the file 
-file = pick_file()
-skip_rows = int(input("Enter the number of rows to skip: "))
+file = f"data and logs/fuelcheck_{nextfile}.csv"
+df = pd.read_csv(file)
 
-# Determine file type based on the extension
-file_type = "excel" if file.endswith(('.xlsx', '.xls')) else "csv"
+# Forward-fill missing information (if the file was originally excel the cells can be merged verticallt causing issues)
+df.ffill(inplace=True)
+
+# Drop rows with all NaN values (if any)
+df_fuel_data = df.dropna(how='all')
+
+# -----> DEV DONE TO HERE
 
 print(file)
 
-# Read the file 
-if file_type == 'excel':
-    df = pd.read_excel(file, skiprows=skip_rows)
-elif file_type == 'csv':
-    df = pd.read_csv(file, skiprows=skip_rows)
-else:
-    raise ValueError("Invalid file type. Please enter 'excel' or 'csv'.")
+
+
+
+
+
 
 # Forward-fill missing information
 df.ffill(inplace=True)
