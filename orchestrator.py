@@ -47,9 +47,8 @@ def push_file_to_repo(file_path, commit_message):
 
         logger.info(f"Successfully pushed {file_path} to repo")
 
-    except subprocess.CalledProcessError as e:
+    except Exception as e:
         logger.exception(f"Failed to push {file_path}: {e}")
-        print(f"ERROR: Failed to push {file_path}: {e}")
         raise
 
 def save_log_and_config():
