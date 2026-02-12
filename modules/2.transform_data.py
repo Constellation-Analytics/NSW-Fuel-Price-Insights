@@ -196,21 +196,23 @@ last_month_price_data = pd.read_sql(price_query, engine)
 # Convert 'date' to datetime
 last_month_price_data['date'] = pd.to_datetime(last_month_price_data['date'])
 
-# -----> DEV DONE TO HERE
-
-semijoined_data = expanded_date_station_fuel_df.merge(
-    daily_median_prices,
-    left_on=['stationid', 'fuelcode', 'date'],
-    right_on=['stationid', 'fuelcode', 'date'],
-    how='left'
+semijoined_data = (
+	expanded_date_station_fuel_df
+	.merge(
+		daily_median_prices,
+		left_on=['stationid', 'fuelcode', 'date'],
+		right_on=['stationid', 'fuelcode', 'date'],
+		how='left')
 )
 
-joined_data = semijoined_data.merge(
-    last_month_price_data,
-    left_on=['stationid', 'fuelcode', 'date'],
-    right_on=['stationid', 'fuelcode', 'date'],
-    how='left'
+joined_data = (
+	semijoined_data
+	.merge(last_month_price_data,
+           left_on=['stationid', 'fuelcode', 'date'],
+           right_on=['stationid', 'fuelcode', 'date'],
+           how='left')
 )
+
 
 # Ensure price columns are numeric before combining
 joined_data['price_x'] = joined_data['price_x'].astype(float)
@@ -225,6 +227,8 @@ joined_data = joined_data.drop(columns=['price_x', 'price_y'])
 
 # set PriceUpdatedDate to date where Price is not Null
 joined_data['PriceUpdatedDate'] = joined_data['date'].where(~joined_data['price'].isna(), pd.NaT)
+
+# -----> DEV DONE TO HERE
 
 
 # ----------------------------------------------------------------------------------------------------
