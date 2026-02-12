@@ -3,9 +3,6 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from sqlalchemy import create_engine
-from sqlalchemy import text
-from tkinter import Tk
-from tkinter.filedialog import askopenfilename
 import hashlib
 
 # ----------------------------------------------------------------------------------------------------
@@ -117,7 +114,7 @@ unique_station_fuelcodes = (
 )
 
 # SQL query to fetch active stations and fuel types for the last month
-query = f"""
+station_query = f"""
 SELECT DISTINCT
 	name,
 	address,
@@ -129,19 +126,16 @@ FROM
 """
 
 # Execute the query
-station_fuelcode_dbo = pd.read_sql(query, engine)
+station_fuelcode_dbo = pd.read_sql(station_query, engine)
 
 # Combine unique station-fuel combinations with last month's data and remove duplicates
 union_data = pd.concat([unique_station_fuelcodes, station_fuelcode_dbo]).drop_duplicates().reset_index(drop=True)
 
-# -----> DEV DONE TO HERE
-
 # ----------------------------------------------------------------------------------------------------
 #                                           Block Three
-# - Fetch price data from last month
-# - Every station Left join median prices 
-# - Every station Left join last_day_of_last_month prices 
-# - Create PriceUpdatedDate column date where Price is not Null
+# - Create date_range_df 
+# - Cross join to unique combinations of 'servicestationname','address','fuelcode' defined in Block 2
+# - Get average price per 'servicestationname','address','fuelcode', 'date' from Block 1
 # ----------------------------------------------------------------------------------------------------
 
 # Generate a full date range based on the min and max dates in the dataset
@@ -169,34 +163,40 @@ daily_median_prices = (
 )
 
 # ----------------------------------------------------------------------------------------------------
-#                                           Block Three
+#                                           Block Four
 # - Fetch price data from last month
 # - Every station Left join median prices 
 # - Every station Left join last_day_of_last_month prices 
 # - Create PriceUpdatedDate column date where Price is not Null
 # ----------------------------------------------------------------------------------------------------
 
-
-
 # Calculate the last day of the previous month
 date = df_fuel_data['date'].min()
 last_day = last_day_of_previous_month(date)
 
-# SQL query to fetch active stations and fuel types for the last month
-call = text(
-    f"""
-    SELECT stationid, fuelcode, price, date 
-    FROM prod.fuel_prices 
-    WHERE date = '{last_day}'
-    """
-)
+# SQL query to fetch fuel price data from last month
+price_query = f"""
+SELECT 
+	name,
+	address,
+	fuelcode,
+	price,
+	date
+FROM
+	public.fuel_prices
+	INNER JOIN dim_fuel_station_dict 
+	ON dim_fuel_station_dict.stationid = fuel_prices.stationid
+WHERE
+	date = {last_day}
+"""
 
 # Execute the query
-last_month_price_data = sql_select(call)
+last_month_price_data = pd.read_sql(price_query, engine)
 
 # Convert 'date' to datetime
 last_month_price_data['date'] = pd.to_datetime(last_month_price_data['date'])
 
+# -----> DEV DONE TO HERE
 
 semijoined_data = expanded_date_station_fuel_df.merge(
     daily_median_prices,
