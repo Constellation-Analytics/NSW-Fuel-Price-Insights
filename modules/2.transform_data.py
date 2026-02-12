@@ -32,7 +32,7 @@ logging.basicConfig(
 logger = logging.getLogger("log_dog")
 
 # Create database engine
-engine = create_engine(NEON_SECRET)
+engine = create_engine(DB_CONNECTION_STRING)
 
 # Set up the file config
 config_file = "config.json"
@@ -145,20 +145,28 @@ union_data = pd.concat([unique_station_fuelcodes, station_fuelcode_dbo]).drop_du
 # ----------------------------------------------------------------------------------------------------
 
 # Generate a full date range based on the min and max dates in the dataset
-date_range_df = pd.DataFrame(pd.date_range(df_fuel_data['date'].min()- timedelta(days=1), 
-                                           df_fuel_data['date'].max()),
-                             columns=['date'])
+date_range_df = pd.DataFrame(
+    pd.date_range(df_fuel_data['date']
+                  .min() - timedelta(days=1),
+				  df_fuel_data['date'].max()
+				 ),columns=['date']
+)
 
 # Create a cross join of unique station-fuel combinations with the date range
-expanded_date_station_fuel_df = union_data.merge(date_range_df, how='cross')
-
-# Sort the DataFrame by station ID, fuel code, and date
-expanded_date_station_fuel_df.sort_values(by=['stationid', 'fuelcode', 'date'],
-                                          inplace=True)
+# Sort the DataFrame ready for forward fill
+date_station_fuel_expanded = (
+	union_data
+	.merge(date_range_df, how='cross')
+	.sort_values(by=['servicestationname','address','fuelcode','date'])
+)
 
 # Calculate the median price per day for each station and fuel type
-daily_median_prices = (df_fuel_data.groupby(['stationid', 'fuelcode', 'date'])['price'].median().reset_index())
-
+daily_median_prices = (
+	df_fuel_data
+	.groupby(['servicestationname','address','fuelcode','date'])['price']
+	.median()
+	.reset_index()
+)
 
 # ----------------------------------------------------------------------------------------------------
 #                                           Block Three
