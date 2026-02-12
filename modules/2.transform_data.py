@@ -187,7 +187,7 @@ FROM
 	INNER JOIN dim_fuel_station_dict 
 	ON dim_fuel_station_dict.stationid = fuel_prices.stationid
 WHERE
-	date = {last_day}
+	date = '{last_day}'
 """
 
 # Execute the query
@@ -200,19 +200,19 @@ semijoined_data = (
 	expanded_date_station_fuel_df
 	.merge(
 		daily_median_prices,
-		left_on=['stationid', 'fuelcode', 'date'],
-		right_on=['stationid', 'fuelcode', 'date'],
+		left_on=['servicestationname', 'address', 'fuelcode', 'date'],
+		right_on=['servicestationname', 'address', 'fuelcode', 'date'],
 		how='left')
 )
 
 joined_data = (
 	semijoined_data
-	.merge(last_month_price_data,
-           left_on=['stationid', 'fuelcode', 'date'],
-           right_on=['stationid', 'fuelcode', 'date'],
+	.merge(
+		last_month_price_data,
+		left_on=['servicestationname', 'address', 'fuelcode', 'date'],
+		right_on=['servicestationname', 'address', 'fuelcode', 'date'],
            how='left')
 )
-
 
 # Ensure price columns are numeric before combining
 joined_data['price_x'] = joined_data['price_x'].astype(float)
@@ -224,23 +224,21 @@ joined_data['price'] = joined_data['price_x'].fillna(joined_data['price_y'])
 # Drop redundant price columns if desired
 joined_data = joined_data.drop(columns=['price_x', 'price_y'])
 
-
 # set PriceUpdatedDate to date where Price is not Null
-joined_data['PriceUpdatedDate'] = joined_data['date'].where(~joined_data['price'].isna(), pd.NaT)
+joined_data['priceupdateddate']= joined_data['date'].where(~joined_data['price'].isna(), pd.NaT)
 
 # -----> DEV DONE TO HERE
 
-
 # ----------------------------------------------------------------------------------------------------
-#                                           Block Four
+#                                           Block Five
 # - Forward fill all prices
 # - Remove null prices
 # - Remove last month data
 # - Add unique id to each row
 # ----------------------------------------------------------------------------------------------------
 
-# Forward fill 'Price' within each 'StadionID' and 'FuelCode' group
-joined_data['price'] = joined_data.groupby(['stationid', 'fuelcode'])['price'].ffill()
+# Forward fill 'Price' within each 'servicestationname', 'address', 'fuelcode' group
+joined_data['price'] = joined_data.groupby(['servicestationname', 'address', 'fuelcode'])['price'].ffill()
 
 # Remove null price
 drop_nulls = joined_data.dropna(subset = ['price']).reset_index(drop=True)
@@ -251,13 +249,12 @@ output = drop_nulls[drop_nulls['date'].dt.month == max_month].copy()
 
 # add unique id
 def hash_row(row):
-    hash_input = f"{row['stationid']}{row['fuelcode']}{row['price']}{row['date']}"
+    hash_input = f"{row['servicestationname']}{row['address']}{row['fuelcode']}{row['price']}{row['date']}"
     return hashlib.md5(hash_input.encode()).hexdigest()
 output['record_id'] = output.apply(hash_row, axis=1)
 
 #order & rename the final output columns
-output = output[['record_id','stationid', 'fuelcode', 'date', 'price','PriceUpdatedDate']]
-output.columns = ['record_id', 'stationid', 'fuelcode', 'date', 'price', 'priceupdateddate']
+output = output[['record_id', 'servicestationname', 'address', 'fuelcode', 'date', 'price', 'priceupdateddate']]
 
 # quick Checks 
 row_count_output = output.shape[0]
