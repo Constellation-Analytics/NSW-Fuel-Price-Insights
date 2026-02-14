@@ -1,4 +1,8 @@
 # Import necessary libraries
+import os
+import json
+import logging
+import argparse
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -197,7 +201,7 @@ last_month_price_data = pd.read_sql(price_query, engine)
 last_month_price_data['date'] = pd.to_datetime(last_month_price_data['date'])
 
 semijoined_data = (
-	expanded_date_station_fuel_df
+	date_station_fuel_expanded
 	.merge(
 		daily_median_prices,
 		left_on=['servicestationname', 'address', 'fuelcode', 'date'],
@@ -210,7 +214,7 @@ joined_data = (
 	.merge(
 		last_month_price_data,
 		left_on=['servicestationname', 'address', 'fuelcode', 'date'],
-		right_on=['servicestationname', 'address', 'fuelcode', 'date'],
+		right_on=['name', 'address', 'fuelcode', 'date'],
            how='left')
 )
 
@@ -235,6 +239,11 @@ joined_data['priceupdateddate']= joined_data['date'].where(~joined_data['price']
 # - Add unique id to each row
 # ----------------------------------------------------------------------------------------------------
 
+# extra sort just to be safe
+joined_data = joined_data.sort_values(
+    ['servicestationname','address','fuelcode','date']
+)
+
 # Forward fill 'Price' within each 'servicestationname', 'address', 'fuelcode' group
 joined_data['price'] = joined_data.groupby(['servicestationname', 'address', 'fuelcode'])['price'].ffill()
 
@@ -242,14 +251,21 @@ joined_data['price'] = joined_data.groupby(['servicestationname', 'address', 'fu
 drop_nulls = joined_data.dropna(subset = ['price']).reset_index(drop=True)
 
 # Remove last month
-max_month = joined_data['date'].max().month
-output = drop_nulls[drop_nulls['date'].dt.month == max_month].copy()
+max_date = joined_data['date'].max()
+output = drop_nulls[(drop_nulls['date'].dt.year == max_date.year) & (drop_nulls['date'].dt.month == max_date.month)].copy()
 
 # add unique id
-def hash_row(row):
-    hash_input = f"{row['servicestationname']}{row['address']}{row['fuelcode']}{row['price']}{row['date']}"
-    return hashlib.md5(hash_input.encode()).hexdigest()
-output['record_id'] = output.apply(hash_row, axis=1)
+concat_cols = (
+    output[['servicestationname','address','fuelcode','price','date']]
+    .astype(str)
+    .agg('|'.join, axis=1)
+)
+
+output['record_id'] = concat_cols.map(
+    lambda x: hashlib
+	.md5(x.encode())
+	.hexdigest()
+)
 
 #order & rename the final output columns
 output = output[['record_id', 'servicestationname', 'address', 'fuelcode', 'date', 'price', 'priceupdateddate']]
