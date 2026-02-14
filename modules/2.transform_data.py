@@ -73,6 +73,15 @@ def last_day_of_previous_month(any_date):
         raise
 
 # ----------------------------------------------------------------------------------------------------
+#                                     Script Body - Start
+# ----------------------------------------------------------------------------------------------------
+
+# exit if the latest file has already been transformed
+if config["latest_file"] = config["last_transformation"]:
+    logger.info(f"{config["latest_file"]} file has already been transformed")
+    sys.exit(10)
+
+# ----------------------------------------------------------------------------------------------------
 #                                           Block one
 # - Import data
 # - Fill missing information
