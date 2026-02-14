@@ -227,8 +227,6 @@ joined_data = joined_data.drop(columns=['price_x', 'price_y'])
 # set PriceUpdatedDate to date where Price is not Null
 joined_data['priceupdateddate']= joined_data['date'].where(~joined_data['price'].isna(), pd.NaT)
 
-# -----> DEV DONE TO HERE
-
 # ----------------------------------------------------------------------------------------------------
 #                                           Block Five
 # - Forward fill all prices
@@ -256,53 +254,21 @@ output['record_id'] = output.apply(hash_row, axis=1)
 #order & rename the final output columns
 output = output[['record_id', 'servicestationname', 'address', 'fuelcode', 'date', 'price', 'priceupdateddate']]
 
-# quick Checks 
-row_count_output = output.shape[0]
-print(f"Number of rows output: {row_count_output}")
-
+# -----> DEV DONE TO HERE
 
 # ----------------------------------------------------------------------------------------------------
 #                                           Block Five
-# - Check stations that are not present in the dictonary
 # - Insert into database
 # ----------------------------------------------------------------------------------------------------
 
-missing_values = merged_fuel_data[merged_fuel_data.isna().any(axis=1)]
-missing_values = missing_values[['ServiceStationName','Address','Suburb','Postcode','Brand']]
-missing_values.drop_duplicates(inplace=True)
-
-stations = missing_values['ServiceStationName'].unique()
-final_output_path = r'C:\Users\paulj\OneDrive\Documents\3. Personal\Projects and Data Challenges\Fuel Analysis 2024\Testing\missing_values.csv'
-missing_values.to_csv(final_output_path, index=False)
-
 
 # Insert into database
-if len(missing_values) == 0:
-    print("we do not have missing values")
-    try:
-         # Database connection string
-        db_url = "postgresql+psycopg2://paul:postgres@localhost:5432/fuelcheck"
-    
-        # Create the database engine
-        engine = create_engine(db_url)
-        
-        # Insert DataFrame into PostgreSQL
-        with engine.connect() as connection:
-            output.to_sql('fuel_prices', connection, schema='prod', if_exists='append', index=False)
-        print("Data inserted successfully!")
-    except Exception as e:
-        print(f"error: {e}")
+try:
+	# Insert DataFrame into PostgreSQL
+    logger.info(f"Inserting values into database")
+	output.to_sql('fuelprice_staging', engine, if_exists='append', index=False)
 
-# -------------------------------------------------------------------------------------------------
-#                                       Removing obsolete records
-# -------------------------------------------------------------------------------------------------
-    print("Removing obsolete records")
+except Exception as e:
+    logger.exception(f"Unexpected error while inserting values into database: {e}")        
 
-    call = text("CALL prod.remove_obsolete_records();")
-    with engine.connect() as conn:
-        conn = conn.execution_options(isolation_level="AUTOCOMMIT")
-        conn.execute(call)
-
-else: print("we have missing values")
-
-print("Operation complete")
+logger.info("Operation complete")
