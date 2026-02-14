@@ -239,11 +239,6 @@ joined_data['priceupdateddate']= joined_data['date'].where(~joined_data['price']
 # - Add unique id to each row
 # ----------------------------------------------------------------------------------------------------
 
-# extra sort just to be safe
-joined_data = joined_data.sort_values(
-    ['servicestationname','address','fuelcode','date']
-)
-
 # Forward fill 'Price' within each 'servicestationname', 'address', 'fuelcode' group
 joined_data['price'] = joined_data.groupby(['servicestationname', 'address', 'fuelcode'])['price'].ffill()
 
@@ -270,13 +265,10 @@ output['record_id'] = concat_cols.map(
 #order & rename the final output columns
 output = output[['record_id', 'servicestationname', 'address', 'fuelcode', 'date', 'price', 'priceupdateddate']]
 
-# -----> DEV DONE TO HERE
-
 # ----------------------------------------------------------------------------------------------------
 #                                           Block Five
 # - Insert into database
 # ----------------------------------------------------------------------------------------------------
-
 
 # Insert into database
 try:
