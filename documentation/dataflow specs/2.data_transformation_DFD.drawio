@@ -146,7 +146,7 @@
         <mxCell id="82GFA4SjvryaE-cGr--l-70" parent="82GFA4SjvryaE-cGr--l-47" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b&gt;forward fill&lt;/b&gt;&lt;div&gt;&lt;div&gt;ServiceStationName&lt;/div&gt;&lt;div&gt;Address&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;FuelCode&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="120" x="452.5" y="235" as="geometry" />
         </mxCell>
-        <mxCell id="82GFA4SjvryaE-cGr--l-72" parent="82GFA4SjvryaE-cGr--l-47" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=#7ea6e0;" value="DBO&lt;div&gt;Fuelcheck&lt;/div&gt;&lt;div&gt;Staging&lt;/div&gt;" vertex="1">
+        <mxCell id="82GFA4SjvryaE-cGr--l-72" parent="82GFA4SjvryaE-cGr--l-47" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=#7ea6e0;" value="DBO&lt;div&gt;Fuelprice&lt;/div&gt;&lt;div&gt;Staging&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="100" x="842.5" y="235" as="geometry" />
         </mxCell>
         <mxCell id="82GFA4SjvryaE-cGr--l-78" edge="1" parent="82GFA4SjvryaE-cGr--l-47" source="82GFA4SjvryaE-cGr--l-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="82GFA4SjvryaE-cGr--l-77" value="">
