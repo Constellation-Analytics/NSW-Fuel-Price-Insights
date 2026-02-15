@@ -150,8 +150,8 @@ def api_data(url, access_token, API_key):
 logger.info(f"Pulling API Information")
 
 # Generate the access token and access the data
-token = create_access_token(access_token_URL,authorisation_header)
-data = api_data(dict_url,token,API_key)
+token = create_access_token(access_token_URL,API_AUTHORISATION_HEADER)
+data = api_data(dict_url,token,API_KEY)
 
 # Create the new address columns using 
 data['street'] = data['address'].str.extract(r'((?:\d+|Corner|Cnr).+?),')
