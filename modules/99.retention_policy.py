@@ -1,9 +1,9 @@
-import os
-import glob
 from datetime import datetime, timedelta
 import argparse
-import subprocess
+import glob
 import logging
+import os
+import subprocess
 
 # ----------------------------------------------------------------------------------------------------
 #                                       setup variables
