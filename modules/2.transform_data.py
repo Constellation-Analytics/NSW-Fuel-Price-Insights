@@ -92,6 +92,7 @@ def generate_md5_hash(value: str) -> str:
     hash_object = hashlib.md5(encoded)  # generate MD5 hash object
     return hash_object.hexdigest()  # return 32-character hexadecimal string
 
+
 def push_file_to_repo(file_path, commit_message):
     """
     Add, commit, and push a file to a GitHub repository using a GitHub token.
@@ -125,6 +126,7 @@ def push_file_to_repo(file_path, commit_message):
         logger.exception(f"Failed to push {file_path}: {e}")
         raise
 
+
 def save_config():
     """
     Save the current configuration to a JSON file and push it to GitHub.
@@ -143,6 +145,7 @@ def save_config():
 
     except Exception as e:
         logger.exception(f"Unexpected error saving json config file: {e}")
+
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
