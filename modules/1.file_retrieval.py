@@ -1,14 +1,14 @@
-import os  # to access GitHub repo
-import subprocess  # to commit in GitHub repo
-import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-import pandas as pd
 from io import BytesIO, StringIO # to read the raw xlsx or csv file
-import logging
 import argparse
 import json
+import logging
+import os  # to access GitHub repo
+import pandas as pd
+import requests
+import subprocess  # to commit in GitHub repo
 import sys
 
 # ----------------------------------------------------------------------------------------------------
