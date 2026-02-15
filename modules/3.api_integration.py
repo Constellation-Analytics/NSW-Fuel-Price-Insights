@@ -169,13 +169,10 @@ fuel_station_api['stationid'] = fuel_station_api['stationid'].astype(str)
 # -------------------------------------------------------------------------------------------------
 #                                       Pull database Information
 # -------------------------------------------------------------------------------------------------
-print("Pulling database Information")
-
-# Database connection string
-db_url = "postgresql+psycopg2://paul:postgres@localhost:5432/fuelcheck"
+logger.info(f"Pulling Database Information")
 
 # Create the database engine
-engine = create_engine(db_url)
+engine = create_engine(DB_CONNECTION_STRING)
 
 # Active stations
 call = text("SELECT stationid,brand,name, address,street, town, postcode, latitude, longitude,last_update \
