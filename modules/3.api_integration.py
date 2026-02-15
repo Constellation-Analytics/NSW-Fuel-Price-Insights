@@ -236,4 +236,8 @@ try:
 except Exception as e:
     logger.exception(f"Unexpected error while inserting values into database: {e}")
 
+#update the config 
+config["last_API_call"] = datetimestamp
+save_config()
+
 logger.info("Operation complete")
