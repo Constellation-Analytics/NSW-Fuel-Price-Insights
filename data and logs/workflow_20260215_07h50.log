@@ -1,0 +1,30 @@
+2026-02-15 07:50:39 - INFO - Orchestrator - Starting orchestrator
+2026-02-15 07:50:39 - INFO - Orchestrator - Starting modules/1.file_retrieval.py
+2026-02-15 07:50:39 - INFO -    Module    - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-15 07:50:44 - INFO -    Module    - jan2026 data file already loaded
+2026-02-15 07:50:44 - INFO - Orchestrator - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-02-15 07:50:44 - INFO - Orchestrator - Starting modules/2.transform_data.py
+2026-02-15 07:50:44 - INFO -    Module    - Reading data and logs/fuelcheck_feb2026.csv
+2026-02-15 07:50:44 - INFO - Orchestrator - Finished modules/2.transform_data.py
+2026-02-15 07:50:44 - ERROR - Orchestrator - Module modules/2.transform_data.py failed with exit code 1
+2026-02-15 07:50:44 - ERROR - Orchestrator - modules/2.transform_data.py errors before failure:
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/2.transform_data.py", line 107, in <module>
+    pd.read_csv(file)
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 873, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 300, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1645, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1904, in _make_engine
+    self.handles = get_handle(
+                   ^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/common.py", line 926, in get_handle
+    handle = open(
+             ^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'data and logs/fuelcheck_feb2026.csv'
+
