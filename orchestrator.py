@@ -106,6 +106,9 @@ run_module("modules/1.file_retrieval.py")
 # -------------------- Module 2
 run_module("modules/2.transform_data.py")
 
+# -------------------- Module 2
+run_module("modules/3.api_integration.py")
+
 # -------------------- Retention Policy
 run_module("modules/99.retention_policy.py")
 
