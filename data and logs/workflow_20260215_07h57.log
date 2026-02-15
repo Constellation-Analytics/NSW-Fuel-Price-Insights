@@ -1,0 +1,33 @@
+2026-02-15 07:57:29 - INFO - Orchestrator - Starting orchestrator
+2026-02-15 07:57:29 - INFO - Orchestrator - Starting modules/1.file_retrieval.py
+2026-02-15 07:57:29 - INFO -    Module    - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-15 07:57:33 - INFO -    Module    - jan2026 data file already loaded
+2026-02-15 07:57:33 - INFO - Orchestrator - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-02-15 07:57:33 - INFO - Orchestrator - Starting modules/2.transform_data.py
+2026-02-15 07:57:33 - INFO -    Module    - Reading data and logs/fuelcheck_jan2026.csv
+2026-02-15 07:57:34 - INFO - Orchestrator - Finished modules/2.transform_data.py
+2026-02-15 07:57:34 - ERROR - Orchestrator - Module modules/2.transform_data.py failed with exit code 1
+2026-02-15 07:57:34 - ERROR - Orchestrator - modules/2.transform_data.py errors before failure:
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/2.transform_data.py", line 114, in <module>
+    pd.to_datetime(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/tools/datetimes.py", line 1036, in to_datetime
+    cache_array = _maybe_cache(arg, format, cache, convert_listlike)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/tools/datetimes.py", line 254, in _maybe_cache
+    cache_dates = convert_listlike(unique_dates, format)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/tools/datetimes.py", line 435, in _convert_listlike_datetimes
+    return _array_strptime_with_fallback(arg, name, utc, format, exact, errors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/tools/datetimes.py", line 470, in _array_strptime_with_fallback
+    result, tz_out = array_strptime(arg, fmt, exact=exact, errors=errors, utc=utc)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas/_libs/tslibs/strptime.pyx", line 563, in pandas._libs.tslibs.strptime.array_strptime
+  File "pandas/_libs/tslibs/strptime.pyx", line 511, in pandas._libs.tslibs.strptime.array_strptime
+  File "pandas/_libs/tslibs/strptime.pyx", line 617, in pandas._libs.tslibs.strptime._parse_with_format
+ValueError: time data "2026-01-13 00:03:11" doesn't match format "%Y-%d-%m %H:%M:%S". You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
