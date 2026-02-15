@@ -106,6 +106,9 @@ run_module("modules/1.file_retrieval.py")
 # -------------------- Module 2
 run_module("modules/2.transform_data.py")
 
+# -------------------- Retention Policy
+run_module("modules/0.retention_policy.py")
+
 # -------------------- Update config and save log
 config_file = "config.json"
 with open("config.json") as json_file:
