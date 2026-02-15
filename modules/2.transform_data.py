@@ -108,6 +108,10 @@ df_fuel_data['date'] = (
     ).dt.normalize()
 )
 
+rowcount = len(df_fuel_data)
+logger.info(f"df_fuel_data has {rowcount} rows")
+
+
 # ----------------------------------------------------------------------------------------------------
 #                                           Block Two
 # - Set column headers to lowercase  
@@ -115,6 +119,7 @@ df_fuel_data['date'] = (
 # - Fetch stations and fuel types for the last month
 # - Union the two datasets
 # ----------------------------------------------------------------------------------------------------
+logger.info(f"Starting Block Two")
 
 # Set column headers to lowercase  
 df_fuel_data.columns = df_fuel_data.columns.str.lower()
@@ -150,6 +155,7 @@ union_data = pd.concat([unique_station_fuelcodes, station_fuelcode_dbo]).drop_du
 # - Cross join to unique combinations of 'servicestationname','address','fuelcode' defined in Block 2
 # - Get average price per 'servicestationname','address','fuelcode', 'date' from Block 1
 # ----------------------------------------------------------------------------------------------------
+logger.info(f"Starting Block Three")
 
 # Generate a full date range based on the min and max dates in the dataset
 date_range_df = pd.DataFrame(
@@ -182,6 +188,7 @@ daily_median_prices = (
 # - Every station Left join last_day_of_last_month prices 
 # - Create PriceUpdatedDate column date where Price is not Null
 # ----------------------------------------------------------------------------------------------------
+logger.info(f"Starting Block Four")
 
 # Calculate the last day of the previous month
 date = df_fuel_data['date'].min()
@@ -247,6 +254,7 @@ joined_data['priceupdateddate']= joined_data['date'].where(~joined_data['price']
 # - Remove last month data
 # - Add unique id to each row
 # ----------------------------------------------------------------------------------------------------
+logger.info(f"Starting Block Five")
 
 # Forward fill 'Price' within each 'servicestationname', 'address', 'fuelcode' group
 joined_data['price'] = joined_data.groupby(['servicestationname', 'address', 'fuelcode'])['price'].ffill()
@@ -275,9 +283,10 @@ output['record_id'] = concat_cols.map(
 output = output[['record_id', 'servicestationname', 'address', 'fuelcode', 'date', 'price', 'priceupdateddate']]
 
 # ----------------------------------------------------------------------------------------------------
-#                                           Block Five
+#                                           Block Six
 # - Insert into database
 # ----------------------------------------------------------------------------------------------------
+logger.info(f"Starting Block six")
 
 # Insert into database
 try:
