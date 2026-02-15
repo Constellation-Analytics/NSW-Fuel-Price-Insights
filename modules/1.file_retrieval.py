@@ -44,6 +44,7 @@ with open("config.json") as json_file:
     config = json.load(json_file)
 
 # Create date variables
+latest_file = config["latest_file"]
 nextfile = config["next_file_date"]
 nextfile_dt = datetime.strptime(nextfile, "%b%Y")
 nextfile_month = nextfile_dt.strftime("%b").lower()
@@ -112,7 +113,7 @@ download_links = [
 
 # exit if the most recent file has already been processed
 if current_monthyear == nextfile:
-    logger.info(f"{current_monthyear} data file already loaded")
+    logger.info(f"{latest_file} data file already loaded")
     sys.exit(10)
 
 # exit if the file is not yet available
