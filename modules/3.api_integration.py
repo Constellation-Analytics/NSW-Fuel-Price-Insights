@@ -191,7 +191,7 @@ SELECT
     longitude,
     last_update
 FROM
-    fuel_station_dict
+    dim_fuel_station_dict
 WHERE 
     active = True
 """
