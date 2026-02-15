@@ -90,9 +90,10 @@ def save_config():
         with open("config.json", "w") as json_file:
             json.dump(config, json_file, indent=4)
         logger.info("Config file updated")
+        push_file_to_repo(config_file, f"successful run - configfile updated {datetimestamp}")
+
     except Exception as e:
-        logger.exception(f"Unexpected error saving json config file: {e}")        
-    push_file_to_repo(config_file,f"successful run - configfile updated {datetimestamp}")
+        logger.exception(f"Unexpected error saving json config file: {e}")
 
 
 # ----------------------------------------------------------------------------------------------------
