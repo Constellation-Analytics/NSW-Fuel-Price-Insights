@@ -84,7 +84,7 @@ def generate_md5_hash(value: str) -> str:
 # ----------------------------------------------------------------------------------------------------
 
 # exit if the latest file has already been transformed
-if config["latest_file"] = config["last_transformation"]:
+if config["latest_file"] == config["last_transformation"]:
     logger.info(f"{config['latest_file']} file has already been transformed")
     sys.exit(10)
 
