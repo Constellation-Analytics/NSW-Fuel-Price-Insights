@@ -44,10 +44,10 @@ with open("config.json") as json_file:
     config = json.load(json_file)
 
 # Create date variables
-nextfile = config["next_file_date"]
-nextfile_dt = datetime.strptime(nextfile, "%b%Y")
-nextfile_month = nextfile_dt.strftime("%b").lower()
-nextfile_year = nextfile_dt.strftime("%Y")
+latest_file = config["latest_file"]
+latest_file_dt = datetime.strptime(latest_file, "%b%Y")
+latest_file_month = latest_file_dt.strftime("%b").lower()
+latest_file_year = latest_file_dt.strftime("%Y")
 current_monthyear = datetime.now().replace(day=1).strftime("%b%Y").lower()
 
 # timestamp for commits
@@ -99,7 +99,7 @@ if config["latest_file"] == config["last_transformation"]:
 # ----------------------------------------------------------------------------------------------------
 
 # Read the file 
-file = f"data and logs/fuelcheck_{nextfile}.csv"
+file = f"data and logs/fuelcheck_{latest_file}.csv"
 logger.info(f"Reading {file}")
 
 # Forward-fill missing information (if the file was originally excel the cells can be merged vertically causing issues)
