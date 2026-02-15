@@ -5,10 +5,13 @@ import pandas as pd
 import uuid
 from sqlalchemy import create_engine, text
 
+
+# Load environment variables from GitHub Secrets
+API_KEY = os.getenv("API_KEY")
+API_SECRET = os.getenv("API_SECRET")
+API_AUTHORISATION_HEADER = os.getenv("API_AUTHORISATION_HEADER")
+
 # Authentification Information
-API_key = "nACARuTyLSo3vHkRDF801iNq2PkvJsIt"
-API_secret = "HDFU9dxVR0Ueh9S5"
-authorisation_header = "Basic bkFDQVJ1VHlMU28zdkhrUkRGODAxaU5xMlBrdkpzSXQ6SERGVTlkeFZSMFVlaDlTNQ=="
 access_token_URL = "https://api.onegov.nsw.gov.au/oauth/client_credential/accesstoken"
 dict_url = "https://api.onegov.nsw.gov.au/FuelCheckRefData/v2/fuel/lovs"
 
