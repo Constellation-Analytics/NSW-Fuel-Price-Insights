@@ -1,11 +1,32 @@
 import os
 import glob
 from datetime import datetime, timedelta
+import argparse
 import subprocess
 import logging
 
-logger = logging.getLogger(__name__)
+# ----------------------------------------------------------------------------------------------------
+#                                       setup variables
+# ----------------------------------------------------------------------------------------------------
 
+# Get log file path from orchestrator
+parser = argparse.ArgumentParser()
+parser.add_argument("--log-file", required=True)
+args = parser.parse_args()
+log_file = args.log_file
+
+os.makedirs("data and logs", exist_ok=True)
+
+# Set up logging for module
+logging.basicConfig(
+    filename=log_file,
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s -    Module    - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+
+# Create logger with dummy name so it can be scaled later if needed
+logger = logging.getLogger("log_dog")
 def cleanup_old_workflow_logs():
     """
     Deletes workflow log files older than 30 days and pushes changes to GitHub.
@@ -47,3 +68,5 @@ def cleanup_old_workflow_logs():
     except subprocess.CalledProcessError as e:
         logger.exception(f"Git operation failed: {e}")
         raise
+
+cleanup_old_workflow_logs()
