@@ -1,0 +1,16 @@
+2026-02-15 09:32:11 - INFO -   Orchestrator   - Starting orchestrator
+2026-02-15 09:32:11 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-02-15 09:32:11 - INFO -      Module      - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-15 09:32:15 - INFO -      Module      - jan2026 data file already loaded
+2026-02-15 09:32:15 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-02-15 09:32:15 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-02-15 09:32:15 - INFO -      Module      - jan2026 file has already been transformed
+2026-02-15 09:32:15 - INFO -   Orchestrator   - Finished modules/2.transform_data.py
+2026-02-15 09:32:15 - ERROR -   Orchestrator   - Module modules/2.transform_data.py failed with exit code 1
+2026-02-15 09:32:15 - ERROR -   Orchestrator   - modules/2.transform_data.py errors before failure:
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/2.transform_data.py", line 129, in <module>
+    sys.exit(10)
+    ^^^
+NameError: name 'sys' is not defined
+
