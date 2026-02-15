@@ -42,9 +42,12 @@ def cleanup_old_workflow_logs():
 
         # 30 days ago
         cutoff_date = datetime.now() - timedelta(days=5)
+        
+        # Name of log folder
+        log_folder = "data and logs"
 
         # Find all workflow logs
-        for file_path in glob.glob("workflow_*.log"):
+        for file_path in glob.glob(os.path.join(log_folder, "workflow_*.log")):
             # Extract date from filename
             base = os.path.basename(file_path)
             try:
