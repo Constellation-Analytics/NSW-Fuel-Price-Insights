@@ -5,6 +5,49 @@ import pandas as pd
 import uuid
 from sqlalchemy import create_engine, text
 
+# ----------------------------------------------------------------------------------------------------
+#                                       setup variables
+# ----------------------------------------------------------------------------------------------------
+
+# Get log file path from orchestrator
+parser = argparse.ArgumentParser()
+parser.add_argument("--log-file", required=True)
+args = parser.parse_args()
+log_file = args.log_file
+
+os.makedirs("data and logs", exist_ok=True)
+
+# Set up logging for module
+logging.basicConfig(
+    filename=log_file,
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s -      Module      - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+
+# Create logger with dummy name so it can be scaled later if needed
+logger = logging.getLogger("log_dog")
+
+# Load environment variables from GitHub Secrets
+DB_CONNECTION_STRING = os.getenv("DB_CONNECTION_STRING")
+
+# Create database engine
+engine = create_engine(DB_CONNECTION_STRING)
+
+# Set up the file config
+config_file = "config.json"
+with open("config.json") as json_file:
+    config = json.load(json_file)
+
+# Create date variables
+latest_file = config["latest_file"]
+latest_file_dt = datetime.strptime(latest_file, "%b%Y")
+latest_file_month = latest_file_dt.strftime("%b").lower()
+latest_file_year = latest_file_dt.strftime("%Y")
+current_monthyear = datetime.now().replace(day=1).strftime("%b%Y").lower()
+
+# timestamp for commits
+datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
 
 # Load environment variables from GitHub Secrets
 API_KEY = os.getenv("API_KEY")
@@ -14,17 +57,25 @@ API_AUTHORISATION_HEADER = os.getenv("API_AUTHORISATION_HEADER")
 # Authentification Information
 access_token_URL = "https://api.onegov.nsw.gov.au/oauth/client_credential/accesstoken"
 dict_url = "https://api.onegov.nsw.gov.au/FuelCheckRefData/v2/fuel/lovs"
-
-#universal variables
-now = datetime.now(timezone.utc).strftime("%Y-%m-%d %I:%M:%S %p")
 unique_id = str(uuid.uuid4())
 
 # -------------------------------------------------------------------------------------------------
 #                                       Define Functions
 # -------------------------------------------------------------------------------------------------
 
+
 # Create an Access Token
 def create_access_token(url, authorisation_header):
+    """
+    Request an OAuth access token using the client credentials grant type.
+
+    Args:
+        url (str): The token endpoint URL.
+        authorisation_header (str): Authorization header value (e.g., Basic base64(client_id:secret)).
+
+    Returns:
+        str | None: Access token if successful, otherwise None.
+    """
     # Define query parameters for the access token request
     querystring = {"grant_type": "client_credentials"}
     
@@ -37,47 +88,64 @@ def create_access_token(url, authorisation_header):
     try:
         # Make a GET request to the API
         auth_response = requests.get(url, headers=headers, params=querystring)
-        auth_response.raise_for_status()  # Raise exception for HTTP errors
+        auth_response.raise_for_status()
         
         # Parse JSON response
         data = auth_response.json()
         return data.get("access_token", None)
+
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
         return None
 
 
-def api_data(url,access_token,API_key):
+def api_data(url, access_token, API_key):
+    """
+    Retrieve station data from the API and return it as a normalized DataFrame.
 
+    Args:
+        url (str): API endpoint URL.
+        access_token (str): Bearer token for authorization.
+        API_key (str): API key required by the endpoint.
+
+    Returns:
+        pd.DataFrame | None: Normalized DataFrame of station data if successful,
+        otherwise None.
+    """
     headers = {
-    'content-type': "application/json",
-    'authorization': f"Bearer {access_token}",
-    'apikey': API_key,
-    'transactionid': unique_id,
-    'requesttimestamp': now,
-    'if-modified-since': now
+        'content-type': "application/json",
+        'authorization': f"Bearer {access_token}",
+        'apikey': API_key,
+        'transactionid': unique_id,
+        'requesttimestamp': datetimestamp,
+        'if-modified-since': datetimestamp
     }
+
     try:
         response = requests.get(dict_url, headers=headers)
-        response.raise_for_status()  # Raise exception for HTTP errors
+        response.raise_for_status()
 
         # Parse JSON response
-        data = response.json()  
+        data = response.json()
         stations = data["stations"]["items"]
         return pd.json_normalize(stations)
+
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
         return None
+
 
 # -------------------------------------------------------------------------------------------------
 #                                       Pull API Information
 # -------------------------------------------------------------------------------------------------
 
+logger.info(f"Pulling API Information")
+
 # Generate the access token and access the data
 token = create_access_token(access_token_URL,authorisation_header)
 data = api_data(dict_url,token,API_key)
 
-# Create the new address columns
+# Create the new address columns using 
 data['street'] = data['address'].str.extract(r'((?:\d+|Corner|Cnr).+?),')
 data['street'] = data['street'].str.title()
 data['town'] = data['address'].str.extract(r',\s(\D+)\sNSW\s\d+')
@@ -85,7 +153,7 @@ data['town'] = data['town'].str.title()
 data['postcode'] = data['address'].str.extract(r'NSW\s(\d+)')
 
 # add timestamp
-data['last_update'] = now
+data['last_update'] = datetimestamp
 
 # Select specific columns
 selected_columns = data[['code','brand','name', 'address','street', 'town', 'postcode', 'location.latitude', 'location.longitude','last_update']]
@@ -137,7 +205,7 @@ new = fuel_station_api[~fuel_station_api['stationid'].isin(fuel_station_dict['st
 updated = fuel_station_api.merge(fuel_station_dict, on='stationid', suffixes=('_api', '_db'))
 updated_stations = updated[(updated['name_api'] != updated['name_db']) | (updated['address_api'] != updated['address_db'])]
 updated_stations = updated_stations[['stationid', 'brand_api', 'name_api', 'address_api', 'street_api','town_api', 'postcode_api', 'latitude_api', 'longitude_api']].rename(columns=lambda x: x.replace('_api', ''))
-updated_stations['last_update'] = now
+updated_stations['last_update'] = datetimestamp
 
 # -------------------------------------------------------------------------------------------------
 #                                       Truncate the temp tables
