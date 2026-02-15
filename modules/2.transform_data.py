@@ -294,8 +294,7 @@ logger.info(f"Final output has {rowcount} rows")
 
 # Insert into database
 try:
-	# Insert DataFrame into PostgreSQL
-    logger.info(f"Inserting values into database")
+	logger.info(f"Inserting values into database")
 	output.to_sql('fuelprice_staging', engine, if_exists='append', index=False)
 
 except Exception as e:
