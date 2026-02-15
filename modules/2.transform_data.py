@@ -77,15 +77,32 @@ def last_day_of_previous_month(any_date):
         logger.exception(f"Error calculating last day of previous month: {e}")
         raise
 
-
 # Hash function to create deterministic fingerprint of each row
 def generate_md5_hash(value: str) -> str:
+    """
+    Generate an MD5 hash for a given string.
+
+    Args:
+        value (str): The input string to hash.
+
+    Returns:
+        str: A 32-character hexadecimal MD5 hash of the input string.
+    """
     encoded = value.encode("utf-8")  # convert string to bytes (required for hashing)
     hash_object = hashlib.md5(encoded)  # generate MD5 hash object
     return hash_object.hexdigest()  # return 32-character hexadecimal string
 
 def push_file_to_repo(file_path, commit_message):
-    """Adds, commits, and pushes a file to GitHub using GITHUB_TOKEN"""
+    """
+    Add, commit, and push a file to a GitHub repository using a GitHub token.
+
+    Args:
+        file_path (str): Path to the file to push.
+        commit_message (str): Commit message for the Git change.
+
+    Raises:
+        subprocess.CalledProcessError: If any git command fails (except when commit has no changes).
+    """
     logger.info("pushing file to repo")
     try:
         repo_url = (
@@ -109,6 +126,15 @@ def push_file_to_repo(file_path, commit_message):
         raise
 
 def save_config():
+    """
+    Save the current configuration to a JSON file and push it to GitHub.
+
+    Writes the global `config` object to 'config.json' with indentation,
+    then pushes the file to the repository with a timestamped commit message.
+
+    Raises:
+        Exception: If writing the file or pushing to GitHub fails.
+    """
     try:
         with open("config.json", "w") as json_file:
             json.dump(config, json_file, indent=4)
@@ -117,8 +143,6 @@ def save_config():
 
     except Exception as e:
         logger.exception(f"Unexpected error saving json config file: {e}")
-
-
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
