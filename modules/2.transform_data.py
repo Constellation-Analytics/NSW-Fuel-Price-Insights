@@ -113,7 +113,6 @@ df_fuel_data = (
 df_fuel_data['date'] = (
     pd.to_datetime(
         df_fuel_data['PriceUpdatedDate'],
-        dayfirst=True,
         errors='raise'
     ).dt.normalize()
 )
