@@ -62,7 +62,16 @@ datafile = f"data and logs/fuelcheck_{nextfile}.csv"
 # ----------------------------------------------------------------------------------------------------
 
 def push_file_to_repo(file_path, commit_message):
-    """Adds, commits, and pushes a file to GitHub using GITHUB_TOKEN"""
+    """
+    Add, commit, and push a file to a GitHub repository using a GitHub token.
+
+    Args:
+        file_path (str): Path to the file to push.
+        commit_message (str): Commit message for the Git change.
+
+    Raises:
+        subprocess.CalledProcessError: If any git command fails (except when commit has no changes).
+    """
     logger.info("pushing file to repo")
     try:
         repo_url = (
@@ -85,7 +94,17 @@ def push_file_to_repo(file_path, commit_message):
         logger.exception(f"Failed to push {file_path}: {e}")
         raise
 
+
 def save_config():
+    """
+    Save the current configuration to a JSON file and push it to GitHub.
+
+    Writes the global `config` object to 'config.json' with indentation,
+    then pushes the file to the repository with a timestamped commit message.
+
+    Raises:
+        Exception: If writing the file or pushing to GitHub fails.
+    """
     try:
         with open("config.json", "w") as json_file:
             json.dump(config, json_file, indent=4)
