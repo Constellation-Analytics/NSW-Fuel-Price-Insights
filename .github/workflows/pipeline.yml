@@ -36,6 +36,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
-          API_key: ${{ secrets.API_key }}
-          API_secret: ${{ secrets.API_secret }}
-          authorisation_header: ${{ secrets.authorisation_header }}
+          API_KEY: ${{ secrets.API_KEY }}
+          API_SECRET: ${{ secrets.API_SECRET }}
+          API_AUTHORISATION_HEADER: ${{ secrets.API_AUTHORISATION_HEADER }}
