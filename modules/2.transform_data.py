@@ -82,6 +82,39 @@ def generate_md5_hash(value: str) -> str:
     hash_object = hashlib.md5(encoded)  # generate MD5 hash object
     return hash_object.hexdigest()  # return 32-character hexadecimal string
 
+def push_file_to_repo(file_path, commit_message):
+    """Adds, commits, and pushes a file to GitHub using GITHUB_TOKEN"""
+    logger.info("pushing file to repo")
+    try:
+        repo_url = (
+            f"https://x-access-token:{os.environ['GITHUB_TOKEN']}"
+            f"@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
+        )
+
+        subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
+        subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
+        subprocess.run(["git", "add", file_path], check=True)
+        subprocess.run(
+            ["git", "commit", "-m", commit_message],
+            check=False  # won't fail if nothing changed
+        )
+        subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
+
+        logger.info(f"Successfully pushed {file_path} to repo")
+
+    except subprocess.CalledProcessError as e:
+        logger.exception(f"Failed to push {file_path}: {e}")
+        raise
+
+def save_config():
+    try:
+        with open("config.json", "w") as json_file:
+            json.dump(config, json_file, indent=4)
+    except Exception as e:
+        logger.exception(f"Unexpected error saving json config file: {e}")        
+    push_file_to_repo(config_file,f"successful run - configfile updated {datetimestamp}")
+
+
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
@@ -300,6 +333,10 @@ try:
 	output.to_sql('fuelprice_staging', engine, if_exists='append', index=False)
 
 except Exception as e:
-    logger.exception(f"Unexpected error while inserting values into database: {e}")        
+    logger.exception(f"Unexpected error while inserting values into database: {e}")
+
+#update the config 
+config["last_transformation"] = config["latest_file"].strftime("%b%Y").lower()
+save_config()
 
 logger.info("Operation complete")
