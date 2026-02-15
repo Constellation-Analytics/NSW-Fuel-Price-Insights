@@ -32,6 +32,9 @@ logging.basicConfig(
 # Create logger with dummy name so it can be scaled later if needed
 logger = logging.getLogger("log_dog")
 
+# Load environment variables from GitHub Secrets
+DB_CONNECTION_STRING = os.getenv("DB_CONNECTION_STRING")
+
 # Create database engine
 engine = create_engine(DB_CONNECTION_STRING)
 
