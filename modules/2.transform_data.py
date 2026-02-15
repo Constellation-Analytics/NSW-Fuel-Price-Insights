@@ -72,6 +72,13 @@ def last_day_of_previous_month(any_date):
         logger.exception(f"Error calculating last day of previous month: {e}")
         raise
 
+
+# Hash function to create deterministic fingerprint of each row
+def generate_md5_hash(value: str) -> str:
+    encoded = value.encode("utf-8")  # convert string to bytes (required for hashing)
+    hash_object = hashlib.md5(encoded)  # generate MD5 hash object
+    return hash_object.hexdigest()  # return 32-character hexadecimal string
+
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
@@ -182,7 +189,7 @@ daily_median_prices = (
 )
 
 # ----------------------------------------------------------------------------------------------------
-#                                           Block Four
+#                                           Block Four - pt1
 # - Fetch price data from last month
 # - Every station Left join median prices 
 # - Every station Left join last_day_of_last_month prices 
@@ -248,13 +255,12 @@ joined_data = joined_data.drop(columns=['price_x', 'price_y'])
 joined_data['priceupdateddate']= joined_data['date'].where(~joined_data['price'].isna(), pd.NaT)
 
 # ----------------------------------------------------------------------------------------------------
-#                                           Block Five
+#                                           Block Four - pt2
 # - Forward fill all prices
 # - Remove null prices
 # - Remove last month data
 # - Add unique id to each row
 # ----------------------------------------------------------------------------------------------------
-logger.info(f"Starting Block Five")
 
 # Forward fill 'Price' within each 'servicestationname', 'address', 'fuelcode' group
 joined_data['price'] = joined_data.groupby(['servicestationname', 'address', 'fuelcode'])['price'].ffill()
@@ -266,27 +272,25 @@ drop_nulls = joined_data.dropna(subset = ['price']).reset_index(drop=True)
 max_date = joined_data['date'].max()
 output = drop_nulls[(drop_nulls['date'].dt.year == max_date.year) & (drop_nulls['date'].dt.month == max_date.month)].copy()
 
-# add unique id
+# Generate deterministic record_id for each fuel price observation
+# Step 1: Select key columns and concatenate them into a single string
 concat_cols = (
-    output[['servicestationname','address','fuelcode','price','date']]
-    .astype(str)
-    .agg('|'.join, axis=1)
+    output[['servicestationname','address','fuelcode','price','date']]  # key columns
+    .astype(str)  # ensure consistent string representation before hashing
+    .agg('|'.join, axis=1)  # combine columns row-wise using a stable delimiter
 )
-
-output['record_id'] = concat_cols.map(
-    lambda x: hashlib
-	.md5(x.encode())
-	.hexdigest()
-)
+# Step 2: Apply hash function to each concatenated row to create record_id
+output['record_id'] = concat_cols.map(generate_md5_hash)
 
 #order & rename the final output columns
 output = output[['record_id', 'servicestationname', 'address', 'fuelcode', 'date', 'price', 'priceupdateddate']]
 
+rowcount = len(output)
+logger.info(f"Final output has {rowcount} rows")
 # ----------------------------------------------------------------------------------------------------
-#                                           Block Six
+#                                           Block Four - pt3
 # - Insert into database
 # ----------------------------------------------------------------------------------------------------
-logger.info(f"Starting Block six")
 
 # Insert into database
 try:
