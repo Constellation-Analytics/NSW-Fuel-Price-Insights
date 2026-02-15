@@ -1,0 +1,21 @@
+2026-02-15 08:58:47 - INFO - Orchestrator - Starting orchestrator
+2026-02-15 08:58:47 - INFO - Orchestrator - Starting modules/1.file_retrieval.py
+2026-02-15 08:58:48 - INFO -    Module    - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-15 08:58:52 - INFO -    Module    - jan2026 data file already loaded
+2026-02-15 08:58:52 - INFO - Orchestrator - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-02-15 08:58:52 - INFO - Orchestrator - Starting modules/2.transform_data.py
+2026-02-15 08:58:53 - INFO -    Module    - Reading data and logs/fuelcheck_jan2026.csv
+2026-02-15 08:58:53 - INFO -    Module    - df_fuel_data has 74525 rows
+2026-02-15 08:58:53 - INFO -    Module    - Starting Block Two
+2026-02-15 08:58:54 - INFO -    Module    - Starting Block Three
+2026-02-15 08:58:54 - INFO -    Module    - Starting Block Four
+2026-02-15 08:59:05 - INFO -    Module    - Final output has 256774 rows
+2026-02-15 08:59:05 - INFO -    Module    - Inserting values into database
+2026-02-15 08:59:17 - INFO -    Module    - pushing file to repo
+2026-02-15 08:59:17 - INFO -    Module    - Successfully pushed config.json to repo
+2026-02-15 08:59:17 - INFO -    Module    - Operation complete
+2026-02-15 08:59:17 - INFO - Orchestrator - Finished modules/2.transform_data.py
+2026-02-15 08:59:17 - INFO - Orchestrator - Starting modules/0.retention_policy.py
+2026-02-15 08:59:17 - INFO -   Retention Policy   - Old workflow logs cleaned up and changes pushed.
+2026-02-15 08:59:17 - INFO - Orchestrator - Finished modules/0.retention_policy.py
+2026-02-15 08:59:17 - INFO - Orchestrator - Finished orchestrator
