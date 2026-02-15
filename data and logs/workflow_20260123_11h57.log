@@ -1,9 +1,0 @@
-2026-01-23 11:57:41 - INFO - starting orchestrator
-2026-01-23 11:57:41 - INFO - Starting modules/1.file_retrieval.py
-2026-01-23 11:57:41 - ERROR - Module modules/1.file_retrieval.py failed with exit code 1
-2026-01-23 11:57:41 - ERROR - modules/1.file_retrieval.py errors before failure:
-  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/1.file_retrieval.py", line 52
-    logger.info(f"pushing file to repo")
-                                        ^
-IndentationError: unindent does not match any outer indentation level
-

@@ -1,8 +1,0 @@
-2026-01-23 12:00:08 - INFO - starting orchestrator
-2026-01-23 12:00:08 - INFO - Starting modules/1.file_retrieval.py
-2026-01-23 12:00:08 - INFO - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
-2026-01-23 12:00:14 - INFO - downloading file from server
-2026-01-23 12:00:22 - INFO - converting file to csv
-2026-01-23 12:00:23 - INFO - pushing file to repo
-2026-01-23 12:00:23 - INFO - Successfully pushed data and logs/fuelcheck_dec2025.csv to repo
-2026-01-23 12:00:23 - INFO - Finished modules/1.file_retrieval.py

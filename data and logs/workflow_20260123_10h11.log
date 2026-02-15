@@ -1,9 +1,0 @@
-2026-01-23 10:11:13 - INFO - Starting modules/1.file_retrieval.py
-2026-01-23 10:11:14 - ERROR - Module modules/1.file_retrieval.py failed with exit code 1
-2026-01-23 10:11:14 - ERROR - modules/1.file_retrieval.py errors before failure:
-Traceback (most recent call last):
-  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/1.file_retrieval.py", line 39, in <module>
-    datafile = f"data and logs/fuelcheck_{month}{year}.csv"
-                                          ^^^^^
-NameError: name 'month' is not defined
-

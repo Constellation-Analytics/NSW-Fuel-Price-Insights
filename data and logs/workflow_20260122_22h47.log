@@ -1,8 +1,0 @@
-2026-01-22 22:47:05 - INFO - Starting modules/1.file_retrieval.py
-2026-01-22 22:47:05 - ERROR - Module modules/1.file_retrieval.py failed with exit code 1
-2026-01-22 22:47:05 - ERROR - modules/1.file_retrieval.py errors before failure:
-  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/1.file_retrieval.py", line 58
-    im_a_potato!!!! 
-               ^
-SyntaxError: invalid syntax
-

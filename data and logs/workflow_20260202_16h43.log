@@ -1,6 +1,0 @@
-2026-02-02 16:43:25 - INFO - Orchestrator - Starting orchestrator
-2026-02-02 16:43:25 - INFO - Orchestrator - Starting modules/1.file_retrieval.py
-2026-02-02 16:43:26 - INFO -    Module    - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
-2026-02-02 16:43:29 - INFO -    Module    - jan2026 file not yet available
-2026-02-02 16:43:29 - INFO - Orchestrator - Conditions not met in modules/1.file_retrieval.py - Skipping Module
-2026-02-02 16:43:29 - INFO - Orchestrator - Finished orchestrator
