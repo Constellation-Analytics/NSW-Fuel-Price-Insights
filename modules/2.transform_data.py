@@ -336,7 +336,7 @@ except Exception as e:
     logger.exception(f"Unexpected error while inserting values into database: {e}")
 
 #update the config 
-config["last_transformation"] = config["latest_file"].strftime("%b%Y").lower()
+config["last_transformation"] = config["latest_file"]
 save_config()
 
 logger.info("Operation complete")
