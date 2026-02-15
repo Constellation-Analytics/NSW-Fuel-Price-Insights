@@ -1,9 +1,17 @@
 #Import packages
-import requests
-from datetime import datetime, timezone
+# Import necessary libraries
+from datetime import datetime, timedelta
+from sqlalchemy import create_engine
+import argparse
+import json
+import logging
+import numpy as np
+import os
 import pandas as pd
+import requests
+import subprocess
+import sys
 import uuid
-from sqlalchemy import create_engine, text
 
 # ----------------------------------------------------------------------------------------------------
 #                                       setup variables
@@ -166,31 +174,33 @@ fuel_station_api = selected_columns.rename(columns={'code': 'stationid',
 # Changing the data type
 fuel_station_api['stationid'] = fuel_station_api['stationid'].astype(str)
 
-# -------------------------------------------------------------------------------------------------
-#                                       Pull database Information
-# -------------------------------------------------------------------------------------------------
+# Pull database Information
 logger.info(f"Pulling Database Information")
 
-# Create the database engine
-engine = create_engine(DB_CONNECTION_STRING)
+# SQL query to fetch active stations
+station_query = f"""
+SELECT 
+    stationid,
+    brand,
+    name, 
+    address,
+    street, 
+    town, 
+    postcode, 
+    latitude, 
+    longitude,
+    last_update
+FROM
+    fuel_station_dict
+WHERE 
+    active = True
+"""
 
-# Active stations
-call = text("SELECT stationid,brand,name, address,street, town, postcode, latitude, longitude,last_update \
-            FROM dev.fuel_station_dict\
-            WHERE active = True")
-try:
-    # Fetch data from PostgreSQL
-    with engine.connect() as conn:
-        result = conn.execute(call)
-        # Convert the result to a DataFrame
-        fuel_station_dict = pd.DataFrame(result.fetchall())
-except Exception as e:
-    print(f"Error: {e}")
+# Execute the query
+station_fuelcode_dbo = pd.read_sql(station_query, engine)
 
-# -------------------------------------------------------------------------------------------------
-#                                       Create the datasets
-# -------------------------------------------------------------------------------------------------
-print("Creating the datasets")
+# Create the datasets
+logger.info("Creating the datasets")
 
 # Dict is not in API
 deleted = fuel_station_dict[~fuel_station_dict['stationid'].isin(fuel_station_api['stationid'])]
@@ -204,12 +214,10 @@ updated_stations = updated[(updated['name_api'] != updated['name_db']) | (update
 updated_stations = updated_stations[['stationid', 'brand_api', 'name_api', 'address_api', 'street_api','town_api', 'postcode_api', 'latitude_api', 'longitude_api']].rename(columns=lambda x: x.replace('_api', ''))
 updated_stations['last_update'] = datetimestamp
 
-# -------------------------------------------------------------------------------------------------
-#                                       Truncate the temp tables
-# -------------------------------------------------------------------------------------------------
-print("Truncating temp tables")
+# Truncate the staging tables
+logger.info("Truncate the staging tables")
 
-call = text("CALL dev.truncate_temp_station_tables();")
+call = text("CALL truncate_staging_station_tables();")
 with engine.connect() as conn:
     conn = conn.execution_options(isolation_level="AUTOCOMMIT")
     conn.execute(call)
@@ -217,15 +225,15 @@ with engine.connect() as conn:
 # -------------------------------------------------------------------------------------------------
 #                                       Insert into database
 # -------------------------------------------------------------------------------------------------
-print("Inserting data into the database")
+logger.info("Inserting data into the database")
 
 try:
     # Insert DataFrame into PostgreSQL
     with engine.connect() as connection:
-        deleted.to_sql('temp_inactive_stations', connection, schema='dev', if_exists='append', index=False)
-        new.to_sql('temp_new_stations', connection, schema='dev', if_exists='append', index=False)
-        updated_stations.to_sql('temp_updated_stations', connection, schema='dev', if_exists='append', index=False)
+        deleted.to_sql('staging_inactive_stations', connection, schema='dev', if_exists='append', index=False)
+        new.to_sql('staging_new_stations', connection, schema='dev', if_exists='append', index=False)
+        updated_stations.to_sql('staging_updated_stations', connection, schema='dev', if_exists='append', index=False)
 except Exception as e:
-    print(f"error: {e}")
+    logger.exception(f"Unexpected error while inserting values into database: {e}")
 
-print("Operation complete")
+logger.info("Operation complete")
