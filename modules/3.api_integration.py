@@ -100,9 +100,6 @@ def create_access_token(url, authorisation_header):
         
         # Parse JSON response
         data = auth_response.json()
-        if data is None:
-            logger.error("API returned no Access Token")
-            sys.exit(1)
         return data.get("access_token", None)
 
     except requests.exceptions.RequestException as e:
@@ -138,9 +135,6 @@ def api_data(url, access_token, API_key):
 
         # Parse JSON response
         data = response.json()
-        if data is None:
-            logger.error("API returned no data")
-            sys.exit(1)
         stations = data["stations"]["items"]
         return pd.json_normalize(stations)
 
@@ -178,6 +172,14 @@ logger.info(f"Pulling API Information")
 # Generate the access token and access the data
 token = create_access_token(access_token_URL,API_AUTHORISATION_HEADER)
 data = api_data(dict_url,token,API_KEY)
+
+if token is None:
+    logger.error("API returned no Access Token")
+    sys.exit(1)
+
+if data is None:
+    logger.error("API returned no data")
+    sys.exit(1)
 
 # Create the new address columns using 
 data['street'] = data['address'].str.extract(r'((?:\d+|Corner|Cnr).+?),')
