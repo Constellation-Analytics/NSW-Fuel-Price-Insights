@@ -100,6 +100,9 @@ def create_access_token(url, authorisation_header):
         
         # Parse JSON response
         data = auth_response.json()
+        if data is None:
+            logger.error("API returned no Access Token")
+            sys.exit(1)
         return data.get("access_token", None)
 
     except requests.exceptions.RequestException as e:
