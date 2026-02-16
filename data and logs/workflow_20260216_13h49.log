@@ -1,0 +1,19 @@
+2026-02-16 13:49:41 - INFO -   Orchestrator   - Starting orchestrator
+2026-02-16 13:49:41 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-02-16 13:49:42 - INFO -      Module      - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-16 13:49:46 - INFO -      Module      - jan2026 data file already loaded
+2026-02-16 13:49:47 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-02-16 13:49:47 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-02-16 13:49:47 - INFO -      Module      - jan2026 file has already been transformed
+2026-02-16 13:49:47 - INFO -   Orchestrator   - Conditions not met in modules/2.transform_data.py - Skipping Module
+2026-02-16 13:49:47 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-02-16 13:49:48 - INFO -      Module      - Pulling API Information
+2026-02-16 13:49:49 - INFO -   Orchestrator   - Finished modules/3.api_integration.py
+2026-02-16 13:49:49 - ERROR -   Orchestrator   - Module modules/3.api_integration.py failed with exit code 1
+2026-02-16 13:49:49 - ERROR -   Orchestrator   - modules/3.api_integration.py errors before failure:
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/3.api_integration.py", line 180, in <module>
+    data['street'] = data['address'].str.extract(r'((?:\d+|Corner|Cnr).+?),')
+                     ~~~~^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
