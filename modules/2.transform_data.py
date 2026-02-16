@@ -213,8 +213,8 @@ SELECT DISTINCT
 	fuelcode
 FROM
 	public.fact_fuel_prices
-	INNER JOIN dim_fuel_station_dict 
-        ON dim_fuel_station_dict.stationid = fact_fuel_prices.stationid
+	INNER JOIN dim_fuel_stations 
+        ON dim_fuel_stations.stationid = fact_fuel_prices.stationid
 """
 
 # Execute the query
@@ -278,8 +278,8 @@ SELECT
 	date
 FROM
 	public.fact_fuel_prices
-	INNER JOIN dim_fuel_station_dict 
-	ON dim_fuel_station_dict.stationid = fact_fuel_prices.stationid
+	INNER JOIN dim_fuel_stations 
+	ON dim_fuel_stations.stationid = fact_fuel_prices.stationid
 WHERE
 	date = '{last_day}'
 """
