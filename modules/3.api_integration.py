@@ -144,6 +144,40 @@ def api_data(url, access_token, API_key):
         return None
 
 
+def push_file_to_repo(file_path, commit_message):
+    """
+    Add, commit, and push a file to a GitHub repository using a GitHub token.
+
+    Args:
+        file_path (str): Path to the file to push.
+        commit_message (str): Commit message for the Git change.
+
+    Raises:
+        subprocess.CalledProcessError: If any git command fails (except when commit has no changes).
+    """
+    logger.info("pushing file to repo")
+    try:
+        repo_url = (
+            f"https://x-access-token:{os.environ['GITHUB_TOKEN']}"
+            f"@github.com/{os.environ['GITHUB_REPOSITORY']}.git"
+        )
+
+        subprocess.run(["git", "config", "user.name", "github-actions"], check=True)
+        subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
+        subprocess.run(["git", "add", file_path], check=True)
+        subprocess.run(
+            ["git", "commit", "-m", commit_message],
+            check=False  # won't fail if nothing changed
+        )
+        subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
+
+        logger.info(f"Successfully pushed {file_path} to repo")
+
+    except subprocess.CalledProcessError as e:
+        logger.exception(f"Failed to push {file_path}: {e}")
+        raise
+
+
 def save_config():
     """
     Save the current configuration to a JSON file and push it to GitHub.
@@ -162,6 +196,7 @@ def save_config():
 
     except Exception as e:
         logger.exception(f"Unexpected error saving json config file: {e}")
+
 
 
 # -------------------------------------------------------------------------------------------------
