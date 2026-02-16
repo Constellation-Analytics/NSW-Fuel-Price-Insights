@@ -362,7 +362,7 @@ logger.info(f"Final output has {rowcount} rows")
 # Insert into database
 try:
 	logger.info(f"Inserting values into database")
-	output.to_sql('fuelprice_staging', engine, if_exists='append', index=False)
+	output.to_sql('stg_fuel_price', engine, if_exists='append', index=False)
 
 except Exception as e:
     logger.exception(f"Unexpected error while inserting values into database: {e}")
