@@ -294,9 +294,9 @@ logger.info("Inserting data into the database")
 try:
     # Insert DataFrame into PostgreSQL
     with engine.connect() as connection:
-        deleted.to_sql('staging_inactive_stations', connection, if_exists='append', index=False)
-        new.to_sql('staging_new_stations', connection, if_exists='append', index=False)
-        updated_stations.to_sql('staging_updated_stations', connection, if_exists='append', index=False)
+        deleted.to_sql('stg_inactive_stations', connection, if_exists='append', index=False)
+        new.to_sql('stg_new_stations', connection, if_exists='append', index=False)
+        updated_stations.to_sql('stg_updated_stations', connection, if_exists='append', index=False)
 except Exception as e:
     logger.exception(f"Unexpected error while inserting values into database: {e}")
 
