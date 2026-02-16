@@ -65,6 +65,7 @@ API_AUTHORISATION_HEADER = os.getenv("API_AUTHORISATION_HEADER")
 # Authentification Information
 access_token_URL = "https://api.onegov.nsw.gov.au/oauth/client_credential/accesstoken"
 dict_url = "https://api.onegov.nsw.gov.au/FuelCheckRefData/v2/fuel/lovs"
+now = datetime.now(timezone.utc).strftime("%Y-%m-%d %I:%M:%S %p")
 unique_id = str(uuid.uuid4())
 
 # -------------------------------------------------------------------------------------------------
@@ -125,8 +126,8 @@ def api_data(url, access_token, API_key):
         'authorization': f"Bearer {access_token}",
         'apikey': API_key,
         'transactionid': unique_id,
-        'requesttimestamp': datetimestamp,
-        'if-modified-since': datetimestamp
+        'requesttimestamp': now,
+        'if-modified-since': now
     }
 
     try:
