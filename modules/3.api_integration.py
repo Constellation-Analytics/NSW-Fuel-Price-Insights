@@ -130,17 +130,40 @@ def api_data(url, access_token, API_key):
     }
 
     try:
-        response = requests.get(dict_url, headers=headers)
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
 
         # Parse JSON response
         data = response.json()
+        if data is None:
+            logger.error("API returned no data")
+            sys.exit(1)
         stations = data["stations"]["items"]
         return pd.json_normalize(stations)
 
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
         return None
+
+
+def save_config():
+    """
+    Save the current configuration to a JSON file and push it to GitHub.
+
+    Writes the global `config` object to 'config.json' with indentation,
+    then pushes the file to the repository with a timestamped commit message.
+
+    Raises:
+        Exception: If writing the file or pushing to GitHub fails.
+    """
+    try:
+        with open("config.json", "w") as json_file:
+            json.dump(config, json_file, indent=4)
+        logger.info("Config file updated")
+        push_file_to_repo(config_file, f"successful run - configfile updated {datetimestamp}")
+
+    except Exception as e:
+        logger.exception(f"Unexpected error saving json config file: {e}")
 
 
 # -------------------------------------------------------------------------------------------------
@@ -203,13 +226,13 @@ station_fuelcode_dbo = pd.read_sql(station_query, engine)
 logger.info("Creating the datasets")
 
 # Dict is not in API
-deleted = fuel_station_dict[~fuel_station_dict['stationid'].isin(fuel_station_api['stationid'])]
+deleted = station_fuelcode_dbo[~station_fuelcode_dbo['stationid'].isin(fuel_station_api['stationid'])]
 
 # API is not in Dict
-new = fuel_station_api[~fuel_station_api['stationid'].isin(fuel_station_dict['stationid'])]
+new = fuel_station_api[~fuel_station_api['stationid'].isin(station_fuelcode_dbo['stationid'])]
 
 # Name or Address has changed
-updated = fuel_station_api.merge(fuel_station_dict, on='stationid', suffixes=('_api', '_db'))
+updated = fuel_station_api.merge(station_fuelcode_dbo, on='stationid', suffixes=('_api', '_db'))
 updated_stations = updated[(updated['name_api'] != updated['name_db']) | (updated['address_api'] != updated['address_db'])]
 updated_stations = updated_stations[['stationid', 'brand_api', 'name_api', 'address_api', 'street_api','town_api', 'postcode_api', 'latitude_api', 'longitude_api']].rename(columns=lambda x: x.replace('_api', ''))
 updated_stations['last_update'] = datetimestamp
@@ -217,10 +240,10 @@ updated_stations['last_update'] = datetimestamp
 # Truncate the staging tables
 logger.info("Truncate the staging tables")
 
-call = text("CALL truncate_staging_station_tables();")
-with engine.connect() as conn:
-    conn = conn.execution_options(isolation_level="AUTOCOMMIT")
-    conn.execute(call)
+#call = text("CALL truncate_staging_station_tables();")
+#with engine.connect() as conn:
+#    conn = conn.execution_options(isolation_level="AUTOCOMMIT")
+#    conn.execute(call)
 
 # -------------------------------------------------------------------------------------------------
 #                                       Insert into database
