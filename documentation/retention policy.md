@@ -7,4 +7,4 @@
 - Fact data older than 24 months will be automatically deleted
 
 ## 3. Process
-- File deleteion will be added to the module `data_update` 
+- A dedicated `retention_policy` module will called at the end of the pipeline 
