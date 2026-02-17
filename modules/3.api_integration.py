@@ -225,7 +225,7 @@ data['town'] = data['town'].str.title()
 data['postcode'] = data['address'].str.extract(r'NSW\s(\d+)')
 
 # add timestamp
-data['last_update'] = datetimestamp
+data['last_update'] = now
 
 # Select specific columns
 selected_columns = data[['code','brand','name', 'address','street', 'town', 'postcode', 'location.latitude', 'location.longitude','last_update']]
