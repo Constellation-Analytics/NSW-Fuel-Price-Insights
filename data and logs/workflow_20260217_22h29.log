@@ -1,0 +1,102 @@
+2026-02-17 22:29:21 - INFO -   Orchestrator   - Starting orchestrator
+2026-02-17 22:29:21 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-02-17 22:29:21 - INFO -      Module      - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-17 22:29:25 - INFO -      Module      - jan2026 data file already loaded
+2026-02-17 22:29:25 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-02-17 22:29:25 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-02-17 22:29:26 - INFO -      Module      - jan2026 file has already been transformed
+2026-02-17 22:29:26 - INFO -   Orchestrator   - Conditions not met in modules/2.transform_data.py - Skipping Module
+2026-02-17 22:29:26 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-02-17 22:29:26 - INFO -      Module      - Pulling API Information
+2026-02-17 22:29:30 - INFO -      Module      - Pulling Database Information
+2026-02-17 22:29:31 - INFO -      Module      - Creating the datasets
+2026-02-17 22:29:31 - INFO -      Module      - Truncate the staging tables
+2026-02-17 22:29:31 - INFO -      Module      - Inserting data into the database
+2026-02-17 22:29:32 - ERROR -      Module      - Unexpected error while inserting values into database: Execution failed on sql 'INSERT INTO stg_inactive_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (:stationid, :brand, :name, :address, :street, :town, :postcode, :latitude, :longitude, :last_update)': (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "staging_inactive_stations_pkey"
+DETAIL:  Key (stationid)=(1369) already exists.
+
+[SQL: INSERT INTO stg_inactive_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid__0)s, %(brand__0)s, %(name__0)s, %(address__0)s, %(street__0)s, %(town__0)s, %(postcode__0)s, %(latitude ... 2103 characters truncated ... eet__13)s, %(town__13)s, %(postcode__13)s, %(latitude__13)s, %(longitude__13)s, %(last_update__13)s)]
+[parameters: {'town__0': 'Lansdowne', 'longitude__0': 150.971024, 'latitude__0': -33.889304, 'street__0': '987 Hume Highway', 'address__0': '987 Hume Highway, Lansdowne NSW 2163', 'postcode__0': '2163', 'last_update__0': datetime.date(2024, 12, 1), 'name__0': 'Metro Lansdowne', 'brand__0': 'Metro Fuel', 'stationid__0': '1369', 'town__1': 'East Ballina', 'longitude__1': 153.582929, 'latitude__1': -28.850083, 'street__1': '30 Links Ave', 'address__1': '30 Links Ave, EAST BALLINA NSW 2478', 'postcode__1': '2478', 'last_update__1': datetime.date(2024, 12, 1), 'name__1': 'Ampol East Ballina', 'brand__1': 'Ampol', 'stationid__1': '17257', 'town__2': 'Adaminaby', 'longitude__2': 148.770111, 'latitude__2': -35.997064, 'street__2': '5243 Snowy Mountains Hwy', 'address__2': '5243 Snowy Mountains Hwy, ADAMINABY NSW 2629', 'postcode__2': '2629', 'last_update__2': datetime.date(2024, 12, 20), 'name__2': 'Wisda Group Australia Adaminaby', 'brand__2': 'Independent', 'stationid__2': '17299', 'town__3': 'Kenthurst', 'longitude__3': 151.005933, 'latitude__3': -33.660452, 'street__3': '137 Kenthurst Rd', 'address__3': '137 Kenthurst Rd, Kenthurst NSW 2156', 'postcode__3': '2156', 'last_update__3': datetime.date(2024, 12, 1), 'name__3': 'Ampol Kenthurst', 'brand__3': 'Ampol', 'stationid__3': '1826', 'town__4': 'Barrington', 'longitude__4': 151.911958, 'latitude__4': -31.973863, 'street__4': '12 Argyle St', 'address__4': '12 ARGYLE ST, BARRINGTON NSW 2422', 'postcode__4': '2422', 'last_update__4': datetime.date(2024, 12, 1), 'name__4': 'Barrington General Store', 'brand__4': 'Independent', 'stationid__4': '18378' ... 40 parameters truncated ... 'town__9': 'Gilgandra', 'longitude__9': 148.658179, 'latitude__9': -31.717167, 'street__9': '13 Castlereagh St', 'address__9': '13 CASTLEREAGH ST, GILGANDRA NSW 2827', 'postcode__9': '2827', 'last_update__9': datetime.date(2024, 12, 1), 'name__9': 'BP Gilgandra', 'brand__9': 'BP', 'stationid__9': '20058', 'town__10': 'Barham', 'longitude__10': 144.128963, 'latitude__10': -35.623909, 'street__10': '2-4 Moulamein Rd', 'address__10': '2-4 MOULAMEIN RD, BARHAM NSW 2732', 'postcode__10': '2732', 'last_update__10': datetime.date(2024, 12, 20), 'name__10': 'Shell Barham', 'brand__10': 'Shell', 'stationid__10': '20262', 'town__11': 'Moree', 'longitude__11': 149.850259, 'latitude__11': -29.490788, 'street__11': '3 Blueberry Rd', 'address__11': '3 BLUEBERRY RD, MOREE NSW 2400', 'postcode__11': '2400', 'last_update__11': datetime.date(2025, 1, 15), 'name__11': 'Caltex Moree', 'brand__11': 'Caltex', 'stationid__11': '20271', 'town__12': 'Rydalmere', 'longitude__12': 151.032389, 'latitude__12': -33.810076, 'street__12': '262-272 Victoria Road', 'address__12': '262-272 Victoria Road, Rydalmere NSW 2116', 'postcode__12': '2116', 'last_update__12': datetime.date(2024, 12, 1), 'name__12': 'United Petroleum Rydalmere', 'brand__12': 'United', 'stationid__12': '481', 'town__13': 'Lavington', 'longitude__13': 146.937444, 'latitude__13': -36.048211, 'street__13': '370 Griffith Rd', 'address__13': '370 Griffith Rd, Lavington NSW 2641', 'postcode__13': '2641', 'last_update__13': datetime.date(2024, 12, 1), 'name__13': 'EG Ampol Lavington', 'brand__13': 'EG Ampol', 'stationid__13': '690'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2125, in _exec_insertmany_context
+    dialect.do_execute(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "staging_inactive_stations_pkey"
+DETAIL:  Key (stationid)=(1369) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1679, in execute
+    return execute_function(sql, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1844, in _execute_context
+    return self._exec_insertmany_context(dialect, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2133, in _exec_insertmany_context
+    self._handle_dbapi_exception(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2125, in _exec_insertmany_context
+    dialect.do_execute(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "staging_inactive_stations_pkey"
+DETAIL:  Key (stationid)=(1369) already exists.
+
+[SQL: INSERT INTO stg_inactive_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid__0)s, %(brand__0)s, %(name__0)s, %(address__0)s, %(street__0)s, %(town__0)s, %(postcode__0)s, %(latitude ... 2103 characters truncated ... eet__13)s, %(town__13)s, %(postcode__13)s, %(latitude__13)s, %(longitude__13)s, %(last_update__13)s)]
+[parameters: {'town__0': 'Lansdowne', 'longitude__0': 150.971024, 'latitude__0': -33.889304, 'street__0': '987 Hume Highway', 'address__0': '987 Hume Highway, Lansdowne NSW 2163', 'postcode__0': '2163', 'last_update__0': datetime.date(2024, 12, 1), 'name__0': 'Metro Lansdowne', 'brand__0': 'Metro Fuel', 'stationid__0': '1369', 'town__1': 'East Ballina', 'longitude__1': 153.582929, 'latitude__1': -28.850083, 'street__1': '30 Links Ave', 'address__1': '30 Links Ave, EAST BALLINA NSW 2478', 'postcode__1': '2478', 'last_update__1': datetime.date(2024, 12, 1), 'name__1': 'Ampol East Ballina', 'brand__1': 'Ampol', 'stationid__1': '17257', 'town__2': 'Adaminaby', 'longitude__2': 148.770111, 'latitude__2': -35.997064, 'street__2': '5243 Snowy Mountains Hwy', 'address__2': '5243 Snowy Mountains Hwy, ADAMINABY NSW 2629', 'postcode__2': '2629', 'last_update__2': datetime.date(2024, 12, 20), 'name__2': 'Wisda Group Australia Adaminaby', 'brand__2': 'Independent', 'stationid__2': '17299', 'town__3': 'Kenthurst', 'longitude__3': 151.005933, 'latitude__3': -33.660452, 'street__3': '137 Kenthurst Rd', 'address__3': '137 Kenthurst Rd, Kenthurst NSW 2156', 'postcode__3': '2156', 'last_update__3': datetime.date(2024, 12, 1), 'name__3': 'Ampol Kenthurst', 'brand__3': 'Ampol', 'stationid__3': '1826', 'town__4': 'Barrington', 'longitude__4': 151.911958, 'latitude__4': -31.973863, 'street__4': '12 Argyle St', 'address__4': '12 ARGYLE ST, BARRINGTON NSW 2422', 'postcode__4': '2422', 'last_update__4': datetime.date(2024, 12, 1), 'name__4': 'Barrington General Store', 'brand__4': 'Independent', 'stationid__4': '18378' ... 40 parameters truncated ... 'town__9': 'Gilgandra', 'longitude__9': 148.658179, 'latitude__9': -31.717167, 'street__9': '13 Castlereagh St', 'address__9': '13 CASTLEREAGH ST, GILGANDRA NSW 2827', 'postcode__9': '2827', 'last_update__9': datetime.date(2024, 12, 1), 'name__9': 'BP Gilgandra', 'brand__9': 'BP', 'stationid__9': '20058', 'town__10': 'Barham', 'longitude__10': 144.128963, 'latitude__10': -35.623909, 'street__10': '2-4 Moulamein Rd', 'address__10': '2-4 MOULAMEIN RD, BARHAM NSW 2732', 'postcode__10': '2732', 'last_update__10': datetime.date(2024, 12, 20), 'name__10': 'Shell Barham', 'brand__10': 'Shell', 'stationid__10': '20262', 'town__11': 'Moree', 'longitude__11': 149.850259, 'latitude__11': -29.490788, 'street__11': '3 Blueberry Rd', 'address__11': '3 BLUEBERRY RD, MOREE NSW 2400', 'postcode__11': '2400', 'last_update__11': datetime.date(2025, 1, 15), 'name__11': 'Caltex Moree', 'brand__11': 'Caltex', 'stationid__11': '20271', 'town__12': 'Rydalmere', 'longitude__12': 151.032389, 'latitude__12': -33.810076, 'street__12': '262-272 Victoria Road', 'address__12': '262-272 Victoria Road, Rydalmere NSW 2116', 'postcode__12': '2116', 'last_update__12': datetime.date(2024, 12, 1), 'name__12': 'United Petroleum Rydalmere', 'brand__12': 'United', 'stationid__12': '481', 'town__13': 'Lavington', 'longitude__13': 146.937444, 'latitude__13': -36.048211, 'street__13': '370 Griffith Rd', 'address__13': '370 Griffith Rd, Lavington NSW 2641', 'postcode__13': '2641', 'last_update__13': datetime.date(2024, 12, 1), 'name__13': 'EG Ampol Lavington', 'brand__13': 'EG Ampol', 'stationid__13': '690'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/3.api_integration.py", line 297, in <module>
+    deleted.to_sql('stg_inactive_stations', connection, if_exists='append', index=False)
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/generic.py", line 3052, in to_sql
+    return sql.to_sql(
+           ^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 841, in to_sql
+    return pandas_sql.to_sql(
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 2037, in to_sql
+    total_inserted = sql_engine.insert_records(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1571, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1122, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1014, in _execute_insert
+    result = self.pd_sql.execute(self.table.insert(), data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1681, in execute
+    raise DatabaseError(f"Execution failed on sql '{sql}': {exc}") from exc
+pandas.errors.DatabaseError: Execution failed on sql 'INSERT INTO stg_inactive_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (:stationid, :brand, :name, :address, :street, :town, :postcode, :latitude, :longitude, :last_update)': (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "staging_inactive_stations_pkey"
+DETAIL:  Key (stationid)=(1369) already exists.
+
+[SQL: INSERT INTO stg_inactive_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid__0)s, %(brand__0)s, %(name__0)s, %(address__0)s, %(street__0)s, %(town__0)s, %(postcode__0)s, %(latitude ... 2103 characters truncated ... eet__13)s, %(town__13)s, %(postcode__13)s, %(latitude__13)s, %(longitude__13)s, %(last_update__13)s)]
+[parameters: {'town__0': 'Lansdowne', 'longitude__0': 150.971024, 'latitude__0': -33.889304, 'street__0': '987 Hume Highway', 'address__0': '987 Hume Highway, Lansdowne NSW 2163', 'postcode__0': '2163', 'last_update__0': datetime.date(2024, 12, 1), 'name__0': 'Metro Lansdowne', 'brand__0': 'Metro Fuel', 'stationid__0': '1369', 'town__1': 'East Ballina', 'longitude__1': 153.582929, 'latitude__1': -28.850083, 'street__1': '30 Links Ave', 'address__1': '30 Links Ave, EAST BALLINA NSW 2478', 'postcode__1': '2478', 'last_update__1': datetime.date(2024, 12, 1), 'name__1': 'Ampol East Ballina', 'brand__1': 'Ampol', 'stationid__1': '17257', 'town__2': 'Adaminaby', 'longitude__2': 148.770111, 'latitude__2': -35.997064, 'street__2': '5243 Snowy Mountains Hwy', 'address__2': '5243 Snowy Mountains Hwy, ADAMINABY NSW 2629', 'postcode__2': '2629', 'last_update__2': datetime.date(2024, 12, 20), 'name__2': 'Wisda Group Australia Adaminaby', 'brand__2': 'Independent', 'stationid__2': '17299', 'town__3': 'Kenthurst', 'longitude__3': 151.005933, 'latitude__3': -33.660452, 'street__3': '137 Kenthurst Rd', 'address__3': '137 Kenthurst Rd, Kenthurst NSW 2156', 'postcode__3': '2156', 'last_update__3': datetime.date(2024, 12, 1), 'name__3': 'Ampol Kenthurst', 'brand__3': 'Ampol', 'stationid__3': '1826', 'town__4': 'Barrington', 'longitude__4': 151.911958, 'latitude__4': -31.973863, 'street__4': '12 Argyle St', 'address__4': '12 ARGYLE ST, BARRINGTON NSW 2422', 'postcode__4': '2422', 'last_update__4': datetime.date(2024, 12, 1), 'name__4': 'Barrington General Store', 'brand__4': 'Independent', 'stationid__4': '18378' ... 40 parameters truncated ... 'town__9': 'Gilgandra', 'longitude__9': 148.658179, 'latitude__9': -31.717167, 'street__9': '13 Castlereagh St', 'address__9': '13 CASTLEREAGH ST, GILGANDRA NSW 2827', 'postcode__9': '2827', 'last_update__9': datetime.date(2024, 12, 1), 'name__9': 'BP Gilgandra', 'brand__9': 'BP', 'stationid__9': '20058', 'town__10': 'Barham', 'longitude__10': 144.128963, 'latitude__10': -35.623909, 'street__10': '2-4 Moulamein Rd', 'address__10': '2-4 MOULAMEIN RD, BARHAM NSW 2732', 'postcode__10': '2732', 'last_update__10': datetime.date(2024, 12, 20), 'name__10': 'Shell Barham', 'brand__10': 'Shell', 'stationid__10': '20262', 'town__11': 'Moree', 'longitude__11': 149.850259, 'latitude__11': -29.490788, 'street__11': '3 Blueberry Rd', 'address__11': '3 BLUEBERRY RD, MOREE NSW 2400', 'postcode__11': '2400', 'last_update__11': datetime.date(2025, 1, 15), 'name__11': 'Caltex Moree', 'brand__11': 'Caltex', 'stationid__11': '20271', 'town__12': 'Rydalmere', 'longitude__12': 151.032389, 'latitude__12': -33.810076, 'street__12': '262-272 Victoria Road', 'address__12': '262-272 Victoria Road, Rydalmere NSW 2116', 'postcode__12': '2116', 'last_update__12': datetime.date(2024, 12, 1), 'name__12': 'United Petroleum Rydalmere', 'brand__12': 'United', 'stationid__12': '481', 'town__13': 'Lavington', 'longitude__13': 146.937444, 'latitude__13': -36.048211, 'street__13': '370 Griffith Rd', 'address__13': '370 Griffith Rd, Lavington NSW 2641', 'postcode__13': '2641', 'last_update__13': datetime.date(2024, 12, 1), 'name__13': 'EG Ampol Lavington', 'brand__13': 'EG Ampol', 'stationid__13': '690'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-02-17 22:29:32 - INFO -      Module      - Config file updated
+2026-02-17 22:29:32 - INFO -      Module      - pushing file to repo
+2026-02-17 22:29:32 - INFO -      Module      - Successfully pushed config.json to repo
+2026-02-17 22:29:32 - INFO -      Module      - Operation complete
+2026-02-17 22:29:32 - INFO -   Orchestrator   - Finished modules/3.api_integration.py
+2026-02-17 22:29:32 - INFO -   Orchestrator   - Starting modules/99.retention_policy.py
+2026-02-17 22:29:33 - INFO - Retention Policy - Old workflow logs cleaned up and changes pushed.
+2026-02-17 22:29:33 - INFO -   Orchestrator   - Finished modules/99.retention_policy.py
+2026-02-17 22:29:33 - INFO -   Orchestrator   - Finished orchestrator
