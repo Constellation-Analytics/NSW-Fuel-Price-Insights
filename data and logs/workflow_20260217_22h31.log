@@ -1,0 +1,106 @@
+2026-02-17 22:31:26 - INFO -   Orchestrator   - Starting orchestrator
+2026-02-17 22:31:26 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-02-17 22:31:26 - INFO -      Module      - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-17 22:31:30 - INFO -      Module      - jan2026 data file already loaded
+2026-02-17 22:31:31 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-02-17 22:31:31 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-02-17 22:31:31 - INFO -      Module      - jan2026 file has already been transformed
+2026-02-17 22:31:31 - INFO -   Orchestrator   - Conditions not met in modules/2.transform_data.py - Skipping Module
+2026-02-17 22:31:31 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-02-17 22:31:32 - INFO -      Module      - Pulling API Information
+2026-02-17 22:31:36 - INFO -      Module      - Pulling Database Information
+2026-02-17 22:31:37 - INFO -      Module      - Creating the datasets
+2026-02-17 22:31:37 - INFO -      Module      - Truncate the staging tables
+2026-02-17 22:31:37 - INFO -      Module      - Inserting data into the database
+2026-02-17 22:31:38 - ERROR -      Module      - Unexpected error while inserting values into database: Execution failed on sql 'INSERT INTO stg_updated_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (:stationid, :brand, :name, :address, :street, :town, :postcode, :latitude, :longitude, :last_update)': (psycopg2.errors.InvalidDatetimeFormat) invalid input syntax for type date: "20260217_22h31"
+LINE 1: ...Pheasants Nest', '2574',  -34.282907, 150.639027, '20260217_...
+                                                             ^
+
+[SQL: INSERT INTO stg_updated_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid__0)s, %(brand__0)s, %(name__0)s, %(address__0)s, %(street__0)s, %(town__0)s, %(postcode__0)s, %(latitude_ ... 1084 characters truncated ...  %(street__7)s, %(town__7)s, %(postcode__7)s, %(latitude__7)s, %(longitude__7)s, %(last_update__7)s)]
+[parameters: {'address__0': 'Lot 12, South Western Freeway, Pheasants Nest NSW 2574', 'name__0': 'Ampol Foodary Pheasants Nest South Bound ', 'postcode__0': '2574', 'brand__0': 'Ampol Foodary', 'longitude__0': 150.639027, 'street__0': '12, South Western Freeway', 'last_update__0': '20260217_22h31', 'latitude__0': -34.282907, 'town__0': 'South Western Freeway, Pheasants Nest', 'stationid__0': '18317', 'address__1': '103 Mathias Street, "Boggabri Road", Gunnedah NSW 2380', 'name__1': 'Independent Gunnedah', 'postcode__1': '2380', 'brand__1': 'Inland Petroleum', 'longitude__1': 150.232898, 'street__1': '103 Mathias Street', 'last_update__1': '20260217_22h31', 'latitude__1': -30.966752, 'town__1': '"Boggabri Road", Gunnedah', 'stationid__1': '1058', 'address__2': '9 Trangie Road, "Mitchell Highway", Narromine NSW 2821', 'name__2': 'Independent Narromine', 'postcode__2': '2821', 'brand__2': 'Inland Petroleum', 'longitude__2': 148.238892, 'street__2': '9 Trangie Road', 'last_update__2': '20260217_22h31', 'latitude__2': -32.226142, 'town__2': '"Mitchell Highway", Narromine', 'stationid__2': '1060', 'address__3': '354 MAITLAND RD, HEXHAM NSW 2322', 'name__3': 'Pearl Energy Hexham', 'postcode__3': '2322', 'brand__3': 'Pearl Energy', 'longitude__3': 151.685607, 'street__3': '354 Maitland Rd', 'last_update__3': '20260217_22h31', 'latitude__3': -32.829469, 'town__3': 'Hexham', 'stationid__3': '20811', 'address__4': '365 GARFIELD RD WEST, MARSDEN PARK NSW 2765', 'name__4': 'Metro Marsden Park Truck Stop', 'postcode__4': '2765', 'brand__4': 'Metro Fuel', 'longitude__4': 150.833541, 'street__4': '365 Garfield Rd West', 'last_update__4': '20260217_22h31', 'latitude__4': -33.697401, 'town__4': 'Marsden Park', 'stationid__4': '20651', 'address__5': '130 EDGAR ST, CONDELL PARK NSW 2200', 'name__5': 'Metro Condell Park West', 'postcode__5': '2200', 'brand__5': 'Metro Fuel', 'longitude__5': 151.013734, 'street__5': '130 Edgar St', 'last_update__5': '20260217_22h31', 'latitude__5': -33.916224, 'town__5': 'Condell Park', 'stationid__5': '20133', 'address__6': '236-240 GEORGES RIVER RD, CROYDON PARK NSW 2133', 'name__6': 'Metro Barista Bar Croydon Park', 'postcode__6': '2133', 'brand__6': 'Metro Fuel', 'longitude__6': 151.105288, 'street__6': '236-240 Georges River Rd', 'last_update__6': '20260217_22h31', 'latitude__6': -33.896412, 'town__6': 'Croydon Park', 'stationid__6': '20218', 'address__7': '1 MULYAN ST, COWRA NSW 2794', 'name__7': 'Metro Petroleum Cowra', 'postcode__7': '2794', 'brand__7': 'Metro Fuel', 'longitude__7': 148.683136, 'street__7': '1 Mulyan St', 'last_update__7': '20260217_22h31', 'latitude__7': -33.828207, 'town__7': 'Cowra', 'stationid__7': '20238'}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2125, in _exec_insertmany_context
+    dialect.do_execute(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.InvalidDatetimeFormat: invalid input syntax for type date: "20260217_22h31"
+LINE 1: ...Pheasants Nest', '2574',  -34.282907, 150.639027, '20260217_...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1679, in execute
+    return execute_function(sql, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1844, in _execute_context
+    return self._exec_insertmany_context(dialect, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2133, in _exec_insertmany_context
+    self._handle_dbapi_exception(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2125, in _exec_insertmany_context
+    dialect.do_execute(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (psycopg2.errors.InvalidDatetimeFormat) invalid input syntax for type date: "20260217_22h31"
+LINE 1: ...Pheasants Nest', '2574',  -34.282907, 150.639027, '20260217_...
+                                                             ^
+
+[SQL: INSERT INTO stg_updated_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid__0)s, %(brand__0)s, %(name__0)s, %(address__0)s, %(street__0)s, %(town__0)s, %(postcode__0)s, %(latitude_ ... 1084 characters truncated ...  %(street__7)s, %(town__7)s, %(postcode__7)s, %(latitude__7)s, %(longitude__7)s, %(last_update__7)s)]
+[parameters: {'address__0': 'Lot 12, South Western Freeway, Pheasants Nest NSW 2574', 'name__0': 'Ampol Foodary Pheasants Nest South Bound ', 'postcode__0': '2574', 'brand__0': 'Ampol Foodary', 'longitude__0': 150.639027, 'street__0': '12, South Western Freeway', 'last_update__0': '20260217_22h31', 'latitude__0': -34.282907, 'town__0': 'South Western Freeway, Pheasants Nest', 'stationid__0': '18317', 'address__1': '103 Mathias Street, "Boggabri Road", Gunnedah NSW 2380', 'name__1': 'Independent Gunnedah', 'postcode__1': '2380', 'brand__1': 'Inland Petroleum', 'longitude__1': 150.232898, 'street__1': '103 Mathias Street', 'last_update__1': '20260217_22h31', 'latitude__1': -30.966752, 'town__1': '"Boggabri Road", Gunnedah', 'stationid__1': '1058', 'address__2': '9 Trangie Road, "Mitchell Highway", Narromine NSW 2821', 'name__2': 'Independent Narromine', 'postcode__2': '2821', 'brand__2': 'Inland Petroleum', 'longitude__2': 148.238892, 'street__2': '9 Trangie Road', 'last_update__2': '20260217_22h31', 'latitude__2': -32.226142, 'town__2': '"Mitchell Highway", Narromine', 'stationid__2': '1060', 'address__3': '354 MAITLAND RD, HEXHAM NSW 2322', 'name__3': 'Pearl Energy Hexham', 'postcode__3': '2322', 'brand__3': 'Pearl Energy', 'longitude__3': 151.685607, 'street__3': '354 Maitland Rd', 'last_update__3': '20260217_22h31', 'latitude__3': -32.829469, 'town__3': 'Hexham', 'stationid__3': '20811', 'address__4': '365 GARFIELD RD WEST, MARSDEN PARK NSW 2765', 'name__4': 'Metro Marsden Park Truck Stop', 'postcode__4': '2765', 'brand__4': 'Metro Fuel', 'longitude__4': 150.833541, 'street__4': '365 Garfield Rd West', 'last_update__4': '20260217_22h31', 'latitude__4': -33.697401, 'town__4': 'Marsden Park', 'stationid__4': '20651', 'address__5': '130 EDGAR ST, CONDELL PARK NSW 2200', 'name__5': 'Metro Condell Park West', 'postcode__5': '2200', 'brand__5': 'Metro Fuel', 'longitude__5': 151.013734, 'street__5': '130 Edgar St', 'last_update__5': '20260217_22h31', 'latitude__5': -33.916224, 'town__5': 'Condell Park', 'stationid__5': '20133', 'address__6': '236-240 GEORGES RIVER RD, CROYDON PARK NSW 2133', 'name__6': 'Metro Barista Bar Croydon Park', 'postcode__6': '2133', 'brand__6': 'Metro Fuel', 'longitude__6': 151.105288, 'street__6': '236-240 Georges River Rd', 'last_update__6': '20260217_22h31', 'latitude__6': -33.896412, 'town__6': 'Croydon Park', 'stationid__6': '20218', 'address__7': '1 MULYAN ST, COWRA NSW 2794', 'name__7': 'Metro Petroleum Cowra', 'postcode__7': '2794', 'brand__7': 'Metro Fuel', 'longitude__7': 148.683136, 'street__7': '1 Mulyan St', 'last_update__7': '20260217_22h31', 'latitude__7': -33.828207, 'town__7': 'Cowra', 'stationid__7': '20238'}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/3.api_integration.py", line 299, in <module>
+    updated_stations.to_sql('stg_updated_stations', connection, if_exists='append', index=False)
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/generic.py", line 3052, in to_sql
+    return sql.to_sql(
+           ^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 841, in to_sql
+    return pandas_sql.to_sql(
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 2037, in to_sql
+    total_inserted = sql_engine.insert_records(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1571, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1122, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1014, in _execute_insert
+    result = self.pd_sql.execute(self.table.insert(), data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1681, in execute
+    raise DatabaseError(f"Execution failed on sql '{sql}': {exc}") from exc
+pandas.errors.DatabaseError: Execution failed on sql 'INSERT INTO stg_updated_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (:stationid, :brand, :name, :address, :street, :town, :postcode, :latitude, :longitude, :last_update)': (psycopg2.errors.InvalidDatetimeFormat) invalid input syntax for type date: "20260217_22h31"
+LINE 1: ...Pheasants Nest', '2574',  -34.282907, 150.639027, '20260217_...
+                                                             ^
+
+[SQL: INSERT INTO stg_updated_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid__0)s, %(brand__0)s, %(name__0)s, %(address__0)s, %(street__0)s, %(town__0)s, %(postcode__0)s, %(latitude_ ... 1084 characters truncated ...  %(street__7)s, %(town__7)s, %(postcode__7)s, %(latitude__7)s, %(longitude__7)s, %(last_update__7)s)]
+[parameters: {'address__0': 'Lot 12, South Western Freeway, Pheasants Nest NSW 2574', 'name__0': 'Ampol Foodary Pheasants Nest South Bound ', 'postcode__0': '2574', 'brand__0': 'Ampol Foodary', 'longitude__0': 150.639027, 'street__0': '12, South Western Freeway', 'last_update__0': '20260217_22h31', 'latitude__0': -34.282907, 'town__0': 'South Western Freeway, Pheasants Nest', 'stationid__0': '18317', 'address__1': '103 Mathias Street, "Boggabri Road", Gunnedah NSW 2380', 'name__1': 'Independent Gunnedah', 'postcode__1': '2380', 'brand__1': 'Inland Petroleum', 'longitude__1': 150.232898, 'street__1': '103 Mathias Street', 'last_update__1': '20260217_22h31', 'latitude__1': -30.966752, 'town__1': '"Boggabri Road", Gunnedah', 'stationid__1': '1058', 'address__2': '9 Trangie Road, "Mitchell Highway", Narromine NSW 2821', 'name__2': 'Independent Narromine', 'postcode__2': '2821', 'brand__2': 'Inland Petroleum', 'longitude__2': 148.238892, 'street__2': '9 Trangie Road', 'last_update__2': '20260217_22h31', 'latitude__2': -32.226142, 'town__2': '"Mitchell Highway", Narromine', 'stationid__2': '1060', 'address__3': '354 MAITLAND RD, HEXHAM NSW 2322', 'name__3': 'Pearl Energy Hexham', 'postcode__3': '2322', 'brand__3': 'Pearl Energy', 'longitude__3': 151.685607, 'street__3': '354 Maitland Rd', 'last_update__3': '20260217_22h31', 'latitude__3': -32.829469, 'town__3': 'Hexham', 'stationid__3': '20811', 'address__4': '365 GARFIELD RD WEST, MARSDEN PARK NSW 2765', 'name__4': 'Metro Marsden Park Truck Stop', 'postcode__4': '2765', 'brand__4': 'Metro Fuel', 'longitude__4': 150.833541, 'street__4': '365 Garfield Rd West', 'last_update__4': '20260217_22h31', 'latitude__4': -33.697401, 'town__4': 'Marsden Park', 'stationid__4': '20651', 'address__5': '130 EDGAR ST, CONDELL PARK NSW 2200', 'name__5': 'Metro Condell Park West', 'postcode__5': '2200', 'brand__5': 'Metro Fuel', 'longitude__5': 151.013734, 'street__5': '130 Edgar St', 'last_update__5': '20260217_22h31', 'latitude__5': -33.916224, 'town__5': 'Condell Park', 'stationid__5': '20133', 'address__6': '236-240 GEORGES RIVER RD, CROYDON PARK NSW 2133', 'name__6': 'Metro Barista Bar Croydon Park', 'postcode__6': '2133', 'brand__6': 'Metro Fuel', 'longitude__6': 151.105288, 'street__6': '236-240 Georges River Rd', 'last_update__6': '20260217_22h31', 'latitude__6': -33.896412, 'town__6': 'Croydon Park', 'stationid__6': '20218', 'address__7': '1 MULYAN ST, COWRA NSW 2794', 'name__7': 'Metro Petroleum Cowra', 'postcode__7': '2794', 'brand__7': 'Metro Fuel', 'longitude__7': 148.683136, 'street__7': '1 Mulyan St', 'last_update__7': '20260217_22h31', 'latitude__7': -33.828207, 'town__7': 'Cowra', 'stationid__7': '20238'}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2026-02-17 22:31:38 - INFO -      Module      - Config file updated
+2026-02-17 22:31:38 - INFO -      Module      - pushing file to repo
+2026-02-17 22:31:38 - INFO -      Module      - Successfully pushed config.json to repo
+2026-02-17 22:31:38 - INFO -      Module      - Operation complete
+2026-02-17 22:31:38 - INFO -   Orchestrator   - Finished modules/3.api_integration.py
+2026-02-17 22:31:38 - INFO -   Orchestrator   - Starting modules/99.retention_policy.py
+2026-02-17 22:31:39 - INFO - Retention Policy - Old workflow logs cleaned up and changes pushed.
+2026-02-17 22:31:39 - INFO -   Orchestrator   - Finished modules/99.retention_policy.py
+2026-02-17 22:31:39 - INFO -   Orchestrator   - Finished orchestrator
