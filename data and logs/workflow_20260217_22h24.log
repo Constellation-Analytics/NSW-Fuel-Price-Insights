@@ -1,0 +1,106 @@
+2026-02-17 22:24:44 - INFO -   Orchestrator   - Starting orchestrator
+2026-02-17 22:24:44 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-02-17 22:24:44 - INFO -      Module      - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-17 22:24:49 - INFO -      Module      - jan2026 data file already loaded
+2026-02-17 22:24:49 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-02-17 22:24:49 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-02-17 22:24:49 - INFO -      Module      - jan2026 file has already been transformed
+2026-02-17 22:24:49 - INFO -   Orchestrator   - Conditions not met in modules/2.transform_data.py - Skipping Module
+2026-02-17 22:24:49 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-02-17 22:24:50 - INFO -      Module      - Pulling API Information
+2026-02-17 22:24:54 - INFO -      Module      - Pulling Database Information
+2026-02-17 22:24:54 - INFO -      Module      - Creating the datasets
+2026-02-17 22:24:54 - INFO -      Module      - Truncate the staging tables
+2026-02-17 22:24:54 - INFO -      Module      - Inserting data into the database
+2026-02-17 22:24:54 - ERROR -      Module      - Unexpected error while inserting values into database: Execution failed on sql 'INSERT INTO stg_new_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (:stationid, :brand, :name, :address, :street, :town, :postcode, :latitude, :longitude, :last_update)': (psycopg2.errors.InvalidDatetimeFormat) invalid input syntax for type date: "20260217_22h24"
+LINE 1: ...d', 'Kenthurst', '2156',  -33.660452, 151.005933, '20260217_...
+                                                             ^
+
+[SQL: INSERT INTO stg_new_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid__0)s, %(brand__0)s, %(name__0)s, %(address__0)s, %(street__0)s, %(town__0)s, %(postcode__0)s, %(latitude__0)s ... 3136 characters truncated ... eet__19)s, %(town__19)s, %(postcode__19)s, %(latitude__19)s, %(longitude__19)s, %(last_update__19)s)]
+[parameters: {'street__0': '137 Kenthurst Rd', 'last_update__0': '20260217_22h24', 'postcode__0': '2156', 'stationid__0': '20824', 'name__0': 'AMPOL KENTHURST', 'brand__0': 'Ampol', 'latitude__0': -33.660452, 'address__0': '137 KENTHURST RD, KENTHURST NSW 2156', 'town__0': 'Kenthurst', 'longitude__0': 151.005933, 'street__1': '370 Griffith Rd', 'last_update__1': '20260217_22h24', 'postcode__1': '2641', 'stationid__1': '20826', 'name__1': 'Roo Petroleum Lavington', 'brand__1': 'Roo Petroleum', 'latitude__1': -36.048249, 'address__1': '370 GRIFFITH RD, LAVINGTON NSW 2641', 'town__1': 'Lavington', 'longitude__1': 146.937412, 'street__2': '3 Blueberry Rd', 'last_update__2': '20260217_22h24', 'postcode__2': '2400', 'stationid__2': '20825', 'name__2': 'Caltex Moree', 'brand__2': 'Caltex', 'latitude__2': -29.490788, 'address__2': '3 BLUEBERRY RD, MOREE NSW 2400', 'town__2': 'Moree', 'longitude__2': 149.850259, 'street__3': '2-4 Moulamein Rd', 'last_update__3': '20260217_22h24', 'postcode__3': '2732', 'stationid__3': '20827', 'name__3': 'Metro Truck Stop Barham', 'brand__3': 'Metro Fuel', 'latitude__3': -35.623909, 'address__3': '2-4 MOULAMEIN RD, BARHAM NSW 2732', 'town__3': 'Barham', 'longitude__3': 144.128963, 'street__4': '91-93 Elsham Av', 'last_update__4': '20260217_22h24', 'postcode__4': '2800', 'stationid__4': '20828', 'name__4': 'Woodham Petroleum Orange', 'brand__4': 'Independent', 'latitude__4': -33.308624, 'address__4': '91-93 ELSHAM AV, ORANGE NSW 2800', 'town__4': 'Orange', 'longitude__4': 149.106243 ... 100 parameters truncated ... 'street__15': '1A St', 'last_update__15': '20260217_22h24', 'postcode__15': '2207', 'stationid__15': '20730', 'name__15': 'AGL  St Kilda St, Bexley North', 'brand__15': 'AGL', 'latitude__15': -33.863088, 'address__15': '1A St, Kilda St, Bexley North NSW 2207', 'town__15': 'Kilda St, Bexley North', 'longitude__15': 151.130861, 'street__16': '22 Stafford', 'last_update__16': '20260217_22h24', 'postcode__16': '2021', 'stationid__16': '20732', 'name__16': 'AGL  StaffoRd, St, Paddington', 'brand__16': 'AGL', 'latitude__16': -33.883741, 'address__16': '22 StaffoRd, St, Paddington NSW 2021', 'town__16': 'St, Paddington', 'longitude__16': 151.22888, 'street__17': '31 Duxford', 'last_update__17': '20260217_22h24', 'postcode__17': '2021', 'stationid__17': '20775', 'name__17': 'AGL 31 DuxfoRd, St, Paddington', 'brand__17': 'AGL', 'latitude__17': -33.883118, 'address__17': '31 DuxfoRd, St, Paddington NSW 2021', 'town__17': 'St, Paddington', 'longitude__17': 151.22891, 'street__18': '17 Hereward', 'last_update__18': '20260217_22h24', 'postcode__18': '2035', 'stationid__18': '20707', 'name__18': 'AGL  Hereward, St, Maroubra', 'brand__18': 'AGL', 'latitude__18': -33.944918, 'address__18': '17 HerewaRd, St, Maroubra NSW 2035', 'town__18': 'St, Maroubra', 'longitude__18': 151.25602, 'street__19': '793 Tomago Rd', 'last_update__19': '20260217_22h24', 'postcode__19': '2322', 'stationid__19': '20830', 'name__19': 'Pearl Energy Tomago', 'brand__19': 'Pearl Energy', 'latitude__19': -32.821351, 'address__19': '793 TOMAGO RD, TOMAGO NSW 2322', 'town__19': 'Tomago', 'longitude__19': 151.699354}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2125, in _exec_insertmany_context
+    dialect.do_execute(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.InvalidDatetimeFormat: invalid input syntax for type date: "20260217_22h24"
+LINE 1: ...d', 'Kenthurst', '2156',  -33.660452, 151.005933, '20260217_...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1679, in execute
+    return execute_function(sql, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1844, in _execute_context
+    return self._exec_insertmany_context(dialect, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2133, in _exec_insertmany_context
+    self._handle_dbapi_exception(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2125, in _exec_insertmany_context
+    dialect.do_execute(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (psycopg2.errors.InvalidDatetimeFormat) invalid input syntax for type date: "20260217_22h24"
+LINE 1: ...d', 'Kenthurst', '2156',  -33.660452, 151.005933, '20260217_...
+                                                             ^
+
+[SQL: INSERT INTO stg_new_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid__0)s, %(brand__0)s, %(name__0)s, %(address__0)s, %(street__0)s, %(town__0)s, %(postcode__0)s, %(latitude__0)s ... 3136 characters truncated ... eet__19)s, %(town__19)s, %(postcode__19)s, %(latitude__19)s, %(longitude__19)s, %(last_update__19)s)]
+[parameters: {'street__0': '137 Kenthurst Rd', 'last_update__0': '20260217_22h24', 'postcode__0': '2156', 'stationid__0': '20824', 'name__0': 'AMPOL KENTHURST', 'brand__0': 'Ampol', 'latitude__0': -33.660452, 'address__0': '137 KENTHURST RD, KENTHURST NSW 2156', 'town__0': 'Kenthurst', 'longitude__0': 151.005933, 'street__1': '370 Griffith Rd', 'last_update__1': '20260217_22h24', 'postcode__1': '2641', 'stationid__1': '20826', 'name__1': 'Roo Petroleum Lavington', 'brand__1': 'Roo Petroleum', 'latitude__1': -36.048249, 'address__1': '370 GRIFFITH RD, LAVINGTON NSW 2641', 'town__1': 'Lavington', 'longitude__1': 146.937412, 'street__2': '3 Blueberry Rd', 'last_update__2': '20260217_22h24', 'postcode__2': '2400', 'stationid__2': '20825', 'name__2': 'Caltex Moree', 'brand__2': 'Caltex', 'latitude__2': -29.490788, 'address__2': '3 BLUEBERRY RD, MOREE NSW 2400', 'town__2': 'Moree', 'longitude__2': 149.850259, 'street__3': '2-4 Moulamein Rd', 'last_update__3': '20260217_22h24', 'postcode__3': '2732', 'stationid__3': '20827', 'name__3': 'Metro Truck Stop Barham', 'brand__3': 'Metro Fuel', 'latitude__3': -35.623909, 'address__3': '2-4 MOULAMEIN RD, BARHAM NSW 2732', 'town__3': 'Barham', 'longitude__3': 144.128963, 'street__4': '91-93 Elsham Av', 'last_update__4': '20260217_22h24', 'postcode__4': '2800', 'stationid__4': '20828', 'name__4': 'Woodham Petroleum Orange', 'brand__4': 'Independent', 'latitude__4': -33.308624, 'address__4': '91-93 ELSHAM AV, ORANGE NSW 2800', 'town__4': 'Orange', 'longitude__4': 149.106243 ... 100 parameters truncated ... 'street__15': '1A St', 'last_update__15': '20260217_22h24', 'postcode__15': '2207', 'stationid__15': '20730', 'name__15': 'AGL  St Kilda St, Bexley North', 'brand__15': 'AGL', 'latitude__15': -33.863088, 'address__15': '1A St, Kilda St, Bexley North NSW 2207', 'town__15': 'Kilda St, Bexley North', 'longitude__15': 151.130861, 'street__16': '22 Stafford', 'last_update__16': '20260217_22h24', 'postcode__16': '2021', 'stationid__16': '20732', 'name__16': 'AGL  StaffoRd, St, Paddington', 'brand__16': 'AGL', 'latitude__16': -33.883741, 'address__16': '22 StaffoRd, St, Paddington NSW 2021', 'town__16': 'St, Paddington', 'longitude__16': 151.22888, 'street__17': '31 Duxford', 'last_update__17': '20260217_22h24', 'postcode__17': '2021', 'stationid__17': '20775', 'name__17': 'AGL 31 DuxfoRd, St, Paddington', 'brand__17': 'AGL', 'latitude__17': -33.883118, 'address__17': '31 DuxfoRd, St, Paddington NSW 2021', 'town__17': 'St, Paddington', 'longitude__17': 151.22891, 'street__18': '17 Hereward', 'last_update__18': '20260217_22h24', 'postcode__18': '2035', 'stationid__18': '20707', 'name__18': 'AGL  Hereward, St, Maroubra', 'brand__18': 'AGL', 'latitude__18': -33.944918, 'address__18': '17 HerewaRd, St, Maroubra NSW 2035', 'town__18': 'St, Maroubra', 'longitude__18': 151.25602, 'street__19': '793 Tomago Rd', 'last_update__19': '20260217_22h24', 'postcode__19': '2322', 'stationid__19': '20830', 'name__19': 'Pearl Energy Tomago', 'brand__19': 'Pearl Energy', 'latitude__19': -32.821351, 'address__19': '793 TOMAGO RD, TOMAGO NSW 2322', 'town__19': 'Tomago', 'longitude__19': 151.699354}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/3.api_integration.py", line 298, in <module>
+    new.to_sql('stg_new_stations', connection, if_exists='append', index=False)
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/generic.py", line 3052, in to_sql
+    return sql.to_sql(
+           ^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 841, in to_sql
+    return pandas_sql.to_sql(
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 2037, in to_sql
+    total_inserted = sql_engine.insert_records(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1571, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1122, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1014, in _execute_insert
+    result = self.pd_sql.execute(self.table.insert(), data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1681, in execute
+    raise DatabaseError(f"Execution failed on sql '{sql}': {exc}") from exc
+pandas.errors.DatabaseError: Execution failed on sql 'INSERT INTO stg_new_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (:stationid, :brand, :name, :address, :street, :town, :postcode, :latitude, :longitude, :last_update)': (psycopg2.errors.InvalidDatetimeFormat) invalid input syntax for type date: "20260217_22h24"
+LINE 1: ...d', 'Kenthurst', '2156',  -33.660452, 151.005933, '20260217_...
+                                                             ^
+
+[SQL: INSERT INTO stg_new_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid__0)s, %(brand__0)s, %(name__0)s, %(address__0)s, %(street__0)s, %(town__0)s, %(postcode__0)s, %(latitude__0)s ... 3136 characters truncated ... eet__19)s, %(town__19)s, %(postcode__19)s, %(latitude__19)s, %(longitude__19)s, %(last_update__19)s)]
+[parameters: {'street__0': '137 Kenthurst Rd', 'last_update__0': '20260217_22h24', 'postcode__0': '2156', 'stationid__0': '20824', 'name__0': 'AMPOL KENTHURST', 'brand__0': 'Ampol', 'latitude__0': -33.660452, 'address__0': '137 KENTHURST RD, KENTHURST NSW 2156', 'town__0': 'Kenthurst', 'longitude__0': 151.005933, 'street__1': '370 Griffith Rd', 'last_update__1': '20260217_22h24', 'postcode__1': '2641', 'stationid__1': '20826', 'name__1': 'Roo Petroleum Lavington', 'brand__1': 'Roo Petroleum', 'latitude__1': -36.048249, 'address__1': '370 GRIFFITH RD, LAVINGTON NSW 2641', 'town__1': 'Lavington', 'longitude__1': 146.937412, 'street__2': '3 Blueberry Rd', 'last_update__2': '20260217_22h24', 'postcode__2': '2400', 'stationid__2': '20825', 'name__2': 'Caltex Moree', 'brand__2': 'Caltex', 'latitude__2': -29.490788, 'address__2': '3 BLUEBERRY RD, MOREE NSW 2400', 'town__2': 'Moree', 'longitude__2': 149.850259, 'street__3': '2-4 Moulamein Rd', 'last_update__3': '20260217_22h24', 'postcode__3': '2732', 'stationid__3': '20827', 'name__3': 'Metro Truck Stop Barham', 'brand__3': 'Metro Fuel', 'latitude__3': -35.623909, 'address__3': '2-4 MOULAMEIN RD, BARHAM NSW 2732', 'town__3': 'Barham', 'longitude__3': 144.128963, 'street__4': '91-93 Elsham Av', 'last_update__4': '20260217_22h24', 'postcode__4': '2800', 'stationid__4': '20828', 'name__4': 'Woodham Petroleum Orange', 'brand__4': 'Independent', 'latitude__4': -33.308624, 'address__4': '91-93 ELSHAM AV, ORANGE NSW 2800', 'town__4': 'Orange', 'longitude__4': 149.106243 ... 100 parameters truncated ... 'street__15': '1A St', 'last_update__15': '20260217_22h24', 'postcode__15': '2207', 'stationid__15': '20730', 'name__15': 'AGL  St Kilda St, Bexley North', 'brand__15': 'AGL', 'latitude__15': -33.863088, 'address__15': '1A St, Kilda St, Bexley North NSW 2207', 'town__15': 'Kilda St, Bexley North', 'longitude__15': 151.130861, 'street__16': '22 Stafford', 'last_update__16': '20260217_22h24', 'postcode__16': '2021', 'stationid__16': '20732', 'name__16': 'AGL  StaffoRd, St, Paddington', 'brand__16': 'AGL', 'latitude__16': -33.883741, 'address__16': '22 StaffoRd, St, Paddington NSW 2021', 'town__16': 'St, Paddington', 'longitude__16': 151.22888, 'street__17': '31 Duxford', 'last_update__17': '20260217_22h24', 'postcode__17': '2021', 'stationid__17': '20775', 'name__17': 'AGL 31 DuxfoRd, St, Paddington', 'brand__17': 'AGL', 'latitude__17': -33.883118, 'address__17': '31 DuxfoRd, St, Paddington NSW 2021', 'town__17': 'St, Paddington', 'longitude__17': 151.22891, 'street__18': '17 Hereward', 'last_update__18': '20260217_22h24', 'postcode__18': '2035', 'stationid__18': '20707', 'name__18': 'AGL  Hereward, St, Maroubra', 'brand__18': 'AGL', 'latitude__18': -33.944918, 'address__18': '17 HerewaRd, St, Maroubra NSW 2035', 'town__18': 'St, Maroubra', 'longitude__18': 151.25602, 'street__19': '793 Tomago Rd', 'last_update__19': '20260217_22h24', 'postcode__19': '2322', 'stationid__19': '20830', 'name__19': 'Pearl Energy Tomago', 'brand__19': 'Pearl Energy', 'latitude__19': -32.821351, 'address__19': '793 TOMAGO RD, TOMAGO NSW 2322', 'town__19': 'Tomago', 'longitude__19': 151.699354}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2026-02-17 22:24:54 - INFO -      Module      - Config file updated
+2026-02-17 22:24:54 - INFO -      Module      - pushing file to repo
+2026-02-17 22:24:55 - INFO -      Module      - Successfully pushed config.json to repo
+2026-02-17 22:24:55 - INFO -      Module      - Operation complete
+2026-02-17 22:24:55 - INFO -   Orchestrator   - Finished modules/3.api_integration.py
+2026-02-17 22:24:55 - INFO -   Orchestrator   - Starting modules/99.retention_policy.py
+2026-02-17 22:24:55 - INFO - Retention Policy - Old workflow logs cleaned up and changes pushed.
+2026-02-17 22:24:55 - INFO -   Orchestrator   - Finished modules/99.retention_policy.py
+2026-02-17 22:24:55 - INFO -   Orchestrator   - Finished orchestrator
