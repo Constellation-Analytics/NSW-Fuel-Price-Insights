@@ -276,7 +276,7 @@ new = fuel_station_api[~fuel_station_api['stationid'].isin(station_fuelcode_dbo[
 updated = fuel_station_api.merge(station_fuelcode_dbo, on='stationid', suffixes=('_api', '_db'))
 updated_stations = updated[(updated['name_api'] != updated['name_db']) | (updated['address_api'] != updated['address_db'])]
 updated_stations = updated_stations[['stationid', 'brand_api', 'name_api', 'address_api', 'street_api','town_api', 'postcode_api', 'latitude_api', 'longitude_api']].rename(columns=lambda x: x.replace('_api', ''))
-updated_stations['last_update'] = datetimestamp
+updated_stations['last_update'] = now
 
 # Truncate the staging tables
 logger.info("Truncate the staging tables")
