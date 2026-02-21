@@ -118,7 +118,12 @@ def save_config():
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
+# exit if the most recent file has already been processed
+if current_monthyear == nextfile:
+    logger.info(f"{latest_file} data file already loaded")
+    sys.exit(10)
 
+# Run requests to connect to website
 logger.info(f"connecting to {url}")
 response = requests.get(url)
 soup = BeautifulSoup(response.text, "html.parser")
@@ -131,11 +136,6 @@ download_links = [
     and nextfile_month in href
     and nextfile_year in href
 ]
-
-# exit if the most recent file has already been processed
-if current_monthyear == nextfile:
-    logger.info(f"{latest_file} data file already loaded")
-    sys.exit(10)
 
 # exit if the file is not yet available
 if len(download_links) == 0:
