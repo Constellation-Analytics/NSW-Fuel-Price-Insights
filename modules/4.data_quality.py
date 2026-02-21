@@ -22,7 +22,7 @@ os.makedirs("data and logs", exist_ok=True)
 logging.basicConfig(
     filename=log_file,
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s -      Module 3    - %(message)s",
+    format="%(asctime)s - %(levelname)s -      Module 4    - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S"
 )
 
@@ -42,7 +42,7 @@ engine = create_engine(DB_CONNECTION_STRING)
 
 logger.info("Running SQL Stored Procedure")
 
-call = text("CALL truncate_stg_stations();")
+call = text("CALL data_quality_check();")
 with engine.connect() as conn:
     conn = conn.execution_options(isolation_level="AUTOCOMMIT")
     conn.execute(call)
