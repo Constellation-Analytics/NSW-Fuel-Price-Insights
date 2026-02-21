@@ -86,7 +86,7 @@ def run_module(module_path):
             logger.error(f"Module {module_path} failed with exit code {result.returncode}")
             logger.error(f"{module_path} errors before failure:\n{result.stderr}")
             push_file_to_repo(log_file, f"Workflow log before failure in {module_path}")
-            sys.exit(0)
+            sys.exit(1)
 
     except Exception as e:
         logger.exception(f"Unexpected error running {module_path}: {e}")
