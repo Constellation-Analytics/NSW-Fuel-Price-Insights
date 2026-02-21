@@ -1,0 +1,54 @@
+2026-02-21 09:59:41 - INFO -   Orchestrator   - Starting orchestrator
+2026-02-21 09:59:41 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-02-21 09:59:41 - INFO -      Module      - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-21 09:59:47 - INFO -      Module      - jan2026 data file already loaded
+2026-02-21 09:59:47 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-02-21 09:59:47 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-02-21 09:59:48 - INFO -      Module      - jan2026 file has already been transformed
+2026-02-21 09:59:48 - INFO -   Orchestrator   - Conditions not met in modules/2.transform_data.py - Skipping Module
+2026-02-21 09:59:48 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-02-21 09:59:48 - INFO -      Module      - Pulling API Information
+2026-02-21 09:59:51 - INFO -      Module      - Cleaning API Data
+2026-02-21 09:59:52 - INFO -      Module      - Pulling Database Information
+2026-02-21 09:59:53 - INFO -      Module      - Creating the datasets
+2026-02-21 09:59:53 - INFO -      Module      - Comparing API dataset to dbo dataset
+2026-02-21 09:59:53 - INFO -      Module      - Truncate the staging tables
+2026-02-21 09:59:53 - INFO -      Module      - Inserting data into the database
+2026-02-21 09:59:54 - INFO -      Module      - Config file updated
+2026-02-21 09:59:54 - INFO -      Module      - pushing file to repo
+2026-02-21 09:59:55 - INFO -      Module      - Successfully pushed config.json to repo
+2026-02-21 09:59:55 - INFO -      Module      - Operation complete
+2026-02-21 09:59:55 - INFO -   Orchestrator   - Finished modules/3.api_integration.py
+2026-02-21 09:59:55 - INFO -   Orchestrator   - Starting modules/99.retention_policy.py
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h50.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_08h40.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h37.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h27.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_09h32.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_09h14.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_21h22.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h17.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h54.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h32.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260216_13h52.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h42.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_09h08.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h21.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260216_15h06.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_08h01.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_21h19.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h57.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260216_13h49.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_08h58.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_09h10.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260216_14h55.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_08h46.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_10h54.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260216_13h54.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h33.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h25.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260216_15h01.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260215_07h46.log
+2026-02-21 09:59:55 - INFO - Retention Policy - Old workflow logs cleaned up and changes pushed.
+2026-02-21 09:59:55 - INFO -   Orchestrator   - Finished modules/99.retention_policy.py
+2026-02-21 09:59:55 - INFO -   Orchestrator   - Finished orchestrator
