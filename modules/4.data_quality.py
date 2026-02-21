@@ -42,7 +42,7 @@ engine = create_engine(DB_CONNECTION_STRING)
 
 logger.info("Running SQL Stored Procedure")
 
-call = text("CALL data_quality_check();")
+call = text("CALL check_data_quality();")
 with engine.connect() as conn:
     conn = conn.execution_options(isolation_level="AUTOCOMMIT")
     conn.execute(call)
