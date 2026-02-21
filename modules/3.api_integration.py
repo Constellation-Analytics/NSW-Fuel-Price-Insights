@@ -289,14 +289,6 @@ updated_stations = updated[(updated['name_api'] != updated['name_db']) | (update
 updated_stations = updated_stations[['stationid', 'brand_api', 'name_api', 'address_api', 'street_api','town_api', 'postcode_api', 'latitude_api', 'longitude_api']].rename(columns=lambda x: x.replace('_api', ''))
 updated_stations['last_update'] = now
 
-# Truncate the staging tables
-logger.info("Truncate the staging tables")
-
-call = text("CALL truncate_stg_stations();")
-with engine.connect() as conn:
-    conn = conn.execution_options(isolation_level="AUTOCOMMIT")
-    conn.execute(call)
-
 # -------------------------------------------------------------------------------------------------
 #                                       Insert into database
 # -------------------------------------------------------------------------------------------------
