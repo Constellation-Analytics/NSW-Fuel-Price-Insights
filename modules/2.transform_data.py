@@ -162,6 +162,7 @@ if config["latest_file"] == config["last_transformation"]:
 # - Fill missing information
 # - Convert column to date type
 # ----------------------------------------------------------------------------------------------------
+logger.info(f"Starting Data Transformations")
 
 # Read the file 
 file = f"data and logs/fuelcheck_{latest_file}.csv"
@@ -193,7 +194,6 @@ logger.info(f"df_fuel_data has {rowcount} rows")
 # - Fetch stations and fuel types for the last month
 # - Union the two datasets
 # ----------------------------------------------------------------------------------------------------
-logger.info(f"Starting Block Two")
 
 # Set column headers to lowercase  
 df_fuel_data.columns = df_fuel_data.columns.str.lower()
@@ -229,7 +229,6 @@ union_data = pd.concat([unique_station_fuelcodes, station_fuelcode_dbo]).drop_du
 # - Cross join to unique combinations of 'servicestationname','address','fuelcode' defined in Block 2
 # - Get average price per 'servicestationname','address','fuelcode', 'date' from Block 1
 # ----------------------------------------------------------------------------------------------------
-logger.info(f"Starting Block Three")
 
 # Generate a full date range based on the min and max dates in the dataset
 date_range_df = pd.DataFrame(
@@ -262,7 +261,6 @@ daily_median_prices = (
 # - Every station Left join last_day_of_last_month prices 
 # - Create PriceUpdatedDate column date where Price is not Null
 # ----------------------------------------------------------------------------------------------------
-logger.info(f"Starting Block Four")
 
 # Calculate the last day of the previous month
 date = df_fuel_data['date'].min()
