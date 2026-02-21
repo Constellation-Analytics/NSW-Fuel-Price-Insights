@@ -1,0 +1,15 @@
+2026-02-21 11:17:20 - INFO -   Orchestrator   - Starting orchestrator
+2026-02-21 11:17:20 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-02-21 11:17:20 - INFO -      Module 1    - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-02-21 11:17:25 - INFO -      Module 1    - jan2026 data file already loaded
+2026-02-21 11:17:25 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-02-21 11:17:25 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-02-21 11:17:26 - INFO -      Module 2    - jan2026 file has already been transformed
+2026-02-21 11:17:26 - INFO -   Orchestrator   - Conditions not met in modules/2.transform_data.py - Skipping Module
+2026-02-21 11:17:26 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-02-21 11:17:26 - INFO -      Module 3    - jan2026 station dictionary already up to date
+2026-02-21 11:17:26 - INFO -   Orchestrator   - Conditions not met in modules/3.api_integration.py - Skipping Module
+2026-02-21 11:17:26 - INFO -   Orchestrator   - Starting modules/99.retention_policy.py
+2026-02-21 11:17:27 - INFO - Retention Policy - Old workflow logs cleaned up and changes pushed.
+2026-02-21 11:17:27 - INFO -   Orchestrator   - Finished modules/99.retention_policy.py
+2026-02-21 11:17:27 - INFO -   Orchestrator   - Finished orchestrator
