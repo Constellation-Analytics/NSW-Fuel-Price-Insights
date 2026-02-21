@@ -292,7 +292,7 @@ updated_stations['last_update'] = now
 # Truncate the staging tables
 logger.info("Truncate the staging tables")
 
-call = text("CALL truncate_staging_station_tables();")
+call = text("CALL truncate_stg_stations();")
 with engine.connect() as conn:
     conn = conn.execution_options(isolation_level="AUTOCOMMIT")
     conn.execute(call)
