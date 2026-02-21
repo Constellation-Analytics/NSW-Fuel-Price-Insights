@@ -1,7 +1,7 @@
-#Import packages
+# Import packages
 # Import necessary libraries
 from datetime import datetime, timedelta, timezone
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 import argparse
 import json
 import logging
@@ -104,7 +104,7 @@ def create_access_token(url, authorisation_header):
         return data.get("access_token", None)
 
     except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
+        logger.error(f"Request failed: {e}")
         return None
 
 
@@ -140,7 +140,7 @@ def api_data(url, access_token, API_key):
         return pd.json_normalize(stations)
 
     except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
+        logger.error(f"Request failed: {e}")
         return None
 
 
@@ -197,7 +197,14 @@ def save_config():
     except Exception as e:
         logger.exception(f"Unexpected error saving json config file: {e}")
 
+# ----------------------------------------------------------------------------------------------------
+#                                     Script Body - Start
+# ----------------------------------------------------------------------------------------------------
 
+# exit if the latest file has already been transformed
+if config["latest_file"] == config["last_API_call_update"]:
+    logger.info(f"{config['latest_file']} station dictionary already up to date")
+    sys.exit(10)
 
 # -------------------------------------------------------------------------------------------------
 #                                       Pull API Information
@@ -216,13 +223,16 @@ if token is None:
 if data is None:
     logger.error("API returned no data")
     sys.exit(1)
-
+    
+logger.info(f"Cleaning API Data")
 # Create the new address columns using 
 data['street'] = data['address'].str.extract(r'((?:\d+|Corner|Cnr).+?),')
 data['street'] = data['street'].str.title()
 data['town'] = data['address'].str.extract(r',\s(\D+)\sNSW\s\d+')
 data['town'] = data['town'].str.title() 
 data['postcode'] = data['address'].str.extract(r'NSW\s(\d+)')
+data['address'] = data['address'].str.strip()
+data['name'] = data['name'].str.strip()
 
 # add timestamp
 data['last_update'] = now
@@ -272,6 +282,7 @@ deleted = station_fuelcode_dbo[~station_fuelcode_dbo['stationid'].isin(fuel_stat
 # API is not in Dict
 new = fuel_station_api[~fuel_station_api['stationid'].isin(station_fuelcode_dbo['stationid'])]
 
+logger.info(f"Comparing API dataset to dbo dataset")
 # Name or Address has changed
 updated = fuel_station_api.merge(station_fuelcode_dbo, on='stationid', suffixes=('_api', '_db'))
 updated_stations = updated[(updated['name_api'] != updated['name_db']) | (updated['address_api'] != updated['address_db'])]
@@ -281,10 +292,10 @@ updated_stations['last_update'] = now
 # Truncate the staging tables
 logger.info("Truncate the staging tables")
 
-#call = text("CALL truncate_staging_station_tables();")
-#with engine.connect() as conn:
-#    conn = conn.execution_options(isolation_level="AUTOCOMMIT")
-#    conn.execute(call)
+call = text("CALL truncate_staging_station_tables();")
+with engine.connect() as conn:
+    conn = conn.execution_options(isolation_level="AUTOCOMMIT")
+    conn.execute(call)
 
 # -------------------------------------------------------------------------------------------------
 #                                       Insert into database
@@ -302,6 +313,7 @@ except Exception as e:
 
 #update the config 
 config["last_API_call"] = datetimestamp
+config["last_API_call_update"] = config["latest_file"]
 save_config()
 
 logger.info("Operation complete")
