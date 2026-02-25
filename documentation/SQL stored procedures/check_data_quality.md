@@ -1,3 +1,6 @@
+
+Full Procedure
+```sql
 -- PROCEDURE: public.check_data_quality()
 
 -- DROP PROCEDURE IF EXISTS public.check_data_quality();
