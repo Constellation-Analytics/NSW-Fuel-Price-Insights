@@ -11,7 +11,7 @@ BEGIN
 			START OF PROCEDURE
 ----------------------------------------*/
 
--- mark all defects as stale
+-- mark all defects as inactive
 UPDATE dq_issues
 SET is_active = false;
 
