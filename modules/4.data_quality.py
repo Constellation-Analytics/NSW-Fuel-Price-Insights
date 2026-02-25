@@ -35,7 +35,6 @@ DB_CONNECTION_STRING = os.getenv("DB_CONNECTION_STRING")
 # Create database engine
 engine = create_engine(DB_CONNECTION_STRING)
 
-
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
@@ -46,5 +45,28 @@ call = text("CALL check_data_quality();")
 with engine.connect() as conn:
     conn = conn.execution_options(isolation_level="AUTOCOMMIT")
     conn.execute(call)
+
+# SQL query to fetch active stations
+data_quality_query = f"""
+SELECT
+	description,
+	rows_affected
+FROM
+	sys_run_log
+WHERE
+	procedure_name = 'check_data_quality'
+ORDER BY
+	log_id
+"""
+
+# Execute the query
+sys_run_log_dbo = pd.read_sql(data_quality_query, engine)
+
+for row in sys_run_log_dbo:
+    logger.info(
+        'defect_id %s has %d rows',
+        row["description"],
+        row["rows_affected"]
+    )
 
 logger.info("Operation complete")
