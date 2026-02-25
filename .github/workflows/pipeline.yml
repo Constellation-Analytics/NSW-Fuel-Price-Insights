@@ -3,8 +3,9 @@ name: NSW Fuel Price Insights Workflow
 # Trigger manually
 on:
   workflow_dispatch: # this runs on a manual trigger
-  #schedule: # runs on a schedule using cron
-  #  - cron: "0 8 * * 1"  # every Monday 8:00 UTC
+  #schedule:
+  #  - cron: "0 2 1-7 * *"    # Check daily first week
+  #  - cron: "0 2 */5 * *"    # Then every 5 daysMonday 8:00 UTC
 
 permissions:
   contents: write
