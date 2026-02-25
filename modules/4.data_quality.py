@@ -63,7 +63,7 @@ ORDER BY
 # Execute the query
 sys_run_log_dbo = pd.read_sql(data_quality_query, engine)
 
-for row in sys_run_log_dbo.iterrows():
+for index, row in sys_run_log_dbo.iterrows():
     logger.info(
         'defect_id %s has %d rows',
         row["description"],
