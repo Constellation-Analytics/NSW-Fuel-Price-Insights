@@ -4,6 +4,7 @@ from sqlalchemy import create_engine, text
 import argparse
 import logging
 import os
+import pandas as pd
 import subprocess
 
 # ----------------------------------------------------------------------------------------------------
