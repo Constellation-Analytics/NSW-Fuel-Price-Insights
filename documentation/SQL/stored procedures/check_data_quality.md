@@ -1,4 +1,137 @@
+# Stored Procedure Spec: `public.check_data_quality()`
 
+## 1. Procedure Overview
+- **Name:** `public.check_data_quality()`  
+- **Type:** PostgreSQL Stored Procedure (`plpgsql`)  
+- **Purpose:**  
+  Executes all data quality checks against staging and dimension tables, records active defects in `dq_issues`, logs row counts to `sys_run_log`, and removes resolved defects.  
+- **Owner:** `neondb_owner`  
+
+---
+
+## 2. Upstream Dependencies
+- `stg_fuel_price` (fact staging table)  
+- `dim_fuel_stations` (dimension table)  
+- `stg_new_stations` (station insert staging table)  
+- `stg_updated_stations` (station update staging table)  
+
+---
+
+## 3. Downstream Dependencies
+- `dq_issues` (data quality defect table)  
+- `sys_run_log` (procedure execution log table)  
+- Orchestrator Python module (`data_quality.py`) which calls this procedure  
+
+---
+
+## 4. Inputs / Sources
+
+This procedure:
+- Has no parameters  
+- Reads from:
+  - `stg_fuel_price`
+  - `dim_fuel_stations`
+  - `stg_new_stations`
+  - `stg_updated_stations`
+
+---
+
+## 5. Outputs
+
+### Primary Output
+- Inserts or updates active defects in:
+  - `dq_issues`
+
+### Logging Output
+- Inserts run-level defect counts into:
+  - `sys_run_log`
+    - `procedure_name`
+    - `description` (defect_id)
+    - `rows_affected`
+
+### Cleanup Output
+- Deletes resolved defects from:
+  - `dq_issues` where `is_active = false`
+
+---
+
+## 6. High-Level Logic / Execution Flow
+
+### Step 1 – Reset State
+1. Mark all existing defects as inactive  
+2. Remove previous run logs for this procedure  
+
+---
+
+### Step 2 – Execute Data Quality Checks (AD_01 to AD_05)
+
+For each defect:
+
+1. Insert detected issues into `dq_issues`  
+2. Reactivate existing defects if already present  
+3. Capture affected row count  
+4. If rows were affected:
+   - Insert summary record into `sys_run_log`
+
+This ensures:
+- Idempotent execution  
+- No duplicate defects  
+- Full auditability of each run  
+
+---
+
+### Step 3 – Remove Resolved Defects
+
+After all checks complete:
+- Permanently remove defects that were not detected in the current run  
+
+---
+
+## 7. Data Quality Checks Summary
+
+| defect_id | defect_type        | description |
+|------------|-------------------|-------------|
+| AD_01 | Missing Data | Station exists in fact table but not in dimension or staging tables |
+| AD_02 | Reference Mismatch | Fact table marked for update but still has records under the old station name/address |
+| AD_03 | Reference Mismatch | Fact table marked for update but has records under both old and new name/address |
+| AD_04 | Parsing Issue | `town` or `street` is NULL in `stg_new_stations` |
+| AD_05 | Parsing Issue | `town` or `street` is NULL in `stg_updated_stations` |
+
+---
+
+## 8. Conflict Handling Strategy
+
+The procedure uses a conflict-handling mechanism that:
+- Prevents duplicate defect records  
+- Reactivates previously detected defects  
+- Preserves historical defect identity  
+
+---
+
+## 9. Logging Strategy
+
+For each defect check:
+- Capture number of affected rows  
+- Insert run summary into `sys_run_log` only if rows were detected  
+
+This provides:
+- Per-defect row counts  
+- Lightweight operational audit trail  
+- Run-by-run defect visibility  
+
+---
+
+## 10. Idempotency & Safety
+
+The procedure is fully idempotent because:
+
+- All defects are first marked inactive  
+- Detected defects are reactivated or inserted  
+- Resolved defects are removed at the end  
+- Conflict handling prevents duplication  
+- Logs are reset per run  
+
+Running the procedure multiple times produces consistent and stable results.
 Full Procedure
 ```sql
 -- PROCEDURE: public.check_data_quality()
@@ -263,4 +396,4 @@ END
 $BODY$;
 ALTER PROCEDURE public.check_data_quality()
     OWNER TO neondb_owner;
-
+```
