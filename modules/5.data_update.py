@@ -23,7 +23,7 @@ os.makedirs("data and logs", exist_ok=True)
 logging.basicConfig(
     filename=log_file,
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s -      Module 4    - %(message)s",
+    format="%(asctime)s - %(levelname)s -      Module 5    - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S"
 )
 
