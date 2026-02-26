@@ -47,7 +47,7 @@ with engine.connect() as conn:
     conn = conn.execution_options(isolation_level="AUTOCOMMIT")
     conn.execute(call)
 
-# SQL query to fetch active stations
+# SQL query to fetch sys_run_log
 data_quality_query = f"""
 SELECT
 	description,
