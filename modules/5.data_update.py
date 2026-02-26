@@ -48,17 +48,17 @@ def run_stored_procedure(engine, logger, procedure):
         conn = conn.execution_options(isolation_level="AUTOCOMMIT")
         conn.execute(call)
 
-    query = f"""
+    query = """
         SELECT
             procedure_name,
             description,
             rows_affected
         FROM sys_run_log
-        WHERE procedure_name = :procedure
+        WHERE procedure_name = %s
         ORDER BY log_id
     """
 
-    df = pd.read_sql(query, engine, params={"procedure": procedure})
+    df = pd.read_sql(query, engine, params=(procedure,))
 
     for row in df.itertuples(index=False):
         logger.info(
