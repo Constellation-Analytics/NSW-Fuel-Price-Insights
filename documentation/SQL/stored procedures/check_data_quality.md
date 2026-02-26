@@ -7,22 +7,16 @@
   Executes all data quality checks against staging and dimension tables, records active defects in `dq_issues`, logs row counts to `sys_run_log`, and removes resolved defects.  
 - **Owner:** `neondb_owner`  
 
----
-
 ## 2. Upstream Dependencies
 - `stg_fuel_price` (fact staging table)  
 - `dim_fuel_stations` (dimension table)  
 - `stg_new_stations` (station insert staging table)  
 - `stg_updated_stations` (station update staging table)  
 
----
-
 ## 3. Downstream Dependencies
 - `dq_issues` (data quality defect table)  
 - `sys_run_log` (procedure execution log table)  
 - Orchestrator Python module (`data_quality.py`) which calls this procedure  
-
----
 
 ## 4. Inputs / Sources
 
@@ -33,8 +27,6 @@ This procedure:
   - `dim_fuel_stations`
   - `stg_new_stations`
   - `stg_updated_stations`
-
----
 
 ## 5. Outputs
 
@@ -53,15 +45,11 @@ This procedure:
 - Deletes resolved defects from:
   - `dq_issues` where `is_active = false`
 
----
-
 ## 6. High-Level Logic / Execution Flow
 
 ### Step 1 – Reset State
 1. Mark all existing defects as inactive  
 2. Remove previous run logs for this procedure  
-
----
 
 ### Step 2 – Execute Data Quality Checks (AD_01 to AD_05)
 
@@ -78,14 +66,10 @@ This ensures:
 - No duplicate defects  
 - Full auditability of each run  
 
----
-
 ### Step 3 – Remove Resolved Defects
 
 After all checks complete:
 - Permanently remove defects that were not detected in the current run  
-
----
 
 ## 7. Data Quality Checks Summary
 
@@ -97,16 +81,12 @@ After all checks complete:
 | AD_04 | Parsing Issue | `town` or `street` is NULL in `stg_new_stations` |
 | AD_05 | Parsing Issue | `town` or `street` is NULL in `stg_updated_stations` |
 
----
-
 ## 8. Conflict Handling Strategy
 
 The procedure uses a conflict-handling mechanism that:
 - Prevents duplicate defect records  
 - Reactivates previously detected defects  
 - Preserves historical defect identity  
-
----
 
 ## 9. Logging Strategy
 
@@ -118,8 +98,6 @@ This provides:
 - Per-defect row counts  
 - Lightweight operational audit trail  
 - Run-by-run defect visibility  
-
----
 
 ## 10. Idempotency & Safety
 
