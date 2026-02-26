@@ -8,6 +8,7 @@
 - **Owner:** `neondb_owner`  
 
 ## 2. Upstream Dependencies
+- Orchestrator Python module (`data_quality.py`) which calls this procedure  [see specs](/documentation/modules/4.data_quality.py)
 - `stg_fuel_price` (fact staging table)  
 - `dim_fuel_stations` (dimension table)  
 - `stg_new_stations` (station insert staging table)  
@@ -16,7 +17,6 @@
 ## 3. Downstream Dependencies
 - `dq_issues` (data quality defect table)  
 - `sys_run_log` (procedure execution log table)  
-- Orchestrator Python module (`data_quality.py`) which calls this procedure  
 
 ## 4. Inputs / Sources
 
