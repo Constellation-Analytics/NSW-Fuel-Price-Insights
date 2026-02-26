@@ -36,6 +36,10 @@ DB_CONNECTION_STRING = os.getenv("DB_CONNECTION_STRING")
 # Create database engine
 engine = create_engine(DB_CONNECTION_STRING)
 
+# -------------------------------------------------------------------------------------------------
+#                                       Define Functions
+# -------------------------------------------------------------------------------------------------
+
 def run_stored_procedure(engine, logger, procedure):
 
     call = text(f"CALL {procedure}();")
