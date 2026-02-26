@@ -5,7 +5,7 @@
 - Deletions are logged and pushed to GitHub automatically by the `99.retention_policy` module.
 
 ## 2. Data
-- Fact data older than **24 months** will be automatically deleted.
+- Database fact data older than **24 months** will be automatically deleted.
 
 ## 3. Process
 - A dedicated `99.retention_policy` module will be called at the end of the pipeline to enforce the above rules.
