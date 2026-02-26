@@ -1,7 +1,7 @@
-# Stored Procedure Spec: `public.check_data_quality()`
+# Stored Procedure Spec: `check_data_quality()`
 
 ## 1. Procedure Overview
-- **Name:** `public.check_data_quality()`  
+- **Name:** `check_data_quality()`  
 - **Type:** PostgreSQL Stored Procedure (`plpgsql`)  
 - **Purpose:**  
   Executes all data quality checks against staging and dimension tables, records active defects in `dq_issues`, logs row counts to `sys_run_log`, and removes resolved defects.  
@@ -110,7 +110,8 @@ The procedure is fully idempotent because:
 - Logs are reset per run  
 
 Running the procedure multiple times produces consistent and stable results.
-Full Procedure
+
+## Full Procedure
 ```sql
 -- PROCEDURE: public.check_data_quality()
 
