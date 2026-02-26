@@ -74,8 +74,8 @@ def run_stored_procedure(engine, logger, procedure):
 
 logger.info("Running SQL Stored Procedures")
 
-run_stored_procedure(engine, logger, update_fuel_stations_active)
-run_stored_procedure(engine, logger, update_fact_fuel)
-run_stored_procedure(engine, logger, update_fuel_stations_inactive)
+run_stored_procedure(engine, logger, "update_fuel_stations_active")
+run_stored_procedure(engine, logger, "update_fact_fuel")
+run_stored_procedure(engine, logger, "update_fuel_stations_inactive")
 
 logger.info("Operation complete")
