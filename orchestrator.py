@@ -112,6 +112,9 @@ run_module("modules/3.api_integration.py")
 # -------------------- Module 4
 run_module("modules/4.data_quality.py")
 
+# -------------------- Module 5
+run_module("modules/5.data_update.py")
+
 # -------------------- Retention Policy
 run_module("modules/99.retention_policy.py")
 
