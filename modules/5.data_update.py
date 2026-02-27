@@ -73,9 +73,9 @@ def run_stored_procedure(engine, logger, procedure):
         ORDER BY log_id
     """
 
-    df = pd.read_sql(query, engine, params=(procedure,))
+    sys_run_log_dbo  = pd.read_sql(query, engine, params=(procedure,))
 
-    for row in df.itertuples(index=False):
+    for index, row in sys_run_log_dbo.iterrows():
         logger.info(
             "%s | %s | %s rows",
             row.procedure_name,
