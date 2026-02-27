@@ -1,0 +1,106 @@
+2026-02-27 15:54:37 - INFO -   Orchestrator   - Starting orchestrator
+2026-02-27 15:54:37 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-02-27 15:54:37 - INFO -      Module 1    - jan2026 data file already loaded
+2026-02-27 15:54:37 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-02-27 15:54:37 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-02-27 15:54:38 - INFO -      Module 2    - jan2026 file has already been transformed
+2026-02-27 15:54:38 - INFO -   Orchestrator   - Conditions not met in modules/2.transform_data.py - Skipping Module
+2026-02-27 15:54:38 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-02-27 15:54:38 - INFO -      Module 3    - jan2026 station dictionary already up to date
+2026-02-27 15:54:38 - INFO -   Orchestrator   - Conditions not met in modules/3.api_integration.py - Skipping Module
+2026-02-27 15:54:38 - INFO -   Orchestrator   - Starting modules/4.data_quality.py
+2026-02-27 15:54:39 - INFO -      Module 4    - Running SQL Stored Procedure
+2026-02-27 15:54:41 - INFO -      Module 4    - Operation complete
+2026-02-27 15:54:41 - INFO -   Orchestrator   - Finished modules/4.data_quality.py
+2026-02-27 15:54:41 - INFO -   Orchestrator   - Starting modules/5.data_update.py
+2026-02-27 15:54:42 - INFO -      Module 5    - Running SQL Stored Procedures
+2026-02-27 15:54:43 - INFO -      Module 5    - update_fuel_stations_active | INSERT | 20 rows
+2026-02-27 15:54:43 - INFO -      Module 5    - update_fuel_stations_active | UPDATE | 8 rows
+2026-02-27 15:54:46 - INFO -   Orchestrator   - Finished modules/5.data_update.py
+2026-02-27 15:54:46 - ERROR -   Orchestrator   - Module modules/5.data_update.py failed with exit code 1
+2026-02-27 15:54:46 - ERROR -   Orchestrator   - modules/5.data_update.py errors before failure:
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "fuel_prices_pkey"
+DETAIL:  Key (record_id)=(ab52b614e11b8b1a32a023e54a916ab9) already exists.
+CONTEXT:  SQL statement "INSERT INTO
+		fact_fuel_prices (
+			record_id,
+			stationid,
+			fuelcode,
+			date,
+			price,
+			priceupdateddate
+		)
+	SELECT
+		record_id,
+		stationid,
+		fuelcode,
+		date,
+		price,
+		priceupdateddate
+	FROM
+		stg_fuel_price AS f
+		LEFT JOIN dim_fuel_stations AS d ON UPPER(f.servicestationname) = UPPER(d.name)
+		AND UPPER(f.address) = UPPER(d.address)"
+PL/pgSQL function update_fact_fuel() line 32 at SQL statement
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/5.data_update.py", line 156, in <module>
+    prodcedure2 = run_stored_procedure(engine, logger, "update_fact_fuel")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/5.data_update.py", line 67, in run_stored_procedure
+    conn.execute(call)
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "fuel_prices_pkey"
+DETAIL:  Key (record_id)=(ab52b614e11b8b1a32a023e54a916ab9) already exists.
+CONTEXT:  SQL statement "INSERT INTO
+		fact_fuel_prices (
+			record_id,
+			stationid,
+			fuelcode,
+			date,
+			price,
+			priceupdateddate
+		)
+	SELECT
+		record_id,
+		stationid,
+		fuelcode,
+		date,
+		price,
+		priceupdateddate
+	FROM
+		stg_fuel_price AS f
+		LEFT JOIN dim_fuel_stations AS d ON UPPER(f.servicestationname) = UPPER(d.name)
+		AND UPPER(f.address) = UPPER(d.address)"
+PL/pgSQL function update_fact_fuel() line 32 at SQL statement
+
+[SQL: CALL update_fact_fuel();]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
