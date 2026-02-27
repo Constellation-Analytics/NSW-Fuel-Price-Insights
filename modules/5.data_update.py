@@ -36,6 +36,21 @@ DB_CONNECTION_STRING = os.getenv("DB_CONNECTION_STRING")
 # Create database engine
 engine = create_engine(DB_CONNECTION_STRING)
 
+# Set up the file config
+config_file = "config.json"
+with open("config.json") as json_file:
+    config = json.load(json_file)
+
+# Create date variables
+latest_file = config["latest_file"]
+latest_file_dt = datetime.strptime(latest_file, "%b%Y")
+latest_file_month = latest_file_dt.strftime("%b").lower()
+latest_file_year = latest_file_dt.strftime("%Y")
+current_monthyear = datetime.now().replace(day=1).strftime("%b%Y").lower()
+
+# timestamp for commits
+datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
+
 # -------------------------------------------------------------------------------------------------
 #                                       Define Functions
 # -------------------------------------------------------------------------------------------------
@@ -137,7 +152,7 @@ run_stored_procedure(engine, logger, "update_fact_fuel")
 run_stored_procedure(engine, logger, "update_fuel_stations_inactive")
 
 #update the config 
-config["last_data_update"] = config["latest_file"]
-save_config()
+#config["last_data_update"] = config["latest_file"]
+#save_config()
 
 logger.info("Operation complete")
