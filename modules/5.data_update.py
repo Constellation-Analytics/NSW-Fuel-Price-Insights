@@ -155,13 +155,13 @@ logger.info("Running SQL Stored Procedures")
 prodcedure1 = run_stored_procedure(engine, logger, "update_fuel_stations_active")
 prodcedure2 = run_stored_procedure(engine, logger, "update_fact_fuel")
 prodcedure3 = run_stored_procedure(engine, logger, "update_fuel_stations_inactive")
-updates = sum([prodcedure1, prodcedure2, prodcedure3])
+total_updates = sum([prodcedure1, prodcedure2, prodcedure3])
 
-logger.info(f"Number of updates = {updates}")
+logger.info(f"Total updates = {total_updates} rows")
 
-
-#update the config 
-#config["last_data_update"] = config["latest_file"]
-#save_config()
+#update the config if updates have happened
+if total_updates > 0:
+    config["last_data_update"] = config["latest_file"]
+    save_config()
 
 logger.info("Operation complete")
