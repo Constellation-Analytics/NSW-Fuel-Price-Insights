@@ -58,6 +58,7 @@ datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
 # -------------------------------------------------------------------------------------------------
 
 def run_stored_procedure(engine, logger, procedure):
+    changes = 0
 
     call = text(f"CALL {procedure}();")
 
@@ -84,6 +85,8 @@ def run_stored_procedure(engine, logger, procedure):
             row.description,
             row.rows_affected
         )
+        changes += row.rows_affected
+    return changes
 
 
 def push_file_to_repo(file_path, commit_message):
@@ -149,9 +152,13 @@ if config["latest_file"] == config["last_data_update"]:
 
 logger.info("Running SQL Stored Procedures")
 
-run_stored_procedure(engine, logger, "update_fuel_stations_active")
-run_stored_procedure(engine, logger, "update_fact_fuel")
-run_stored_procedure(engine, logger, "update_fuel_stations_inactive")
+prodcedure1 = run_stored_procedure(engine, logger, "update_fuel_stations_active")
+prodcedure2 = run_stored_procedure(engine, logger, "update_fact_fuel")
+prodcedure3 = run_stored_procedure(engine, logger, "update_fuel_stations_inactive")
+updates = sum([prodcedure1, prodcedure2, prodcedure3])
+
+logger.info(f"Number of updates = {updates}")
+
 
 #update the config 
 #config["last_data_update"] = config["latest_file"]
