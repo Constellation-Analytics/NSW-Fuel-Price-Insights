@@ -2,6 +2,7 @@
 # Import necessary libraries
 from sqlalchemy import create_engine, text
 import argparse
+import json
 import logging
 import os
 import pandas as pd
