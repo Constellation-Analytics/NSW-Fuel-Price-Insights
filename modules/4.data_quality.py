@@ -40,7 +40,69 @@ engine = create_engine(DB_CONNECTION_STRING)
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
 
-logger.info("Running SQL Stored Procedure")
+logger.info("Running Data Quality Stored Procedure")
+
+call = text("CALL check_data_quality();")
+with engine.connect() as conn:
+    conn = conn.execution_options(isolation_level="AUTOCOMMIT")
+    conn.execute(call)
+
+# SQL query to fetch sys_run_log
+data_quality_query = f"""
+SELECT
+	description,
+	rows_affected
+FROM
+	sys_run_log
+WHERE
+	procedure_name = 'check_data_quality'
+ORDER BY
+	log_id
+"""
+
+# Execute the query
+sys_run_log_dbo = pd.read_sql(data_quality_query, engine)
+
+for index, row in sys_run_log_dbo.iterrows():
+    logger.warning(
+        'defect_id %s has %d rows',
+        row["description"],
+        row["rows_affected"]
+    )
+
+
+logger.info("Running AUTOFIX Stored Procedure")
+
+call = text("CALL update_data_quality_autofix();")
+with engine.connect() as conn:
+    conn = conn.execution_options(isolation_level="AUTOCOMMIT")
+    conn.execute(call)
+
+# SQL query to fetch sys_run_log
+data_quality_query = f"""
+SELECT
+	description,
+	rows_affected
+FROM
+	sys_run_log
+WHERE
+	procedure_name = 'update_data_quality_autofix'
+ORDER BY
+	log_id
+"""
+
+# Execute the query
+sys_run_log_dbo = pd.read_sql(data_quality_query, engine)
+
+for index, row in sys_run_log_dbo.iterrows():
+    logger.warning(
+        'defect_id %s has %d rows',
+        row["description"],
+        row["rows_affected"]
+    )
+
+
+logger.info("Running Data Quality Stored Procedure")
 
 call = text("CALL check_data_quality();")
 with engine.connect() as conn:
