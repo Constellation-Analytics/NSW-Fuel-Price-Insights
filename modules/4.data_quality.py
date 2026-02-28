@@ -96,7 +96,7 @@ sys_run_log_dbo = pd.read_sql(data_quality_query, engine)
 
 for index, row in sys_run_log_dbo.iterrows():
     logger.warning(
-        'defect_id %s has %d rows',
+        'Autofix %s has %d rows',
         row["description"],
         row["rows_affected"]
     )
