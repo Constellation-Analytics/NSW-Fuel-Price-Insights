@@ -153,10 +153,10 @@ if config["latest_file"] == config["last_data_update"]:
 
 logger.info("Running SQL Stored Procedures")
 
-prodcedure1 = run_stored_procedure(engine, logger, "update_fuel_stations_active")
-prodcedure2 = run_stored_procedure(engine, logger, "update_fact_fuel")
-prodcedure3 = run_stored_procedure(engine, logger, "update_fuel_stations_inactive")
-total_updates = sum([prodcedure1, prodcedure2, prodcedure3])
+procedure1 = run_stored_procedure(engine, logger, "update_fuel_stations_active")
+procedure2 = run_stored_procedure(engine, logger, "update_fact_fuel")
+procedure3 = run_stored_procedure(engine, logger, "update_fuel_stations_inactive")
+total_updates = sum([procedure1, procedure2, procedure3])
 
 logger.info(f"Total updates = {total_updates} rows")
 
