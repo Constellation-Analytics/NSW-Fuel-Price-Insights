@@ -7,6 +7,7 @@ import logging
 import os
 import pandas as pd
 import subprocess
+import sys
 
 # ----------------------------------------------------------------------------------------------------
 #                                       setup variables
@@ -81,7 +82,7 @@ def run_stored_procedure(conn, logger, procedure):
 # ----------------------------------------------------------------------------------------------------
 # exit if the latest file has already been transformed
 if config["latest_file"] == config["last_data_update"]:
-    logger.info(f"{config['latest_file']} data is already updated in the database - Nothing to check")
+    logger.info(f"{config['latest_file']} data is already loaded to database")
     sys.exit(10)
 	
 logger.info("Running Data Quality Stored Procedure")
