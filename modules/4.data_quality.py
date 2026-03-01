@@ -39,7 +39,11 @@ engine = create_engine(DB_CONNECTION_STRING)
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
-
+# exit if the latest file has already been transformed
+if config["latest_file"] == config["last_data_update"]:
+    logger.info(f"{config['latest_file']} data is already updated in the database - Nothing to check")
+    sys.exit(10)
+	
 logger.info("Running Data Quality Stored Procedure")
 
 call = text("CALL check_data_quality();")
