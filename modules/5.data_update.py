@@ -58,28 +58,25 @@ datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
 #                                       Define Functions
 # -------------------------------------------------------------------------------------------------
 
-def run_stored_procedure(engine, logger, procedure):
+def run_stored_procedure(conn, logger, procedure):
     changes = 0
 
     call = text(f"CALL {procedure}();")
+    conn.execute(call)
 
-    with engine.connect() as conn:
-        conn = conn.execution_options(isolation_level="AUTOCOMMIT")
-        conn.execute(call)
-
-    query = """
+    query = text("""
         SELECT
             procedure_name,
             description,
             rows_affected
         FROM sys_run_log
-        WHERE procedure_name = %s
+        WHERE procedure_name = :procedure
         ORDER BY log_id
-    """
+    """)
 
-    sys_run_log_dbo  = pd.read_sql(query, engine, params=(procedure,))
+    result = conn.execute(query, {"procedure": procedure})
 
-    for index, row in sys_run_log_dbo.iterrows():
+    for row in result:
         logger.info(
             "%s | %s | %s rows",
             row.procedure_name,
@@ -87,6 +84,7 @@ def run_stored_procedure(engine, logger, procedure):
             row.rows_affected
         )
         changes += row.rows_affected
+
     return changes
 
 
@@ -153,10 +151,12 @@ if config["latest_file"] == config["last_data_update"]:
 
 logger.info("Running SQL Stored Procedures")
 
-procedure1 = run_stored_procedure(engine, logger, "update_fuel_stations_active")
-procedure2 = run_stored_procedure(engine, logger, "update_fact_fuel")
-procedure3 = run_stored_procedure(engine, logger, "update_fuel_stations_inactive")
-total_updates = sum([procedure1, procedure2, procedure3])
+with engine.begin() as conn:
+    procedure1 = run_stored_procedure(conn, logger, "update_fuel_stations_active")
+    procedure2 = run_stored_procedure(conn, logger, "update_fact_fuel")
+    procedure3 = run_stored_procedure(conn, logger, "update_fuel_stations_inactive")
+    
+    total_updates = sum([procedure1, procedure2, procedure3])
 
 logger.info(f"Total updates = {total_updates} rows")
 
