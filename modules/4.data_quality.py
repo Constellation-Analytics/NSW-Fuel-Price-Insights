@@ -66,7 +66,7 @@ def run_stored_procedure(conn, logger, procedure):
     result = conn.execute(query, {"procedure": procedure})
 
     for row in result:
-        logger.info(
+        logger.warning(
             "%s | %s | %s rows",
             row.procedure_name,
             row.description,
