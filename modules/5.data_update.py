@@ -157,13 +157,15 @@ with engine.begin() as conn:
     procedure3 = run_stored_procedure(conn, logger, "update_fuel_stations_inactive")
     procedure4 = run_stored_procedure(conn, logger, "truncate_stg_tables")
     
-    total_updates = sum([procedure1, procedure2, procedure3, procedure4])
+    price_updates = procedure2
 
 logger.info(f"Total updates = {total_updates} rows")
 
-#update the config if updates have happened
-if total_updates > 0:
+#update the config and truncate staging tables if updates have happened
+if price_updates > 0:
     config["last_data_update"] = config["latest_file"]
+    with engine.begin() as conn:
+        procedure4 = run_stored_procedure(conn, logger, "truncate_stg_tables")
     save_config()
 
 logger.info("Operation complete")
