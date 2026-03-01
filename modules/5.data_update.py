@@ -155,8 +155,9 @@ with engine.begin() as conn:
     procedure1 = run_stored_procedure(conn, logger, "update_fuel_stations_active")
     procedure2 = run_stored_procedure(conn, logger, "update_fact_fuel")
     procedure3 = run_stored_procedure(conn, logger, "update_fuel_stations_inactive")
+    procedure4 = run_stored_procedure(conn, logger, "truncate_stg_tables")
     
-    total_updates = sum([procedure1, procedure2, procedure3])
+    total_updates = sum([procedure1, procedure2, procedure3, procedure4])
 
 logger.info(f"Total updates = {total_updates} rows")
 
