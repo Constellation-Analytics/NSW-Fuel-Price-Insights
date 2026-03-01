@@ -2,6 +2,7 @@
 # Import necessary libraries
 from sqlalchemy import create_engine, text
 import argparse
+import json
 import logging
 import os
 import pandas as pd
@@ -35,6 +36,11 @@ DB_CONNECTION_STRING = os.getenv("DB_CONNECTION_STRING")
 
 # Create database engine
 engine = create_engine(DB_CONNECTION_STRING)
+
+# Set up the file config
+config_file = "config.json"
+with open("config.json") as json_file:
+    config = json.load(json_file)
 
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
