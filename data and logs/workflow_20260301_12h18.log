@@ -1,0 +1,36 @@
+2026-03-01 12:18:44 - INFO -   Orchestrator   - Starting orchestrator
+2026-03-01 12:18:44 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-03-01 12:18:44 - INFO -      Module 1    - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-03-01 12:18:49 - INFO -      Module 1    - feb2026 file not yet available
+2026-03-01 12:18:50 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-03-01 12:18:50 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-03-01 12:18:50 - INFO -      Module 2    - Starting Data Transformations
+2026-03-01 12:18:50 - INFO -      Module 2    - Reading data and logs/fuelcheck_jan2026.csv
+2026-03-01 12:18:50 - INFO -      Module 2    - df_fuel_data has 74525 rows
+2026-03-01 12:19:03 - INFO -      Module 2    - Final output has 256774 rows
+2026-03-01 12:19:03 - INFO -      Module 2    - Inserting values into database
+2026-03-01 12:19:27 - INFO -      Module 2    - Config file updated
+2026-03-01 12:19:27 - INFO -      Module 2    - pushing file to repo
+2026-03-01 12:19:28 - INFO -      Module 2    - Successfully pushed config.json to repo
+2026-03-01 12:19:28 - INFO -      Module 2    - Operation complete
+2026-03-01 12:19:28 - INFO -   Orchestrator   - Finished modules/2.transform_data.py
+2026-03-01 12:19:28 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-03-01 12:19:28 - INFO -      Module 3    - Pulling API Information
+2026-03-01 12:19:34 - INFO -      Module 3    - Cleaning API Data
+2026-03-01 12:19:34 - INFO -      Module 3    - Pulling Database Information
+2026-03-01 12:19:35 - INFO -      Module 3    - Creating the datasets
+2026-03-01 12:19:35 - INFO -      Module 3    - Comparing API dataset to dbo dataset
+2026-03-01 12:19:35 - INFO -      Module 3    - Inserting data into the database
+2026-03-01 12:19:36 - INFO -      Module 3    - Config file updated
+2026-03-01 12:19:36 - INFO -      Module 3    - pushing file to repo
+2026-03-01 12:19:37 - INFO -      Module 3    - Successfully pushed config.json to repo
+2026-03-01 12:19:37 - INFO -      Module 3    - Operation complete
+2026-03-01 12:19:37 - INFO -   Orchestrator   - Finished modules/3.api_integration.py
+2026-03-01 12:19:37 - INFO -   Orchestrator   - Starting modules/4.data_quality.py
+2026-03-01 12:19:37 - INFO -   Orchestrator   - Finished modules/4.data_quality.py
+2026-03-01 12:19:37 - ERROR -   Orchestrator   - Module modules/4.data_quality.py failed with exit code 1
+2026-03-01 12:19:37 - ERROR -   Orchestrator   - modules/4.data_quality.py errors before failure:
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/4.data_quality.py", line 91
+    if data_quality > 0:
+TabError: inconsistent use of tabs and spaces in indentation
+
