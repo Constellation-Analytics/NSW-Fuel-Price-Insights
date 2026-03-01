@@ -88,8 +88,8 @@ logger.info("Running Data Quality Stored Procedure")
 
 with engine.begin() as conn:
     data_quality = run_stored_procedure(conn, logger, "check_data_quality")
-	if data_quality > 0:
-		run_stored_procedure(conn, logger, "update_data_quality_autofix")
-		run_stored_procedure(conn, logger, "check_data_quality")
+    if data_quality > 0:
+        run_stored_procedure(conn, logger, "update_data_quality_autofix")
+        run_stored_procedure(conn, logger, "check_data_quality")
 
 logger.info("Operation complete")
