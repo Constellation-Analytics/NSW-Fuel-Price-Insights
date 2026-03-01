@@ -73,7 +73,8 @@ def run_module(module_path):
             ["python", module_path, "--log-file", log_file],
             check=False, # We use check=False and handle errors via returncode
             capture_output=True,
-            text=True
+            text=True,
+            timeout = 60
         )
         if result.returncode == 10:
             logger.info(f"Conditions not met in {module_path} - Skipping Module")
@@ -100,22 +101,28 @@ def run_module(module_path):
 # -------------------- Basic logging and config updates
 logger.info("Starting orchestrator")
 
-# -------------------- Module 1 
+# -------------------- Module 1
+print("Starting module 1", flush=True)
 run_module("modules/1.file_retrieval.py")
 
 # -------------------- Module 2
+print("Starting module 2", flush=True)
 run_module("modules/2.transform_data.py")
 
 # -------------------- Module 3
+print("Starting module 3", flush=True)
 run_module("modules/3.api_integration.py")
 
 # -------------------- Module 4
+print("Starting module 4", flush=True)
 run_module("modules/4.data_quality.py")
 
 # -------------------- Module 5
+print("Starting module 5", flush=True)
 run_module("modules/5.data_update.py")
 
 # -------------------- Retention Policy
+print("Starting module 99", flush=True)
 run_module("modules/99.retention_policy.py")
 
 # -------------------- Update config and save log
