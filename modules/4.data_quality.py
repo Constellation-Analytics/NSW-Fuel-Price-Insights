@@ -42,6 +42,40 @@ config_file = "config.json"
 with open("config.json") as json_file:
     config = json.load(json_file)
 
+
+# -------------------------------------------------------------------------------------------------
+#                                       Define Functions
+# -------------------------------------------------------------------------------------------------
+
+def run_stored_procedure(conn, logger, procedure):
+    changes = 0
+
+    call = text(f"CALL {procedure}();")
+    conn.execute(call)
+
+    query = text("""
+        SELECT
+            procedure_name,
+            description,
+            rows_affected
+        FROM sys_run_log
+        WHERE procedure_name = :procedure
+        ORDER BY log_id
+    """)
+
+    result = conn.execute(query, {"procedure": procedure})
+
+    for row in result:
+        logger.info(
+            "%s | %s | %s rows",
+            row.procedure_name,
+            row.description,
+            row.rows_affected
+        )
+        changes += row.rows_affected
+
+    return changes
+
 # ----------------------------------------------------------------------------------------------------
 #                                     Script Body - Start
 # ----------------------------------------------------------------------------------------------------
@@ -52,94 +86,10 @@ if config["latest_file"] == config["last_data_update"]:
 	
 logger.info("Running Data Quality Stored Procedure")
 
-call = text("CALL check_data_quality();")
-with engine.connect() as conn:
-    conn = conn.execution_options(isolation_level="AUTOCOMMIT")
-    conn.execute(call)
-
-# SQL query to fetch sys_run_log
-data_quality_query = f"""
-SELECT
-	description,
-	rows_affected
-FROM
-	sys_run_log
-WHERE
-	procedure_name = 'check_data_quality'
-ORDER BY
-	log_id
-"""
-
-# Execute the query
-sys_run_log_dbo = pd.read_sql(data_quality_query, engine)
-
-for index, row in sys_run_log_dbo.iterrows():
-    logger.warning(
-        'dq_id %s has %d rows',
-        row["description"],
-        row["rows_affected"]
-    )
-
-
-logger.info("Running AUTOFIX Stored Procedure")
-
-call = text("CALL update_data_quality_autofix();")
-with engine.connect() as conn:
-    conn = conn.execution_options(isolation_level="AUTOCOMMIT")
-    conn.execute(call)
-
-# SQL query to fetch sys_run_log
-data_quality_query = f"""
-SELECT
-	description,
-	rows_affected
-FROM
-	sys_run_log
-WHERE
-	procedure_name = 'update_data_quality_autofix'
-ORDER BY
-	log_id
-"""
-
-# Execute the query
-sys_run_log_dbo = pd.read_sql(data_quality_query, engine)
-
-for index, row in sys_run_log_dbo.iterrows():
-    logger.info(
-        'Autofix %s has %d rows',
-        row["description"],
-        row["rows_affected"]
-    )
-
-
-logger.info("Running Data Quality Stored Procedure")
-
-call = text("CALL check_data_quality();")
-with engine.connect() as conn:
-    conn = conn.execution_options(isolation_level="AUTOCOMMIT")
-    conn.execute(call)
-
-# SQL query to fetch sys_run_log
-data_quality_query = f"""
-SELECT
-	description,
-	rows_affected
-FROM
-	sys_run_log
-WHERE
-	procedure_name = 'check_data_quality'
-ORDER BY
-	log_id
-"""
-
-# Execute the query
-sys_run_log_dbo = pd.read_sql(data_quality_query, engine)
-
-for index, row in sys_run_log_dbo.iterrows():
-    logger.warning(
-        'dq_id %s has %d rows',
-        row["description"],
-        row["rows_affected"]
-    )
+with engine.begin() as conn:
+    data_quality = run_stored_procedure(conn, logger, "check_data_quality")
+	if data_quality > 0:
+		run_stored_procedure(conn, logger, "update_data_quality_autofix")
+		run_stored_procedure(conn, logger, "check_data_quality")
 
 logger.info("Operation complete")
