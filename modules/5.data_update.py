@@ -159,7 +159,7 @@ with engine.begin() as conn:
     
     price_updates = procedure2
 
-logger.info(f"Total updates = {total_updates} rows")
+logger.info(f"Total price updates = {price_updates} rows")
 
 #update the config and truncate staging tables if updates have happened
 if price_updates > 0:
