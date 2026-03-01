@@ -8,6 +8,7 @@ import logging
 import os
 import pandas as pd
 import subprocess
+import sys
 
 # ----------------------------------------------------------------------------------------------------
 #                                       setup variables
