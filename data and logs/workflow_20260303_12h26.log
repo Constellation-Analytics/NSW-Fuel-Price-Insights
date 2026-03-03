@@ -1,0 +1,127 @@
+2026-03-03 12:26:49 - INFO -   Orchestrator   - Starting orchestrator
+2026-03-03 12:26:49 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-03-03 12:26:50 - INFO -      Module 1    - feb2026 data file already loaded
+2026-03-03 12:26:50 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-03-03 12:26:50 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-03-03 12:26:50 - INFO -      Module 2    - Starting Data Transformations
+2026-03-03 12:26:50 - INFO -      Module 2    - Reading data and logs/fuelcheck_feb2026.csv
+2026-03-03 12:26:50 - INFO -      Module 2    - df_fuel_data has 66981 rows
+2026-03-03 12:27:00 - INFO -      Module 2    - Final output has 213165 rows
+2026-03-03 12:27:00 - INFO -      Module 2    - Inserting values into database
+2026-03-03 12:27:02 - ERROR -      Module 2    - Unexpected error while inserting values into database: Execution failed on sql 'INSERT INTO stg_fuel_price (record_id, servicestationname, address, fuelcode, date, price, priceupdateddate) VALUES (:record_id, :servicestationname, :address, :fuelcode, :date, :price, :priceupdateddate)': (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "fuelprice_staging_pkey"
+DETAIL:  Key (record_id)=(309ba971a40fb807b1910a07bb05af20) already exists.
+
+[SQL: INSERT INTO stg_fuel_price (record_id, servicestationname, address, fuelcode, date, price, priceupdateddate) VALUES (%(record_id__0)s, %(servicestationname__0)s, %(address__0)s, %(fuelcode__0)s, %(date__0)s, %(price__0)s, %(priceupdateddate__0)s), (% ... 144994 characters truncated ... 99)s, %(address__999)s, %(fuelcode__999)s, %(date__999)s, %(price__999)s, %(priceupdateddate__999)s)]
+[parameters: {'record_id__0': '309ba971a40fb807b1910a07bb05af20', 'price__0': 170.4, 'priceupdateddate__0': None, 'address__0': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__0': '7 Express Carlton', 'fuelcode__0': 'E10', 'date__0': datetime.datetime(2026, 2, 1, 0, 0), 'record_id__1': '8188907efb144b03ee0cd398ee036240', 'price__1': 162.9, 'priceupdateddate__1': datetime.datetime(2026, 2, 2, 0, 0), 'address__1': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__1': '7 Express Carlton', 'fuelcode__1': 'E10', 'date__1': datetime.datetime(2026, 2, 2, 0, 0), 'record_id__2': '1c278d0641b342427572e221ce2f0d47', 'price__2': 162.9, 'priceupdateddate__2': None, 'address__2': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__2': '7 Express Carlton', 'fuelcode__2': 'E10', 'date__2': datetime.datetime(2026, 2, 3, 0, 0), 'record_id__3': '744442dc98397dfd751be1535912741a', 'price__3': 160.9, 'priceupdateddate__3': datetime.datetime(2026, 2, 4, 0, 0), 'address__3': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__3': '7 Express Carlton', 'fuelcode__3': 'E10', 'date__3': datetime.datetime(2026, 2, 4, 0, 0), 'record_id__4': '9458f1bc804369c0e278c6c13d1f4618', 'price__4': 157.9, 'priceupdateddate__4': datetime.datetime(2026, 2, 5, 0, 0), 'address__4': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__4': '7 Express Carlton', 'fuelcode__4': 'E10', 'date__4': datetime.datetime(2026, 2, 5, 0, 0), 'record_id__5': '9db15d68656de9ca0a0a8040dbb3538e', 'price__5': 157.9, 'priceupdateddate__5': None, 'address__5': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__5': '7 Express Carlton', 'fuelcode__5': 'E10', 'date__5': datetime.datetime(2026, 2, 6, 0, 0), 'record_id__6': 'c7d58e8b575be8d57cbd100e713192f2', 'price__6': 155.9, 'priceupdateddate__6': datetime.datetime(2026, 2, 7, 0, 0), 'address__6': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__6': '7 Express Carlton', 'fuelcode__6': 'E10', 'date__6': datetime.datetime(2026, 2, 7, 0, 0), 'record_id__7': '3d40d4bfb1ea53849071fb59ef478346' ... 6900 parameters truncated ... 'date__992': datetime.datetime(2026, 2, 13, 0, 0), 'record_id__993': '8fd32eeee80492d9c5903f05d12c2989', 'price__993': 184.9, 'priceupdateddate__993': None, 'address__993': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__993': '7-Eleven Arncliffe', 'fuelcode__993': 'PDL', 'date__993': datetime.datetime(2026, 2, 14, 0, 0), 'record_id__994': 'e34547182a8deb17b3b2698d5fd01400', 'price__994': 184.9, 'priceupdateddate__994': None, 'address__994': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__994': '7-Eleven Arncliffe', 'fuelcode__994': 'PDL', 'date__994': datetime.datetime(2026, 2, 15, 0, 0), 'record_id__995': 'c86272225c0904c12da120a696626e8d', 'price__995': 185.9, 'priceupdateddate__995': datetime.datetime(2026, 2, 16, 0, 0), 'address__995': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__995': '7-Eleven Arncliffe', 'fuelcode__995': 'PDL', 'date__995': datetime.datetime(2026, 2, 16, 0, 0), 'record_id__996': '6458abb1086c64ae5a10c1ff18c29630', 'price__996': 185.9, 'priceupdateddate__996': None, 'address__996': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__996': '7-Eleven Arncliffe', 'fuelcode__996': 'PDL', 'date__996': datetime.datetime(2026, 2, 17, 0, 0), 'record_id__997': '7c33c8ee1fbd5b3b86866b394471d62a', 'price__997': 185.9, 'priceupdateddate__997': None, 'address__997': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__997': '7-Eleven Arncliffe', 'fuelcode__997': 'PDL', 'date__997': datetime.datetime(2026, 2, 18, 0, 0), 'record_id__998': '9a3adac4616e09997d32ba8300505c9e', 'price__998': 185.9, 'priceupdateddate__998': None, 'address__998': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__998': '7-Eleven Arncliffe', 'fuelcode__998': 'PDL', 'date__998': datetime.datetime(2026, 2, 19, 0, 0), 'record_id__999': '09c144ed5e53abc078cb16c8a661c1ff', 'price__999': 187.9, 'priceupdateddate__999': datetime.datetime(2026, 2, 20, 0, 0), 'address__999': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__999': '7-Eleven Arncliffe', 'fuelcode__999': 'PDL', 'date__999': datetime.datetime(2026, 2, 20, 0, 0)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2125, in _exec_insertmany_context
+    dialect.do_execute(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "fuelprice_staging_pkey"
+DETAIL:  Key (record_id)=(309ba971a40fb807b1910a07bb05af20) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1679, in execute
+    return execute_function(sql, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1844, in _execute_context
+    return self._exec_insertmany_context(dialect, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2133, in _exec_insertmany_context
+    self._handle_dbapi_exception(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2125, in _exec_insertmany_context
+    dialect.do_execute(
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "fuelprice_staging_pkey"
+DETAIL:  Key (record_id)=(309ba971a40fb807b1910a07bb05af20) already exists.
+
+[SQL: INSERT INTO stg_fuel_price (record_id, servicestationname, address, fuelcode, date, price, priceupdateddate) VALUES (%(record_id__0)s, %(servicestationname__0)s, %(address__0)s, %(fuelcode__0)s, %(date__0)s, %(price__0)s, %(priceupdateddate__0)s), (% ... 144994 characters truncated ... 99)s, %(address__999)s, %(fuelcode__999)s, %(date__999)s, %(price__999)s, %(priceupdateddate__999)s)]
+[parameters: {'record_id__0': '309ba971a40fb807b1910a07bb05af20', 'price__0': 170.4, 'priceupdateddate__0': None, 'address__0': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__0': '7 Express Carlton', 'fuelcode__0': 'E10', 'date__0': datetime.datetime(2026, 2, 1, 0, 0), 'record_id__1': '8188907efb144b03ee0cd398ee036240', 'price__1': 162.9, 'priceupdateddate__1': datetime.datetime(2026, 2, 2, 0, 0), 'address__1': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__1': '7 Express Carlton', 'fuelcode__1': 'E10', 'date__1': datetime.datetime(2026, 2, 2, 0, 0), 'record_id__2': '1c278d0641b342427572e221ce2f0d47', 'price__2': 162.9, 'priceupdateddate__2': None, 'address__2': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__2': '7 Express Carlton', 'fuelcode__2': 'E10', 'date__2': datetime.datetime(2026, 2, 3, 0, 0), 'record_id__3': '744442dc98397dfd751be1535912741a', 'price__3': 160.9, 'priceupdateddate__3': datetime.datetime(2026, 2, 4, 0, 0), 'address__3': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__3': '7 Express Carlton', 'fuelcode__3': 'E10', 'date__3': datetime.datetime(2026, 2, 4, 0, 0), 'record_id__4': '9458f1bc804369c0e278c6c13d1f4618', 'price__4': 157.9, 'priceupdateddate__4': datetime.datetime(2026, 2, 5, 0, 0), 'address__4': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__4': '7 Express Carlton', 'fuelcode__4': 'E10', 'date__4': datetime.datetime(2026, 2, 5, 0, 0), 'record_id__5': '9db15d68656de9ca0a0a8040dbb3538e', 'price__5': 157.9, 'priceupdateddate__5': None, 'address__5': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__5': '7 Express Carlton', 'fuelcode__5': 'E10', 'date__5': datetime.datetime(2026, 2, 6, 0, 0), 'record_id__6': 'c7d58e8b575be8d57cbd100e713192f2', 'price__6': 155.9, 'priceupdateddate__6': datetime.datetime(2026, 2, 7, 0, 0), 'address__6': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__6': '7 Express Carlton', 'fuelcode__6': 'E10', 'date__6': datetime.datetime(2026, 2, 7, 0, 0), 'record_id__7': '3d40d4bfb1ea53849071fb59ef478346' ... 6900 parameters truncated ... 'date__992': datetime.datetime(2026, 2, 13, 0, 0), 'record_id__993': '8fd32eeee80492d9c5903f05d12c2989', 'price__993': 184.9, 'priceupdateddate__993': None, 'address__993': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__993': '7-Eleven Arncliffe', 'fuelcode__993': 'PDL', 'date__993': datetime.datetime(2026, 2, 14, 0, 0), 'record_id__994': 'e34547182a8deb17b3b2698d5fd01400', 'price__994': 184.9, 'priceupdateddate__994': None, 'address__994': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__994': '7-Eleven Arncliffe', 'fuelcode__994': 'PDL', 'date__994': datetime.datetime(2026, 2, 15, 0, 0), 'record_id__995': 'c86272225c0904c12da120a696626e8d', 'price__995': 185.9, 'priceupdateddate__995': datetime.datetime(2026, 2, 16, 0, 0), 'address__995': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__995': '7-Eleven Arncliffe', 'fuelcode__995': 'PDL', 'date__995': datetime.datetime(2026, 2, 16, 0, 0), 'record_id__996': '6458abb1086c64ae5a10c1ff18c29630', 'price__996': 185.9, 'priceupdateddate__996': None, 'address__996': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__996': '7-Eleven Arncliffe', 'fuelcode__996': 'PDL', 'date__996': datetime.datetime(2026, 2, 17, 0, 0), 'record_id__997': '7c33c8ee1fbd5b3b86866b394471d62a', 'price__997': 185.9, 'priceupdateddate__997': None, 'address__997': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__997': '7-Eleven Arncliffe', 'fuelcode__997': 'PDL', 'date__997': datetime.datetime(2026, 2, 18, 0, 0), 'record_id__998': '9a3adac4616e09997d32ba8300505c9e', 'price__998': 185.9, 'priceupdateddate__998': None, 'address__998': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__998': '7-Eleven Arncliffe', 'fuelcode__998': 'PDL', 'date__998': datetime.datetime(2026, 2, 19, 0, 0), 'record_id__999': '09c144ed5e53abc078cb16c8a661c1ff', 'price__999': 187.9, 'priceupdateddate__999': datetime.datetime(2026, 2, 20, 0, 0), 'address__999': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__999': '7-Eleven Arncliffe', 'fuelcode__999': 'PDL', 'date__999': datetime.datetime(2026, 2, 20, 0, 0)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/2.transform_data.py", line 363, in <module>
+    output.to_sql('stg_fuel_price', engine, if_exists='append', index=False)
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/generic.py", line 3052, in to_sql
+    return sql.to_sql(
+           ^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 841, in to_sql
+    return pandas_sql.to_sql(
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 2037, in to_sql
+    total_inserted = sql_engine.insert_records(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1571, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1122, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1014, in _execute_insert
+    result = self.pd_sql.execute(self.table.insert(), data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1681, in execute
+    raise DatabaseError(f"Execution failed on sql '{sql}': {exc}") from exc
+pandas.errors.DatabaseError: Execution failed on sql 'INSERT INTO stg_fuel_price (record_id, servicestationname, address, fuelcode, date, price, priceupdateddate) VALUES (:record_id, :servicestationname, :address, :fuelcode, :date, :price, :priceupdateddate)': (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "fuelprice_staging_pkey"
+DETAIL:  Key (record_id)=(309ba971a40fb807b1910a07bb05af20) already exists.
+
+[SQL: INSERT INTO stg_fuel_price (record_id, servicestationname, address, fuelcode, date, price, priceupdateddate) VALUES (%(record_id__0)s, %(servicestationname__0)s, %(address__0)s, %(fuelcode__0)s, %(date__0)s, %(price__0)s, %(priceupdateddate__0)s), (% ... 144994 characters truncated ... 99)s, %(address__999)s, %(fuelcode__999)s, %(date__999)s, %(price__999)s, %(priceupdateddate__999)s)]
+[parameters: {'record_id__0': '309ba971a40fb807b1910a07bb05af20', 'price__0': 170.4, 'priceupdateddate__0': None, 'address__0': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__0': '7 Express Carlton', 'fuelcode__0': 'E10', 'date__0': datetime.datetime(2026, 2, 1, 0, 0), 'record_id__1': '8188907efb144b03ee0cd398ee036240', 'price__1': 162.9, 'priceupdateddate__1': datetime.datetime(2026, 2, 2, 0, 0), 'address__1': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__1': '7 Express Carlton', 'fuelcode__1': 'E10', 'date__1': datetime.datetime(2026, 2, 2, 0, 0), 'record_id__2': '1c278d0641b342427572e221ce2f0d47', 'price__2': 162.9, 'priceupdateddate__2': None, 'address__2': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__2': '7 Express Carlton', 'fuelcode__2': 'E10', 'date__2': datetime.datetime(2026, 2, 3, 0, 0), 'record_id__3': '744442dc98397dfd751be1535912741a', 'price__3': 160.9, 'priceupdateddate__3': datetime.datetime(2026, 2, 4, 0, 0), 'address__3': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__3': '7 Express Carlton', 'fuelcode__3': 'E10', 'date__3': datetime.datetime(2026, 2, 4, 0, 0), 'record_id__4': '9458f1bc804369c0e278c6c13d1f4618', 'price__4': 157.9, 'priceupdateddate__4': datetime.datetime(2026, 2, 5, 0, 0), 'address__4': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__4': '7 Express Carlton', 'fuelcode__4': 'E10', 'date__4': datetime.datetime(2026, 2, 5, 0, 0), 'record_id__5': '9db15d68656de9ca0a0a8040dbb3538e', 'price__5': 157.9, 'priceupdateddate__5': None, 'address__5': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__5': '7 Express Carlton', 'fuelcode__5': 'E10', 'date__5': datetime.datetime(2026, 2, 6, 0, 0), 'record_id__6': 'c7d58e8b575be8d57cbd100e713192f2', 'price__6': 155.9, 'priceupdateddate__6': datetime.datetime(2026, 2, 7, 0, 0), 'address__6': '370 Railway Parade, Carlton NSW 2216', 'servicestationname__6': '7 Express Carlton', 'fuelcode__6': 'E10', 'date__6': datetime.datetime(2026, 2, 7, 0, 0), 'record_id__7': '3d40d4bfb1ea53849071fb59ef478346' ... 6900 parameters truncated ... 'date__992': datetime.datetime(2026, 2, 13, 0, 0), 'record_id__993': '8fd32eeee80492d9c5903f05d12c2989', 'price__993': 184.9, 'priceupdateddate__993': None, 'address__993': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__993': '7-Eleven Arncliffe', 'fuelcode__993': 'PDL', 'date__993': datetime.datetime(2026, 2, 14, 0, 0), 'record_id__994': 'e34547182a8deb17b3b2698d5fd01400', 'price__994': 184.9, 'priceupdateddate__994': None, 'address__994': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__994': '7-Eleven Arncliffe', 'fuelcode__994': 'PDL', 'date__994': datetime.datetime(2026, 2, 15, 0, 0), 'record_id__995': 'c86272225c0904c12da120a696626e8d', 'price__995': 185.9, 'priceupdateddate__995': datetime.datetime(2026, 2, 16, 0, 0), 'address__995': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__995': '7-Eleven Arncliffe', 'fuelcode__995': 'PDL', 'date__995': datetime.datetime(2026, 2, 16, 0, 0), 'record_id__996': '6458abb1086c64ae5a10c1ff18c29630', 'price__996': 185.9, 'priceupdateddate__996': None, 'address__996': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__996': '7-Eleven Arncliffe', 'fuelcode__996': 'PDL', 'date__996': datetime.datetime(2026, 2, 17, 0, 0), 'record_id__997': '7c33c8ee1fbd5b3b86866b394471d62a', 'price__997': 185.9, 'priceupdateddate__997': None, 'address__997': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__997': '7-Eleven Arncliffe', 'fuelcode__997': 'PDL', 'date__997': datetime.datetime(2026, 2, 18, 0, 0), 'record_id__998': '9a3adac4616e09997d32ba8300505c9e', 'price__998': 185.9, 'priceupdateddate__998': None, 'address__998': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__998': '7-Eleven Arncliffe', 'fuelcode__998': 'PDL', 'date__998': datetime.datetime(2026, 2, 19, 0, 0), 'record_id__999': '09c144ed5e53abc078cb16c8a661c1ff', 'price__999': 187.9, 'priceupdateddate__999': datetime.datetime(2026, 2, 20, 0, 0), 'address__999': '28 Princes Highway, Arncliffe NSW 2205', 'servicestationname__999': '7-Eleven Arncliffe', 'fuelcode__999': 'PDL', 'date__999': datetime.datetime(2026, 2, 20, 0, 0)}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-03-03 12:27:02 - INFO -      Module 2    - Config file updated
+2026-03-03 12:27:02 - INFO -      Module 2    - pushing file to repo
+2026-03-03 12:27:03 - INFO -      Module 2    - Successfully pushed config.json to repo
+2026-03-03 12:27:03 - INFO -      Module 2    - Operation complete
+2026-03-03 12:27:03 - INFO -   Orchestrator   - Finished modules/2.transform_data.py
+2026-03-03 12:27:03 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-03-03 12:27:03 - INFO -      Module 3    - Pulling API Information
+2026-03-03 12:27:07 - INFO -      Module 3    - Cleaning API Data
+2026-03-03 12:27:07 - INFO -      Module 3    - Pulling Database Information
+2026-03-03 12:27:07 - INFO -      Module 3    - Creating the datasets
+2026-03-03 12:27:07 - INFO -      Module 3    - Comparing API dataset to dbo dataset
+2026-03-03 12:27:07 - INFO -      Module 3    - Inserting data into the database
+2026-03-03 12:27:08 - INFO -      Module 3    - Config file updated
+2026-03-03 12:27:08 - INFO -      Module 3    - pushing file to repo
+2026-03-03 12:27:08 - INFO -      Module 3    - Successfully pushed config.json to repo
+2026-03-03 12:27:08 - INFO -      Module 3    - Operation complete
+2026-03-03 12:27:08 - INFO -   Orchestrator   - Finished modules/3.api_integration.py
+2026-03-03 12:27:08 - INFO -   Orchestrator   - Starting modules/4.data_quality.py
+2026-03-03 12:27:09 - INFO -      Module 4    - Running Data Quality Stored Procedure
+2026-03-03 12:27:10 - WARNING -      Module 4    - check_data_quality | PAR_01 | 2 rows
+2026-03-03 12:27:10 - WARNING -      Module 4    - check_data_quality | INC_05 | 6 rows
+2026-03-03 12:27:10 - WARNING -      Module 4    - update_data_quality_autofix | INC_05 | 6 rows
+2026-03-03 12:27:11 - WARNING -      Module 4    - check_data_quality | PAR_01 | 2 rows
+2026-03-03 12:27:11 - INFO -      Module 4    - Operation complete
+2026-03-03 12:27:11 - INFO -   Orchestrator   - Finished modules/4.data_quality.py
+2026-03-03 12:27:11 - INFO -   Orchestrator   - Starting modules/5.data_update.py
+2026-03-03 12:27:12 - INFO -      Module 5    - Running SQL Stored Procedures
+2026-03-03 12:27:12 - INFO -      Module 5    - update_fuel_stations_active | INSERT | 0 rows
+2026-03-03 12:27:12 - INFO -      Module 5    - update_fuel_stations_active | UPDATE | 0 rows
+2026-03-03 12:27:12 - INFO -      Module 5    - update_fact_fuel | INSERT | 0 rows
+2026-03-03 12:27:12 - INFO -      Module 5    - update_fuel_stations_inactive | UPDATE | 0 rows
+2026-03-03 12:27:12 - INFO -      Module 5    - Total price updates = 0 rows
+2026-03-03 12:27:12 - INFO -      Module 5    - Operation complete
+2026-03-03 12:27:12 - INFO -   Orchestrator   - Finished modules/5.data_update.py
+2026-03-03 12:27:12 - INFO -   Orchestrator   - Starting modules/99.retention_policy.py
+2026-03-03 12:27:13 - INFO - Retention Policy - Old workflow logs cleaned up and changes pushed.
+2026-03-03 12:27:13 - INFO -   Orchestrator   - Finished modules/99.retention_policy.py
+2026-03-03 12:27:13 - INFO -   Orchestrator   - Finished orchestrator
