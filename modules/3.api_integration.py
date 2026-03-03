@@ -302,6 +302,7 @@ try:
         updated_stations.to_sql('stg_updated_stations', connection, if_exists='append', index=False)
 except Exception as e:
     logger.exception(f"Unexpected error while inserting values into database: {e}")
+    sys.exit(1)
 
 #update the config 
 config["last_API_call"] = datetimestamp
