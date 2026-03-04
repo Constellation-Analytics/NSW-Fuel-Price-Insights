@@ -1,0 +1,45 @@
+2026-03-04 06:58:41 - INFO -   Orchestrator   - Starting orchestrator
+2026-03-04 06:58:41 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-03-04 06:58:41 - INFO -      Module 1    - feb2026 data file already loaded
+2026-03-04 06:58:41 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-03-04 06:58:41 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-03-04 06:58:42 - INFO -      Module 2    - feb2026 file has already been transformed
+2026-03-04 06:58:42 - INFO -   Orchestrator   - Conditions not met in modules/2.transform_data.py - Skipping Module
+2026-03-04 06:58:42 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-03-04 06:58:42 - INFO -      Module 3    - feb2026 station dictionary already up to date
+2026-03-04 06:58:42 - INFO -   Orchestrator   - Conditions not met in modules/3.api_integration.py - Skipping Module
+2026-03-04 06:58:42 - INFO -   Orchestrator   - Starting modules/4.data_quality.py
+2026-03-04 06:58:43 - INFO -      Module 4    - Running Data Quality Stored Procedure
+2026-03-04 06:58:45 - INFO -      Module 4    - Operation complete
+2026-03-04 06:58:45 - INFO -   Orchestrator   - Finished modules/4.data_quality.py
+2026-03-04 06:58:45 - INFO -   Orchestrator   - Starting modules/5.data_update.py
+2026-03-04 06:58:46 - INFO -      Module 5    - Running SQL Stored Procedures
+2026-03-04 06:58:46 - INFO -      Module 5    - update_fuel_stations_active | INSERT | 26 rows
+2026-03-04 06:58:46 - INFO -      Module 5    - update_fuel_stations_active | UPDATE | 10 rows
+2026-03-04 06:58:53 - INFO -      Module 5    - update_fact_fuel | INSERT | 213165 rows
+2026-03-04 06:58:53 - INFO -      Module 5    - update_fuel_stations_inactive | UPDATE | 590 rows
+2026-03-04 06:58:53 - INFO -      Module 5    - Total price updates = 213165 rows
+2026-03-04 06:58:53 - INFO -      Module 5    - Config file updated
+2026-03-04 06:58:53 - INFO -      Module 5    - pushing file to repo
+2026-03-04 06:58:54 - INFO -      Module 5    - Successfully pushed config.json to repo
+2026-03-04 06:58:54 - INFO -      Module 5    - Operation complete
+2026-03-04 06:58:54 - INFO -   Orchestrator   - Finished modules/5.data_update.py
+2026-03-04 06:58:54 - INFO -   Orchestrator   - Starting modules/99.retention_policy.py
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_20h36.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_15h19.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_15h10.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_15h49.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_19h17.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_23h08.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_15h12.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_15h54.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_21h01.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_21h57.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_15h25.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_15h08.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_23h06.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_21h21.log
+2026-03-04 06:58:54 - INFO - Retention Policy - Deleted old workflow log: data and logs/workflow_20260227_21h42.log
+2026-03-04 06:58:55 - INFO - Retention Policy - Old workflow logs cleaned up and changes pushed.
+2026-03-04 06:58:55 - INFO -   Orchestrator   - Finished modules/99.retention_policy.py
+2026-03-04 06:58:55 - INFO -   Orchestrator   - Finished orchestrator
