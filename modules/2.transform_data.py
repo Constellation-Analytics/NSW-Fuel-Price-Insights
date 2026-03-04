@@ -364,7 +364,7 @@ try:
 
 except Exception as e:
     logger.exception(f"Unexpected error while inserting values into database: {e}")
-	sys.exit(10)
+    sys.exit(1)
 
 #update the config 
 config["last_transformation"] = config["latest_file"]
