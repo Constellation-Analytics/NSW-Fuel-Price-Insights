@@ -41,7 +41,7 @@ def cleanup_old_workflow_logs():
         subprocess.run(["git", "config", "user.email", "github-actions@github.com"], check=True)
 
         # 30 days ago
-        cutoff_date = datetime.now() - timedelta(days=5)
+        cutoff_date = datetime.now() - timedelta(days=30)
         
         # Name of log folder
         log_folder = "data and logs"
