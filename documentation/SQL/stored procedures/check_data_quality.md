@@ -83,7 +83,7 @@ For each check:
 | defect_id | defect_type        | description |
 |-----------|------------------|-------------|
 | MIS_01 | Missing Data | Fact records not found in dimension or staging tables |
-| MIS_02 | Missing Data | Fact records not linked to an **active** dimension record and not in staging |
+| MIS_02 | Missing Data | Fact records not linked to an **ACTIVE** dimension record and not in staging |
 | INC_01 | Inconsistent Data | Station marked for update but fact still uses old name/address |
 | INC_02 | Inconsistent Data | Fact contains both old and new station records |
 | INC_03 | Inconsistent Data | Station appears in both new and inactive staging tables |
