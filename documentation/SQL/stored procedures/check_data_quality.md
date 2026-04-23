@@ -122,6 +122,14 @@ The procedure uses `GET DIAGNOSTICS` to capture how many rows were affected by e
   - `description` → defect ID (e.g. `MIS_01`)
   - `rows_affected` → number of impacted records
 
+```sql
+-- Run log
+GET DIAGNOSTICS affected_rows = ROW_COUNT;
+IF affected_rows > 0 THEN
+    INSERT INTO sys_run_log(procedure_name, description, rows_affected)
+    VALUES ('check_data_quality', 'MIS_01', affected_rows);
+END IF;
+```
 
 ## 10. Idempotency & Safety
 
