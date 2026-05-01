@@ -277,7 +277,11 @@ station_fuelcode_dbo = pd.read_sql(station_query, engine)
 logger.info("Creating the datasets")
 
 # Dict is not in API
-deleted = station_fuelcode_dbo[~station_fuelcode_dbo['stationid'].isin(fuel_station_api['stationid'])]
+active_stations = station_fuelcode_dbo[
+    (station_fuelcode_dbo['active'] == True) & 
+    (station_fuelcode_dbo['deletion_flag'] == False)
+    ]
+deleted = active_stations[~active_stations['stationid'].isin(fuel_station_api['stationid'])]
 
 # API is not in Dict
 new = fuel_station_api[~fuel_station_api['stationid'].isin(station_fuelcode_dbo['stationid'])]
