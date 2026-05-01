@@ -263,7 +263,9 @@ SELECT
     postcode, 
     latitude, 
     longitude,
-    last_update
+    last_update,
+    active,
+    deletion_flag
 FROM
     dim_fuel_stations
 """
