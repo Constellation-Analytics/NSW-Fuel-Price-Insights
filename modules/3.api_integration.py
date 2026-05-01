@@ -267,7 +267,7 @@ SELECT
 FROM
     dim_fuel_stations
 --WHERE 
---    active = True
+    active = True
 """
 
 # Execute the query
