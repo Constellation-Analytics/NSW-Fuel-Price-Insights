@@ -266,7 +266,7 @@ SELECT
     last_update
 FROM
     dim_fuel_stations
---WHERE 
+WHERE 
     active = True
 """
 
