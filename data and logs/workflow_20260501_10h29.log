@@ -1,0 +1,42 @@
+2026-05-01 10:29:04 - INFO -   Orchestrator   - Starting orchestrator
+2026-05-01 10:29:04 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-05-01 10:29:05 - INFO -      Module 1    - apr2026 data file already loaded
+2026-05-01 10:29:05 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-05-01 10:29:05 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-05-01 10:29:06 - INFO -      Module 2    - apr2026 file has already been transformed
+2026-05-01 10:29:06 - INFO -   Orchestrator   - Conditions not met in modules/2.transform_data.py - Skipping Module
+2026-05-01 10:29:06 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-05-01 10:29:06 - INFO -      Module 3    - Pulling API Information
+2026-05-01 10:29:10 - INFO -      Module 3    - Cleaning API Data
+2026-05-01 10:29:10 - INFO -      Module 3    - Pulling Database Information
+2026-05-01 10:29:11 - INFO -      Module 3    - Creating the datasets
+2026-05-01 10:29:11 - INFO -      Module 3    - Comparing API dataset to dbo dataset
+2026-05-01 10:29:11 - INFO -      Module 3    - Inserting data into the database
+2026-05-01 10:29:11 - INFO -      Module 3    - Config file updated
+2026-05-01 10:29:11 - INFO -      Module 3    - pushing file to repo
+2026-05-01 10:29:12 - INFO -      Module 3    - Successfully pushed config.json to repo
+2026-05-01 10:29:12 - INFO -      Module 3    - Operation complete
+2026-05-01 10:29:12 - INFO -   Orchestrator   - Finished modules/3.api_integration.py
+2026-05-01 10:29:12 - INFO -   Orchestrator   - Starting modules/4.data_quality.py
+2026-05-01 10:29:12 - INFO -      Module 4    - Running Data Quality Stored Procedure
+2026-05-01 10:29:15 - WARNING -      Module 4    - check_data_quality | INC_04 | 36 rows
+2026-05-01 10:29:15 - WARNING -      Module 4    - check_data_quality | PAR_01 | 1 rows
+2026-05-01 10:29:15 - WARNING -      Module 4    - check_data_quality | INC_05 | 2 rows
+2026-05-01 10:29:15 - WARNING -      Module 4    - update_data_quality_autofix | INC_05 | 2 rows
+2026-05-01 10:29:16 - WARNING -      Module 4    - check_data_quality | INC_04 | 36 rows
+2026-05-01 10:29:16 - WARNING -      Module 4    - check_data_quality | PAR_01 | 1 rows
+2026-05-01 10:29:16 - INFO -      Module 4    - Operation complete
+2026-05-01 10:29:16 - INFO -   Orchestrator   - Finished modules/4.data_quality.py
+2026-05-01 10:29:16 - INFO -   Orchestrator   - Starting modules/5.data_update.py
+2026-05-01 10:29:17 - INFO -      Module 5    - Running SQL Stored Procedures
+2026-05-01 10:29:17 - INFO -      Module 5    - update_fuel_stations_active | INSERT | 0 rows
+2026-05-01 10:29:17 - INFO -      Module 5    - update_fuel_stations_active | UPDATE | 0 rows
+2026-05-01 10:29:17 - INFO -      Module 5    - update_fact_fuel | INSERT | 0 rows
+2026-05-01 10:29:17 - INFO -      Module 5    - update_fuel_stations_inactive | UPDATE | 0 rows
+2026-05-01 10:29:17 - INFO -      Module 5    - Total price updates = 0 rows
+2026-05-01 10:29:17 - INFO -      Module 5    - Operation complete
+2026-05-01 10:29:17 - INFO -   Orchestrator   - Finished modules/5.data_update.py
+2026-05-01 10:29:17 - INFO -   Orchestrator   - Starting modules/99.retention_policy.py
+2026-05-01 10:29:18 - INFO - Retention Policy - Old workflow logs cleaned up and changes pushed.
+2026-05-01 10:29:18 - INFO -   Orchestrator   - Finished modules/99.retention_policy.py
+2026-05-01 10:29:18 - INFO -   Orchestrator   - Finished orchestrator
