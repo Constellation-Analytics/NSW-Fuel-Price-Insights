@@ -251,7 +251,7 @@ fuel_station_api['stationid'] = fuel_station_api['stationid'].astype(str)
 # Pull database Information
 logger.info(f"Pulling Database Information")
 
-# SQL query to fetch active stations
+# SQL query to fetch ALL database stations
 station_query = f"""
 SELECT 
     stationid,
@@ -266,8 +266,8 @@ SELECT
     last_update
 FROM
     dim_fuel_stations
-WHERE 
-    active = True
+--WHERE 
+    --active = True
 """
 
 # Execute the query
