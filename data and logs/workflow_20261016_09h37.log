@@ -1,0 +1,42 @@
+2026-10-16 09:37:33 - INFO -   Orchestrator   - Starting orchestrator
+2026-10-16 09:37:33 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-10-16 09:37:34 - INFO -      Module 1    - connecting to https://data.nsw.gov.au/data/dataset/fuel-check
+2026-10-16 09:37:53 - INFO -      Module 1    - downloading file from server
+2026-10-16 09:38:06 - INFO -      Module 1    - converting file to csv
+2026-10-16 09:38:06 - INFO -      Module 1    - pushing file to repo
+2026-10-16 09:38:10 - INFO -      Module 1    - Successfully pushed data and logs/fuelcheck_sep2026.csv to repo
+2026-10-16 09:38:10 - INFO -      Module 1    - Config file updated
+2026-10-16 09:38:10 - INFO -      Module 1    - pushing file to repo
+2026-10-16 09:38:11 - INFO -      Module 1    - Successfully pushed config.json to repo
+2026-10-16 09:38:11 - INFO -   Orchestrator   - Finished modules/1.file_retrieval.py
+2026-10-16 09:38:11 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-10-16 09:38:12 - INFO -      Module 2    - Starting Data Transformations
+2026-10-16 09:38:12 - INFO -      Module 2    - Reading data and logs/fuelcheck_sep2026.csv
+2026-10-16 09:38:12 - INFO -   Orchestrator   - Finished modules/2.transform_data.py
+2026-10-16 09:38:12 - ERROR -   Orchestrator   - Module modules/2.transform_data.py failed with exit code 1
+2026-10-16 09:38:12 - ERROR -   Orchestrator   - modules/2.transform_data.py errors before failure:
+/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/2.transform_data.py:173: DtypeWarning: Columns (3: Unnamed: 3, 7: Unnamed: 7) have mixed types. Specify dtype option on import or set low_memory=False.
+  pd.read_csv(file)
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 3641, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 168, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 197, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7668, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7676, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'PriceUpdatedDate'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/2.transform_data.py", line 181, in <module>
+    df_fuel_data['PriceUpdatedDate'],
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/frame.py", line 4378, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 3648, in get_loc
+    raise KeyError(key) from err
+KeyError: 'PriceUpdatedDate'
+
