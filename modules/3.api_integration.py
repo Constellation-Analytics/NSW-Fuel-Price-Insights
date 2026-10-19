@@ -237,6 +237,9 @@ data['name'] = data['name'].str.strip()
 # add timestamp
 data['last_update'] = now
 
+# patch 20261019
+data['last_update'] = pd.to_datetime(data['last_update']).dt.date
+
 # Select specific columns
 selected_columns = data[['code','brand','name', 'address','street', 'town', 'postcode', 'location.latitude', 'location.longitude','last_update']]
 
