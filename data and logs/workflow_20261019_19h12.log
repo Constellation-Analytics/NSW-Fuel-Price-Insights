@@ -1,0 +1,97 @@
+2026-10-19 19:12:42 - INFO -   Orchestrator   - Starting orchestrator
+2026-10-19 19:12:42 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-10-19 19:12:42 - INFO -      Module 1    - sep2026 data file already loaded
+2026-10-19 19:12:43 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-10-19 19:12:43 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-10-19 19:12:43 - INFO -      Module 2    - sep2026 file has already been transformed
+2026-10-19 19:12:43 - INFO -   Orchestrator   - Conditions not met in modules/2.transform_data.py - Skipping Module
+2026-10-19 19:12:43 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-10-19 19:12:44 - INFO -      Module 3    - Pulling API Information
+2026-10-19 19:12:47 - INFO -      Module 3    - Cleaning API Data
+2026-10-19 19:12:47 - INFO -      Module 3    - Pulling Database Information
+2026-10-19 19:12:47 - INFO -      Module 3    - Creating the datasets
+2026-10-19 19:12:47 - INFO -      Module 3    - Comparing API dataset to dbo dataset
+2026-10-19 19:12:47 - INFO -      Module 3    - Inserting data into the database
+2026-10-19 19:12:47 - ERROR -      Module 3    - Unexpected error while inserting values into database: Execution failed on sql 'INSERT INTO stg_new_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (:stationid, :brand, :name, :address, :street, :town, :postcode, :latitude, :longitude, :last_update)': (psycopg.errors.UniqueViolation) duplicate key value violates unique constraint "staging_new_stations_pkey"
+DETAIL:  Key (stationid)=(20934) already exists.
+[SQL: INSERT INTO stg_new_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid)s::VARCHAR, %(brand)s::VARCHAR, %(name)s::VARCHAR, %(address)s::VARCHAR, %(street)s::VARCHAR, %(town)s::VARCHAR, %(postcode)s::VARCHAR, %(latitude)s, %(longitude)s, %(last_update)s::DATE)]
+[parameters: [{'stationid': '20934', 'brand': 'Metro Fuel', 'name': 'METRO TURA BEACH', 'address': '487 SAPPHIRE COAST DR, BOURNDA NSW 2548', 'street': '487 Sapphire Coast Dr', 'town': 'Bournda', 'postcode': '2548', 'latitude': -36.850002, 'longitude': 149.921571, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20936', 'brand': 'IOR Group', 'name': 'IOR Yass', 'address': '10 INDUSTRIAL CL, YASS NSW 2582', 'street': '10 Industrial Cl', 'town': 'Yass', 'postcode': '2582', 'latitude': -34.809445, 'longitude': 148.879457, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20933', 'brand': 'Pearl Energy', 'name': 'Pearl Energy Metford', 'address': '71 TURTON ST, METFORD NSW 2323', 'street': '71 Turton St', 'town': 'Metford', 'postcode': '2323', 'latitude': -32.761356, 'longitude': 151.598409, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20940', 'brand': 'Metro Fuel', 'name': 'Metro Blacktown Richmond Rd', 'address': '69 RICHMOND RD, BLACKTOWN NSW 2148', 'street': '69 Richmond Rd', 'town': 'Blacktown', 'postcode': '2148', 'latitude': -33.763866, 'longitude': 150.902445, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20951', 'brand': 'Metro Fuel', 'name': 'Metro Prestons', 'address': '14 BERNERA RD, PRESTONS NSW 2170', 'street': '14 Bernera Rd', 'town': 'Prestons', 'postcode': '2170', 'latitude': -33.93577, 'longitude': 150.869267, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20935', 'brand': 'Metro Fuel', 'name': 'Metro Revesby West', 'address': '10 MILPERRA RD, REVESBY NSW 2212', 'street': '10 Milperra Rd', 'town': 'Revesby', 'postcode': '2212', 'latitude': -33.938371, 'longitude': 151.017192, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20937', 'brand': 'Shell', 'name': 'OTR Warrawong South', 'address': '75-77 KING ST, WARRAWONG NSW 2502', 'street': '75-77 King St', 'town': 'Warrawong', 'postcode': '2502', 'latitude': -34.490381, 'longitude': 150.888815, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20941', 'brand': 'Metro Fuel', 'name': 'Metro Petroleum Doonside', 'address': '198 HILL END RD, DOONSIDE NSW 2767', 'street': '198 Hill End Rd', 'town': 'Doonside', 'postcode': '2767', 'latitude': -33.747217, 'longitude': 150.872244, 'last_update': datetime.date(2026, 10, 19)}  ... displaying 10 of 19 total bound parameter sets ...  {'stationid': '20947', 'brand': 'Pearl Energy', 'name': 'Pearl Energy Lake Tabourie', 'address': '70 PRINCES HWY, LAKE TABOURIE NSW 2539', 'street': '70 Princes Hwy', 'town': 'Lake Tabourie', 'postcode': '2539', 'latitude': -35.435067, 'longitude': 150.403283, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20948', 'brand': 'Shell', 'name': 'Solo Casino', 'address': '88 CENTRE ST, CASINO NSW 2470', 'street': '88 Centre St', 'town': 'Casino', 'postcode': '2470', 'latitude': -28.866279, 'longitude': 153.044889, 'last_update': datetime.date(2026, 10, 19)}]]
+(Background on this error at: https://sqlalche.me/e/21/gkpj)
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1922, in _exec_single_context
+    self.dialect.do_executemany(
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 1189, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/psycopg/cursor.py", line 148, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UniqueViolation: duplicate key value violates unique constraint "staging_new_stations_pkey"
+DETAIL:  Key (stationid)=(20934) already exists.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1679, in execute
+    return execute_function(sql, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1458, in execute
+    return meth(
+           ^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 533, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1678, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1832, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1972, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2342, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1922, in _exec_single_context
+    self.dialect.do_executemany(
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 1189, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/psycopg/cursor.py", line 148, in executemany
+    raise ex.with_traceback(None)
+sqlalchemy.exc.IntegrityError: (psycopg.errors.UniqueViolation) duplicate key value violates unique constraint "staging_new_stations_pkey"
+DETAIL:  Key (stationid)=(20934) already exists.
+[SQL: INSERT INTO stg_new_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid)s::VARCHAR, %(brand)s::VARCHAR, %(name)s::VARCHAR, %(address)s::VARCHAR, %(street)s::VARCHAR, %(town)s::VARCHAR, %(postcode)s::VARCHAR, %(latitude)s, %(longitude)s, %(last_update)s::DATE)]
+[parameters: [{'stationid': '20934', 'brand': 'Metro Fuel', 'name': 'METRO TURA BEACH', 'address': '487 SAPPHIRE COAST DR, BOURNDA NSW 2548', 'street': '487 Sapphire Coast Dr', 'town': 'Bournda', 'postcode': '2548', 'latitude': -36.850002, 'longitude': 149.921571, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20936', 'brand': 'IOR Group', 'name': 'IOR Yass', 'address': '10 INDUSTRIAL CL, YASS NSW 2582', 'street': '10 Industrial Cl', 'town': 'Yass', 'postcode': '2582', 'latitude': -34.809445, 'longitude': 148.879457, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20933', 'brand': 'Pearl Energy', 'name': 'Pearl Energy Metford', 'address': '71 TURTON ST, METFORD NSW 2323', 'street': '71 Turton St', 'town': 'Metford', 'postcode': '2323', 'latitude': -32.761356, 'longitude': 151.598409, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20940', 'brand': 'Metro Fuel', 'name': 'Metro Blacktown Richmond Rd', 'address': '69 RICHMOND RD, BLACKTOWN NSW 2148', 'street': '69 Richmond Rd', 'town': 'Blacktown', 'postcode': '2148', 'latitude': -33.763866, 'longitude': 150.902445, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20951', 'brand': 'Metro Fuel', 'name': 'Metro Prestons', 'address': '14 BERNERA RD, PRESTONS NSW 2170', 'street': '14 Bernera Rd', 'town': 'Prestons', 'postcode': '2170', 'latitude': -33.93577, 'longitude': 150.869267, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20935', 'brand': 'Metro Fuel', 'name': 'Metro Revesby West', 'address': '10 MILPERRA RD, REVESBY NSW 2212', 'street': '10 Milperra Rd', 'town': 'Revesby', 'postcode': '2212', 'latitude': -33.938371, 'longitude': 151.017192, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20937', 'brand': 'Shell', 'name': 'OTR Warrawong South', 'address': '75-77 KING ST, WARRAWONG NSW 2502', 'street': '75-77 King St', 'town': 'Warrawong', 'postcode': '2502', 'latitude': -34.490381, 'longitude': 150.888815, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20941', 'brand': 'Metro Fuel', 'name': 'Metro Petroleum Doonside', 'address': '198 HILL END RD, DOONSIDE NSW 2767', 'street': '198 Hill End Rd', 'town': 'Doonside', 'postcode': '2767', 'latitude': -33.747217, 'longitude': 150.872244, 'last_update': datetime.date(2026, 10, 19)}  ... displaying 10 of 19 total bound parameter sets ...  {'stationid': '20947', 'brand': 'Pearl Energy', 'name': 'Pearl Energy Lake Tabourie', 'address': '70 PRINCES HWY, LAKE TABOURIE NSW 2539', 'street': '70 Princes Hwy', 'town': 'Lake Tabourie', 'postcode': '2539', 'latitude': -35.435067, 'longitude': 150.403283, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20948', 'brand': 'Shell', 'name': 'Solo Casino', 'address': '88 CENTRE ST, CASINO NSW 2470', 'street': '88 Centre St', 'town': 'Casino', 'postcode': '2470', 'latitude': -28.866279, 'longitude': 153.044889, 'last_update': datetime.date(2026, 10, 19)}]]
+(Background on this error at: https://sqlalche.me/e/21/gkpj)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/3.api_integration.py", line 310, in <module>
+    new.to_sql('stg_new_stations', connection, if_exists='append', index=False)
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/generic.py", line 3040, in to_sql
+    return sql.to_sql(
+           ^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 841, in to_sql
+    return pandas_sql.to_sql(
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 2037, in to_sql
+    total_inserted = sql_engine.insert_records(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1571, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1122, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1014, in _execute_insert
+    result = self.pd_sql.execute(self.table.insert(), data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1681, in execute
+    raise DatabaseError(f"Execution failed on sql '{sql}': {exc}") from exc
+pandas.errors.DatabaseError: Execution failed on sql 'INSERT INTO stg_new_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (:stationid, :brand, :name, :address, :street, :town, :postcode, :latitude, :longitude, :last_update)': (psycopg.errors.UniqueViolation) duplicate key value violates unique constraint "staging_new_stations_pkey"
+DETAIL:  Key (stationid)=(20934) already exists.
+[SQL: INSERT INTO stg_new_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid)s::VARCHAR, %(brand)s::VARCHAR, %(name)s::VARCHAR, %(address)s::VARCHAR, %(street)s::VARCHAR, %(town)s::VARCHAR, %(postcode)s::VARCHAR, %(latitude)s, %(longitude)s, %(last_update)s::DATE)]
+[parameters: [{'stationid': '20934', 'brand': 'Metro Fuel', 'name': 'METRO TURA BEACH', 'address': '487 SAPPHIRE COAST DR, BOURNDA NSW 2548', 'street': '487 Sapphire Coast Dr', 'town': 'Bournda', 'postcode': '2548', 'latitude': -36.850002, 'longitude': 149.921571, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20936', 'brand': 'IOR Group', 'name': 'IOR Yass', 'address': '10 INDUSTRIAL CL, YASS NSW 2582', 'street': '10 Industrial Cl', 'town': 'Yass', 'postcode': '2582', 'latitude': -34.809445, 'longitude': 148.879457, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20933', 'brand': 'Pearl Energy', 'name': 'Pearl Energy Metford', 'address': '71 TURTON ST, METFORD NSW 2323', 'street': '71 Turton St', 'town': 'Metford', 'postcode': '2323', 'latitude': -32.761356, 'longitude': 151.598409, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20940', 'brand': 'Metro Fuel', 'name': 'Metro Blacktown Richmond Rd', 'address': '69 RICHMOND RD, BLACKTOWN NSW 2148', 'street': '69 Richmond Rd', 'town': 'Blacktown', 'postcode': '2148', 'latitude': -33.763866, 'longitude': 150.902445, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20951', 'brand': 'Metro Fuel', 'name': 'Metro Prestons', 'address': '14 BERNERA RD, PRESTONS NSW 2170', 'street': '14 Bernera Rd', 'town': 'Prestons', 'postcode': '2170', 'latitude': -33.93577, 'longitude': 150.869267, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20935', 'brand': 'Metro Fuel', 'name': 'Metro Revesby West', 'address': '10 MILPERRA RD, REVESBY NSW 2212', 'street': '10 Milperra Rd', 'town': 'Revesby', 'postcode': '2212', 'latitude': -33.938371, 'longitude': 151.017192, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20937', 'brand': 'Shell', 'name': 'OTR Warrawong South', 'address': '75-77 KING ST, WARRAWONG NSW 2502', 'street': '75-77 King St', 'town': 'Warrawong', 'postcode': '2502', 'latitude': -34.490381, 'longitude': 150.888815, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20941', 'brand': 'Metro Fuel', 'name': 'Metro Petroleum Doonside', 'address': '198 HILL END RD, DOONSIDE NSW 2767', 'street': '198 Hill End Rd', 'town': 'Doonside', 'postcode': '2767', 'latitude': -33.747217, 'longitude': 150.872244, 'last_update': datetime.date(2026, 10, 19)}  ... displaying 10 of 19 total bound parameter sets ...  {'stationid': '20947', 'brand': 'Pearl Energy', 'name': 'Pearl Energy Lake Tabourie', 'address': '70 PRINCES HWY, LAKE TABOURIE NSW 2539', 'street': '70 Princes Hwy', 'town': 'Lake Tabourie', 'postcode': '2539', 'latitude': -35.435067, 'longitude': 150.403283, 'last_update': datetime.date(2026, 10, 19)}, {'stationid': '20948', 'brand': 'Shell', 'name': 'Solo Casino', 'address': '88 CENTRE ST, CASINO NSW 2470', 'street': '88 Centre St', 'town': 'Casino', 'postcode': '2470', 'latitude': -28.866279, 'longitude': 153.044889, 'last_update': datetime.date(2026, 10, 19)}]]
+(Background on this error at: https://sqlalche.me/e/21/gkpj)
+2026-10-19 19:12:47 - INFO -   Orchestrator   - Finished modules/3.api_integration.py
+2026-10-19 19:12:47 - ERROR -   Orchestrator   - Module modules/3.api_integration.py failed with exit code 1
+2026-10-19 19:12:47 - ERROR -   Orchestrator   - modules/3.api_integration.py errors before failure:
+
