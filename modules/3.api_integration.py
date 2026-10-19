@@ -53,6 +53,8 @@ latest_file_dt = datetime.strptime(latest_file, "%b%Y")
 latest_file_month = latest_file_dt.strftime("%b").lower()
 latest_file_year = latest_file_dt.strftime("%Y")
 current_monthyear = datetime.now().replace(day=1).strftime("%b%Y").lower()
+dt = datetime.now(timezone.utc)
+
 
 # timestamp for commits
 datetimestamp = datetime.now().strftime("%Y%m%d_%Hh%M")
@@ -238,7 +240,7 @@ data['name'] = data['name'].str.strip()
 data['last_update'] = now
 
 # patch 20261019
-data['last_update'] = pd.to_datetime(data['last_update']).dt.date
+data['last_update'] = dt.date()
 
 # Select specific columns
 selected_columns = data[['code','brand','name', 'address','street', 'town', 'postcode', 'location.latitude', 'location.longitude','last_update']]
@@ -294,7 +296,7 @@ logger.info(f"Comparing API dataset to dbo dataset")
 updated = fuel_station_api.merge(station_fuelcode_dbo, on='stationid', suffixes=('_api', '_db'))
 updated_stations = updated[(updated['name_api'] != updated['name_db']) | (updated['address_api'] != updated['address_db'])]
 updated_stations = updated_stations[['stationid', 'brand_api', 'name_api', 'address_api', 'street_api','town_api', 'postcode_api', 'latitude_api', 'longitude_api']].rename(columns=lambda x: x.replace('_api', ''))
-updated_stations['last_update'] = now
+updated_stations['last_update'] = dt.date()
 
 # -------------------------------------------------------------------------------------------------
 #                                       Insert into database
