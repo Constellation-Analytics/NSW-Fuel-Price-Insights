@@ -1,0 +1,105 @@
+2026-10-19 19:01:38 - INFO -   Orchestrator   - Starting orchestrator
+2026-10-19 19:01:38 - INFO -   Orchestrator   - Starting modules/1.file_retrieval.py
+2026-10-19 19:01:39 - INFO -      Module 1    - sep2026 data file already loaded
+2026-10-19 19:01:39 - INFO -   Orchestrator   - Conditions not met in modules/1.file_retrieval.py - Skipping Module
+2026-10-19 19:01:39 - INFO -   Orchestrator   - Starting modules/2.transform_data.py
+2026-10-19 19:01:39 - INFO -      Module 2    - sep2026 file has already been transformed
+2026-10-19 19:01:39 - INFO -   Orchestrator   - Conditions not met in modules/2.transform_data.py - Skipping Module
+2026-10-19 19:01:39 - INFO -   Orchestrator   - Starting modules/3.api_integration.py
+2026-10-19 19:01:40 - INFO -      Module 3    - Pulling API Information
+2026-10-19 19:01:43 - INFO -      Module 3    - Cleaning API Data
+2026-10-19 19:01:43 - INFO -      Module 3    - Pulling Database Information
+2026-10-19 19:01:45 - INFO -      Module 3    - Creating the datasets
+2026-10-19 19:01:45 - INFO -      Module 3    - Comparing API dataset to dbo dataset
+2026-10-19 19:01:45 - INFO -      Module 3    - Inserting data into the database
+2026-10-19 19:01:45 - ERROR -      Module 3    - Unexpected error while inserting values into database: Execution failed on sql 'INSERT INTO stg_updated_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (:stationid, :brand, :name, :address, :street, :town, :postcode, :latitude, :longitude, :last_update)': (psycopg.errors.DatatypeMismatch) column "last_update" is of type date but expression is of type character varying
+LINE 1: ...R, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8, $9, $10::VARCH...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+[SQL: INSERT INTO stg_updated_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid)s::VARCHAR, %(brand)s::VARCHAR, %(name)s::VARCHAR, %(address)s::VARCHAR, %(street)s::VARCHAR, %(town)s::VARCHAR, %(postcode)s::VARCHAR, %(latitude)s, %(longitude)s, %(last_update)s::VARCHAR)]
+[parameters: [{'stationid': '2198', 'brand': 'Metro Fuel', 'name': 'Metro Petroleum Berowra', 'address': '111 Berowra Waters Rd, BEROWRA HEIGHTS NSW 2082', 'street': '111 Berowra Waters Rd', 'town': 'Berowra Heights', 'postcode': '2082', 'latitude': -33.615454, 'longitude': 151.141677, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '17231', 'brand': 'Ampol', 'name': 'Ampol Leeton', 'address': '62-64 Wamoon Ave, LEETON NSW 2705', 'street': '62-64 Wamoon Ave', 'town': 'Leeton', 'postcode': '2705', 'latitude': -34.551017, 'longitude': 146.391217, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '18615', 'brand': 'Independent', 'name': 'Eden Servo', 'address': '26 MITCHELL ST, EDEN NSW 2551', 'street': '26 Mitchell St', 'town': 'Eden', 'postcode': '2551', 'latitude': -37.063775, 'longitude': 149.903103, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '538', 'brand': 'U-Go', 'name': 'U-GO EAGLE VALE (Self - Serve)', 'address': 'Eaglevale Road (Eaglevale Market Place), Eagle Vale NSW 2558', 'street': None, 'town': 'Eagle Vale', 'postcode': '2558', 'latitude': -34.031827, 'longitude': 150.81579, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '696', 'brand': 'Ampol', 'name': 'Ampol Ingleburn Diesel Stop', 'address': '6 Lancaster St, Ingleburn NSW 2565 Ingleburn NSW 2565', 'street': '6 Lancaster St', 'town': 'Ingleburn', 'postcode': '2565', 'latitude': -33.989784, 'longitude': 150.866572, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '2086', 'brand': 'Independent', 'name': 'Fuelled Dungog', 'address': '23-27 HOOKE ST, DUNGOG NSW 2420', 'street': '23-27 Hooke St', 'town': 'Dungog', 'postcode': '2420', 'latitude': -32.399232, 'longitude': 151.757294, 'last_update': '2026-10-19 07:01:40 PM'}]]
+(Background on this error at: https://sqlalche.me/e/21/f405)
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1922, in _exec_single_context
+    self.dialect.do_executemany(
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 1189, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/psycopg/cursor.py", line 148, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.DatatypeMismatch: column "last_update" is of type date but expression is of type character varying
+LINE 1: ...R, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8, $9, $10::VARCH...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1679, in execute
+    return execute_function(sql, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1458, in execute
+    return meth(
+           ^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 533, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1678, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1832, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1972, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2342, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1922, in _exec_single_context
+    self.dialect.do_executemany(
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 1189, in do_executemany
+    cursor.executemany(statement, parameters)
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/psycopg/cursor.py", line 148, in executemany
+    raise ex.with_traceback(None)
+sqlalchemy.exc.ProgrammingError: (psycopg.errors.DatatypeMismatch) column "last_update" is of type date but expression is of type character varying
+LINE 1: ...R, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8, $9, $10::VARCH...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+[SQL: INSERT INTO stg_updated_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid)s::VARCHAR, %(brand)s::VARCHAR, %(name)s::VARCHAR, %(address)s::VARCHAR, %(street)s::VARCHAR, %(town)s::VARCHAR, %(postcode)s::VARCHAR, %(latitude)s, %(longitude)s, %(last_update)s::VARCHAR)]
+[parameters: [{'stationid': '2198', 'brand': 'Metro Fuel', 'name': 'Metro Petroleum Berowra', 'address': '111 Berowra Waters Rd, BEROWRA HEIGHTS NSW 2082', 'street': '111 Berowra Waters Rd', 'town': 'Berowra Heights', 'postcode': '2082', 'latitude': -33.615454, 'longitude': 151.141677, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '17231', 'brand': 'Ampol', 'name': 'Ampol Leeton', 'address': '62-64 Wamoon Ave, LEETON NSW 2705', 'street': '62-64 Wamoon Ave', 'town': 'Leeton', 'postcode': '2705', 'latitude': -34.551017, 'longitude': 146.391217, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '18615', 'brand': 'Independent', 'name': 'Eden Servo', 'address': '26 MITCHELL ST, EDEN NSW 2551', 'street': '26 Mitchell St', 'town': 'Eden', 'postcode': '2551', 'latitude': -37.063775, 'longitude': 149.903103, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '538', 'brand': 'U-Go', 'name': 'U-GO EAGLE VALE (Self - Serve)', 'address': 'Eaglevale Road (Eaglevale Market Place), Eagle Vale NSW 2558', 'street': None, 'town': 'Eagle Vale', 'postcode': '2558', 'latitude': -34.031827, 'longitude': 150.81579, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '696', 'brand': 'Ampol', 'name': 'Ampol Ingleburn Diesel Stop', 'address': '6 Lancaster St, Ingleburn NSW 2565 Ingleburn NSW 2565', 'street': '6 Lancaster St', 'town': 'Ingleburn', 'postcode': '2565', 'latitude': -33.989784, 'longitude': 150.866572, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '2086', 'brand': 'Independent', 'name': 'Fuelled Dungog', 'address': '23-27 HOOKE ST, DUNGOG NSW 2420', 'street': '23-27 Hooke St', 'town': 'Dungog', 'postcode': '2420', 'latitude': -32.399232, 'longitude': 151.757294, 'last_update': '2026-10-19 07:01:40 PM'}]]
+(Background on this error at: https://sqlalche.me/e/21/f405)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/NSW-Fuel-Price-Insights/NSW-Fuel-Price-Insights/modules/3.api_integration.py", line 309, in <module>
+    updated_stations.to_sql('stg_updated_stations', connection, if_exists='append', index=False)
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/generic.py", line 3040, in to_sql
+    return sql.to_sql(
+           ^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 841, in to_sql
+    return pandas_sql.to_sql(
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 2037, in to_sql
+    total_inserted = sql_engine.insert_records(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1571, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1122, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1014, in _execute_insert
+    result = self.pd_sql.execute(self.table.insert(), data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/io/sql.py", line 1681, in execute
+    raise DatabaseError(f"Execution failed on sql '{sql}': {exc}") from exc
+pandas.errors.DatabaseError: Execution failed on sql 'INSERT INTO stg_updated_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (:stationid, :brand, :name, :address, :street, :town, :postcode, :latitude, :longitude, :last_update)': (psycopg.errors.DatatypeMismatch) column "last_update" is of type date but expression is of type character varying
+LINE 1: ...R, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8, $9, $10::VARCH...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+[SQL: INSERT INTO stg_updated_stations (stationid, brand, name, address, street, town, postcode, latitude, longitude, last_update) VALUES (%(stationid)s::VARCHAR, %(brand)s::VARCHAR, %(name)s::VARCHAR, %(address)s::VARCHAR, %(street)s::VARCHAR, %(town)s::VARCHAR, %(postcode)s::VARCHAR, %(latitude)s, %(longitude)s, %(last_update)s::VARCHAR)]
+[parameters: [{'stationid': '2198', 'brand': 'Metro Fuel', 'name': 'Metro Petroleum Berowra', 'address': '111 Berowra Waters Rd, BEROWRA HEIGHTS NSW 2082', 'street': '111 Berowra Waters Rd', 'town': 'Berowra Heights', 'postcode': '2082', 'latitude': -33.615454, 'longitude': 151.141677, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '17231', 'brand': 'Ampol', 'name': 'Ampol Leeton', 'address': '62-64 Wamoon Ave, LEETON NSW 2705', 'street': '62-64 Wamoon Ave', 'town': 'Leeton', 'postcode': '2705', 'latitude': -34.551017, 'longitude': 146.391217, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '18615', 'brand': 'Independent', 'name': 'Eden Servo', 'address': '26 MITCHELL ST, EDEN NSW 2551', 'street': '26 Mitchell St', 'town': 'Eden', 'postcode': '2551', 'latitude': -37.063775, 'longitude': 149.903103, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '538', 'brand': 'U-Go', 'name': 'U-GO EAGLE VALE (Self - Serve)', 'address': 'Eaglevale Road (Eaglevale Market Place), Eagle Vale NSW 2558', 'street': None, 'town': 'Eagle Vale', 'postcode': '2558', 'latitude': -34.031827, 'longitude': 150.81579, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '696', 'brand': 'Ampol', 'name': 'Ampol Ingleburn Diesel Stop', 'address': '6 Lancaster St, Ingleburn NSW 2565 Ingleburn NSW 2565', 'street': '6 Lancaster St', 'town': 'Ingleburn', 'postcode': '2565', 'latitude': -33.989784, 'longitude': 150.866572, 'last_update': '2026-10-19 07:01:40 PM'}, {'stationid': '2086', 'brand': 'Independent', 'name': 'Fuelled Dungog', 'address': '23-27 HOOKE ST, DUNGOG NSW 2420', 'street': '23-27 Hooke St', 'town': 'Dungog', 'postcode': '2420', 'latitude': -32.399232, 'longitude': 151.757294, 'last_update': '2026-10-19 07:01:40 PM'}]]
+(Background on this error at: https://sqlalche.me/e/21/f405)
+2026-10-19 19:01:45 - INFO -   Orchestrator   - Finished modules/3.api_integration.py
+2026-10-19 19:01:45 - ERROR -   Orchestrator   - Module modules/3.api_integration.py failed with exit code 1
+2026-10-19 19:01:45 - ERROR -   Orchestrator   - modules/3.api_integration.py errors before failure:
+
