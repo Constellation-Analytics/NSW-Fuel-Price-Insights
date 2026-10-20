@@ -74,7 +74,7 @@ def run_module(module_path):
             check=False, # We use check=False and handle errors via returncode
             capture_output=True,
             text=True,
-            timeout = 60
+            timeout = 120
         )
         if result.returncode == 10:
             logger.info(f"Conditions not met in {module_path} - Skipping Module")
